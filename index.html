@@ -116,14 +116,17 @@
             z-index: 1; /* Damit die Streifen hinter dem Inhalt bleiben */
         }
 
+        /* Glänzender Effekt: von unten links nach oben rechts */
         @keyframes shineBackground {
             0% {
                 left: -100%;
                 top: 100%;
+                transform: rotate(45deg); /* 45 Grad Winkel */
             }
             100% {
                 left: 100%;
                 top: -100%;
+                transform: rotate(45deg); /* 45 Grad Winkel */
             }
         }
 
