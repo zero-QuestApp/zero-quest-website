@@ -11,7 +11,7 @@
             box-sizing: border-box;
         }
 
-        /* Hintergrundgestaltung */
+        /* Hintergrundgestaltung - Dunkelgrau-Schwarz */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #121212; /* Sehr dunkles Grau-Schwarz */
@@ -27,41 +27,43 @@
 
         /* Header */
         header {
-            padding: 30px;
+            padding: 20px;
             background: rgba(0, 0, 0, 0.7);
-            border-radius: 20px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
             margin-bottom: 40px;
             text-align: center;
         }
 
         header h1 {
-            font-size: 4rem;
+            font-size: 3rem;
             color: #00aaff; /* Helles Blau */
             text-shadow: 0 0 15px #00aaff, 0 0 30px #00aaff;
             margin-bottom: 10px;
         }
 
         header p {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: #aaa;
         }
 
         /* Panel-Design */
         .panel {
             background: rgba(0, 0, 0, 0.8);
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
             max-width: 600px;
             width: 100%;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .panel:hover {
             transform: translateY(-10px);
-            box-shadow: 0 0 40px rgba(0, 170, 255, 0.8);
+            box-shadow: 0 0 30px rgba(0, 170, 255, 0.8);
         }
 
         .panel h2 {
@@ -72,7 +74,7 @@
         }
 
         .panel p {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: #bbb;
             margin-bottom: 30px;
         }
@@ -94,6 +96,23 @@
             transform: scale(1.1);
         }
 
+        /* Glänzender Silber-Effekt von links nach rechts */
+        .shine {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: -100%; }
+        }
+
         /* Footer */
         footer {
             position: absolute;
@@ -103,19 +122,6 @@
             font-size: 1rem;
             text-align: center;
         }
-
-        /* Subtile Animation für die Schaltflächen */
-        @keyframes glowing {
-            0% { box-shadow: 0 0 5px #00aaff, 0 0 10px #00aaff; }
-            50% { box-shadow: 0 0 20px #00aaff, 0 0 30px #00aaff; }
-            100% { box-shadow: 0 0 5px #00aaff, 0 0 10px #00aaff; }
-        }
-
-        /* Glühen beim Hover über die Schaltfläche */
-        .download-link a {
-            animation: glowing 1.5s infinite alternate;
-        }
-
     </style>
 </head>
 <body>
@@ -125,9 +131,10 @@
         <h1>Willkommen auf der Download-Seite</h1>
         <p>Hole dir die neuesten Dateien und Updates!</p>
     </header>
-    
-    <!-- Panel für die Download-Option -->
+
+    <!-- Panel mit Download-Link -->
     <div class="panel">
+        <div class="shine"></div> <!-- Silbernes glänzendes Overlay -->
         <h2>Download Deine Datei</h2>
         <p>Drücke den Button, um die Datei herunterzuladen.</p>
         <div class="download-link">
