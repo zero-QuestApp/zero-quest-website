@@ -23,6 +23,7 @@
             min-height: 100vh;
             overflow: hidden;
             padding: 20px;
+            position: relative; /* Wichtig, damit die Streifen im Hintergrund bleiben */
         }
 
         /* Header */
@@ -63,6 +64,7 @@
             text-align: center;
             position: relative;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 10; /* Damit der Inhalt immer vor den Streifen angezeigt wird */
         }
 
         .panel:hover {
@@ -110,7 +112,8 @@
             height: 100%;
             width: 100%;
             background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            animation: shineBackground 6s infinite;
+            animation: shineBackground 6s infinite linear;
+            z-index: 1; /* Damit die Streifen hinter dem Inhalt bleiben */
         }
 
         @keyframes shineBackground {
@@ -118,39 +121,9 @@
                 left: -100%;
                 top: 100%;
             }
-            50% {
-                left: 100%;
-                top: 0%;
-            }
             100% {
-                left: -100%;
-                top: 100%;
-            }
-        }
-
-        /* Animation für glänzenden Effekt beim Button */
-        .shine-button {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            animation: shineButton 8s infinite;
-        }
-
-        @keyframes shineButton {
-            0% {
-                left: -100%;
-                top: 100%;
-            }
-            50% {
                 left: 100%;
-                top: 0%;
-            }
-            100% {
-                left: -100%;
-                top: 100%;
+                top: -100%;
             }
         }
 
@@ -198,12 +171,10 @@
 
     <!-- Panel mit Download-Link -->
     <div class="panel">
-        <div class="shine-background"></div> <!-- Glänzender Effekt für Hintergrund -->
         <h2>Download die Datei</h2>
         <p>Klicke auf den Button, um die Datei herunterzuladen:</p>
         <div class="download-link">
             <a href="DEIN-DATEINAME" download>Download Datei</a>
-            <div class="shine-button"></div> <!-- Glänzender Effekt für Button -->
         </div>
     </div>
 
@@ -218,6 +189,9 @@
     <footer>
         <p>&copy; 2025 Dein Name | Alle Rechte vorbehalten</p>
     </footer>
+
+    <!-- Glänzender Effekt (Silberne Streifen) -->
+    <div class="shine-background"></div>
 
 </body>
 </html>
