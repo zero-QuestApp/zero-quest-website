@@ -14,14 +14,14 @@
         /* Hintergrund */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #121212; /* Dunkles Grau-Schwarz */
+            background: linear-gradient(45deg, #dcdcdc, #e6e6e6); /* Sanfter Silber-Übergang */
             color: #e0e0e0;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             min-height: 100vh;
-            overflow: auto; /* Scrollen ermöglichen */
+            overflow: auto;
             padding: 20px;
             position: relative;
             animation: fadeInBackground 1s ease-in-out;
@@ -29,7 +29,7 @@
 
         /* Header */
         header {
-            background: #1e1e1e;
+            background: rgba(0, 0, 0, 0.8);
             padding: 20px 50px;
             text-align: center;
             border-radius: 10px;
@@ -103,7 +103,7 @@
             opacity: 0.8;
         }
 
-        /* Coole Glüheffekte */
+        /* Glüheffekte */
         @keyframes glowEffect {
             0% {
                 box-shadow: 0 0 10px rgba(0, 170, 255, 0.6), 0 0 30px rgba(0, 170, 255, 0.8);
