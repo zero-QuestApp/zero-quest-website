@@ -89,6 +89,7 @@
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 170, 255, 0.6);
             transition: background 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0.7; /* Sichtbarkeit des Download-Links reduziert */
         }
 
         .download-link a:hover {
@@ -98,7 +99,7 @@
             opacity: 0.8;
         }
 
-        /* Animation für glänzenden Silber-Effekt */
+        /* Glänzende Streifen im Hintergrund */
         .shine-background {
             position: absolute;
             top: 0;
@@ -111,45 +112,29 @@
             z-index: 1; /* Damit der Effekt immer im Hintergrund bleibt */
         }
 
-        .shine-background::before,
-        .shine-background::after,
         .shine-background .shine-line {
             content: "";
             position: absolute;
             background: linear-gradient(45deg, rgba(255, 255, 255, 0.2), transparent, rgba(255, 255, 255, 0.2)); /* Dünnerer silberner Effekt */
-            animation: shineBackground 30s infinite linear; /* Sehr langsamer Glanz-Effekt */
-            height: 25px; /* 2,5 mal höher als vorher */
+            height: 25px; /* Dünnerer Balken */
             width: 200%; /* Breiterer Balken */
             opacity: 0.7; /* Sichtbarkeit auf 70% */
+            transform: rotate(45deg); /* 45 Grad Winkel */
         }
 
-        .shine-background::before {
+        .shine-background .shine-line:nth-child(1) {
             top: 10%;
             left: 0;
         }
 
-        .shine-background::after {
+        .shine-background .shine-line:nth-child(2) {
             top: 50%;
             left: 0;
         }
 
-        .shine-background .shine-line {
+        .shine-background .shine-line:nth-child(3) {
             top: 90%;
             left: 0;
-        }
-
-        /* Glänzender Effekt von unten links nach oben rechts */
-        @keyframes shineBackground {
-            0% {
-                left: -100%;
-                top: 100%;
-                transform: rotate(45deg); /* 45 Grad Winkel */
-            }
-            100% {
-                left: 100%;
-                top: -100%;
-                transform: rotate(45deg); /* 45 Grad Winkel */
-            }
         }
 
         /* Bilder-Galerie */
@@ -204,7 +189,11 @@
     </div>
 
     <!-- Glänzende Streifen im Hintergrund -->
-    <div class="shine-background"></div>
+    <div class="shine-background">
+        <div class="shine-line"></div>
+        <div class="shine-line"></div>
+        <div class="shine-line"></div>
+    </div>
 
     <!-- Bilder-Galerie -->
     <div class="images">
