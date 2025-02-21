@@ -83,6 +83,7 @@
             margin-bottom: 30px;
         }
 
+        /* Download-Link */
         .download-link a {
             font-size: 1.8rem;
             color: #121212;
@@ -91,13 +92,14 @@
             background: linear-gradient(45deg, #00aaff, #0066cc);
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 170, 255, 0.6);
-            transition: background 0.3s ease, transform 0.3s ease;
+            transition: background 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
         }
 
         .download-link a:hover {
             background: #00aaff;
             color: #121212;
-            transform: scale(1.1);
+            transform: scale(0.95);
+            opacity: 0.8;
         }
 
         /* Animation für glänzenden Silber-Effekt */
@@ -108,12 +110,14 @@
             height: 100%;
             width: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            animation: shine 2s infinite;
+            animation: shine 5s infinite;
         }
 
         @keyframes shine {
             0% { left: -100%; }
-            50% { left: 100%; }
+            25% { left: 0; top: 0; }
+            50% { left: 100%; top: 0; }
+            75% { left: 0; top: 0; }
             100% { left: -100%; }
         }
 
@@ -183,4 +187,3 @@
 
 </body>
 </html>
-
