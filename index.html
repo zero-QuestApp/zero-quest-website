@@ -11,32 +11,61 @@
             box-sizing: border-box;
         }
 
+        /* Dunkler Hintergrund und allgemeine Gestaltung */
         body {
-            margin: 0;
-            padding: 0;
             font-family: 'Arial', sans-serif;
-            background-image: url('blitz_background.jpg'); /* Dein eigenes Bild */
-            background-size: cover; /* Passt das Bild an die Bildschirmgröße an */
-            background-position: center;
-            background-repeat: no-repeat;
-            color: #e0e0e0;
+            background-color: #1a1a1a; /* Dunkelgrau bis Schwarz */
+            color: #e0e0e0; /* Helles Grau für Text */
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             text-align: center;
+            overflow: hidden;
+        }
+
+        /* Header-Stil */
+        header {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7); /* Dunkler Hintergrund für den Header */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
         }
 
         header h1 {
             font-size: 3rem;
-            color: #00aaff;
+            color: #00aaff; /* Leuchtendes Blau für den Titel */
             text-shadow: 0 0 15px #00aaff, 0 0 30px #00aaff;
-            margin-bottom: 20px;
         }
 
         header p {
             font-size: 1.5rem;
+            color: #aaa;
+            margin-top: 10px;
+        }
+
+        /* Panel-Stil für die Download-Link-Sektion */
+        .panel {
+            background: rgba(0, 0, 0, 0.8); /* Panel-Hintergrund */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+            max-width: 500px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .panel h2 {
+            font-size: 2rem;
+            color: #00aaff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px #00aaff, 0 0 30px #00aaff;
+        }
+
+        .panel p {
+            font-size: 1.2rem;
             color: #aaa;
             margin-bottom: 30px;
         }
@@ -48,7 +77,8 @@
             padding: 15px 30px;
             background: rgba(0, 170, 255, 0.5);
             border-radius: 8px;
-            transition: background 0.3s ease;
+            transition: background 0.3s ease, transform 0.2s ease;
+            display: inline-block;
         }
 
         .download-link a:hover {
@@ -65,22 +95,96 @@
             font-size: 1rem;
             text-align: center;
         }
+
+        /* Animierte Blitze am Rand */
+        @keyframes lightning {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .lightning {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .lightning div {
+            position: absolute;
+            width: 10px;
+            height: 100%;
+            background: linear-gradient(45deg, #00aaff, #ffffff);
+            opacity: 0;
+            animation: lightning 1s infinite;
+        }
+
+        .lightning div:nth-child(1) {
+            left: 10%;
+            animation-delay: 0.3s;
+        }
+
+        .lightning div:nth-child(2) {
+            left: 30%;
+            animation-delay: 0.5s;
+        }
+
+        .lightning div:nth-child(3) {
+            left: 50%;
+            animation-delay: 0.7s;
+        }
+
+        .lightning div:nth-child(4) {
+            left: 70%;
+            animation-delay: 0.9s;
+        }
+
+        .lightning div:nth-child(5) {
+            left: 90%;
+            animation-delay: 1s;
+        }
+
     </style>
 </head>
 <body>
+
+    <!-- Blitze am Rand -->
+    <div class="lightning">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
     <div class="container">
         <header>
             <h1>Willkommen auf meiner Download-Seite</h1>
-            <p>Hier kannst du die Dateien herunterladen!</p>
+            <p>Hol dir die neuesten Dateien!</p>
         </header>
         <main>
-            <div class="download-link">
-                <a href="DEIN-DATEINAME" download>Download Datei</a>
+            <div class="panel">
+                <h2>Download Deine Datei</h2>
+                <p>Klicke auf den Button, um die Datei herunterzuladen.</p>
+                <div class="download-link">
+                    <a href="DEIN-DATEINAME" download>Download Datei</a>
+                </div>
             </div>
         </main>
         <footer>
             <p>&copy; 2025 Dein Name | Alle Rechte vorbehalten</p>
         </footer>
     </div>
+
 </body>
 </html>
+
