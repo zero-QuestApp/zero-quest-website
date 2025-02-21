@@ -23,7 +23,8 @@
             min-height: 100vh;
             overflow: auto; /* Scrollen ermöglichen */
             padding: 20px;
-            position: relative; /* Wichtig, damit die Streifen im Hintergrund bleiben */
+            position: relative;
+            animation: fadeInBackground 1s ease-in-out;
         }
 
         /* Header */
@@ -36,6 +37,7 @@
             margin-bottom: 30px;
             width: 100%;
             max-width: 1200px;
+            animation: fadeInHeader 1s ease-in-out;
         }
 
         header h1 {
@@ -64,6 +66,7 @@
             text-align: center;
             position: relative;
             z-index: 10; /* Damit der Inhalt immer vor den Streifen angezeigt wird */
+            animation: fadeInPanel 1s ease-in-out;
         }
 
         .panel h2 {
@@ -90,6 +93,7 @@
             box-shadow: 0 0 20px rgba(0, 170, 255, 0.6);
             transition: background 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
             opacity: 0.7; /* Sichtbarkeit des Download-Links reduziert */
+            animation: glowEffect 2s ease-in-out infinite alternate;
         }
 
         .download-link a:hover {
@@ -99,42 +103,49 @@
             opacity: 0.8;
         }
 
-        /* Glänzende Streifen im Hintergrund */
-        .shine-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 30px; /* Abstand zwischen den Linien */
-            z-index: 1; /* Damit der Effekt immer im Hintergrund bleibt */
+        /* Coole Glüheffekte */
+        @keyframes glowEffect {
+            0% {
+                box-shadow: 0 0 10px rgba(0, 170, 255, 0.6), 0 0 30px rgba(0, 170, 255, 0.8);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(0, 170, 255, 0.8), 0 0 40px rgba(0, 170, 255, 1);
+            }
+            100% {
+                box-shadow: 0 0 30px rgba(0, 170, 255, 0.6), 0 0 60px rgba(0, 170, 255, 0.9);
+            }
         }
 
-        .shine-background .shine-line {
-            content: "";
-            position: absolute;
-            background: linear-gradient(45deg, rgba(255, 255, 255, 0.2), transparent, rgba(255, 255, 255, 0.2)); /* Dünnerer silberner Effekt */
-            height: 25px; /* Dünnerer Balken */
-            width: 200%; /* Breiterer Balken */
-            opacity: 0.7; /* Sichtbarkeit auf 70% */
-            transform: rotate(45deg); /* 45 Grad Winkel */
+        /* Fade-In-Animationen */
+        @keyframes fadeInBackground {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
         }
 
-        .shine-background .shine-line:nth-child(1) {
-            top: 10%;
-            left: 0;
+        @keyframes fadeInHeader {
+            0% {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
-        .shine-background .shine-line:nth-child(2) {
-            top: 50%;
-            left: 0;
-        }
-
-        .shine-background .shine-line:nth-child(3) {
-            top: 90%;
-            left: 0;
+        @keyframes fadeInPanel {
+            0% {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         /* Bilder-Galerie */
@@ -145,6 +156,7 @@
             width: 100%;
             max-width: 1200px;
             margin-top: 40px;
+            animation: fadeInImages 1s ease-in-out;
         }
 
         .images img {
@@ -157,6 +169,15 @@
         .images img:hover {
             transform: scale(1.05);
             box-shadow: 0 0 20px rgba(0, 170, 255, 0.8);
+        }
+
+        @keyframes fadeInImages {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
         }
 
         /* Footer */
@@ -186,13 +207,6 @@
         <div class="download-link">
             <a href="https://www.dropbox.com/scl/fi/lxhfyucgfgov611emelo3/2025-01-03-20-15-00_OSKnHG3p.mp4?rlkey=6ayahrba5tgubxgxhqv4kln0b&st=p9skzizd&dl=0">Jetzt herunterladen</a>
         </div>
-    </div>
-
-    <!-- Glänzende Streifen im Hintergrund -->
-    <div class="shine-background">
-        <div class="shine-line"></div>
-        <div class="shine-line"></div>
-        <div class="shine-line"></div>
     </div>
 
     <!-- Bilder-Galerie -->
