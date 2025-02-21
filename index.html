@@ -105,9 +105,36 @@
             left: 0;
             height: 100%;
             width: 100%;
-            background: linear-gradient(45deg, rgba(255, 255, 255, 0.2), transparent, rgba(255, 255, 255, 0.2)); /* Dünnerer, subtiler silberner Effekt */
-            animation: shineBackground 30s infinite linear; /* Sehr langsamer Glanz-Effekt */
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Abstand zwischen den Linien */
             z-index: 1; /* Damit der Effekt immer im Hintergrund bleibt */
+        }
+
+        .shine-background::before,
+        .shine-background::after,
+        .shine-background .shine-line {
+            content: "";
+            position: absolute;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.2), transparent, rgba(255, 255, 255, 0.2)); /* Dünnerer silberner Effekt */
+            animation: shineBackground 30s infinite linear; /* Sehr langsamer Glanz-Effekt */
+            height: 4px; /* Dünner als zuvor */
+            width: 200%; /* Breiterer Balken */
+        }
+
+        .shine-background::before {
+            top: 10%;
+            left: 0;
+        }
+
+        .shine-background::after {
+            top: 40%;
+            left: 0;
+        }
+
+        .shine-background .shine-line {
+            top: 70%;
+            left: 0;
         }
 
         /* Glänzender Effekt von unten links nach oben rechts */
@@ -192,4 +219,6 @@
 
 </body>
 </html>
+
+
 
