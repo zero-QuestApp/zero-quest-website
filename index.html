@@ -103,22 +103,55 @@
         }
 
         /* Animation für glänzenden Silber-Effekt */
-        .shine {
+        .shine-background {
             position: absolute;
             top: 0;
-            left: -100%;
+            left: 0;
             height: 100%;
             width: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            animation: shine 5s infinite;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shineBackground 6s infinite;
         }
 
-        @keyframes shine {
-            0% { left: -100%; }
-            25% { left: 0; top: 0; }
-            50% { left: 100%; top: 0; }
-            75% { left: 0; top: 0; }
-            100% { left: -100%; }
+        @keyframes shineBackground {
+            0% {
+                left: -100%;
+                top: 100%;
+            }
+            50% {
+                left: 100%;
+                top: -100%;
+            }
+            100% {
+                left: -100%;
+                top: 100%;
+            }
+        }
+
+        /* Animation für glänzenden Effekt beim Button */
+        .shine-button {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shineButton 8s infinite;
+        }
+
+        @keyframes shineButton {
+            0% {
+                left: -100%;
+                top: 100%;
+            }
+            50% {
+                left: 100%;
+                top: 0;
+            }
+            100% {
+                left: -100%;
+                top: 100%;
+            }
         }
 
         /* Bilder-Galerie */
@@ -165,11 +198,12 @@
 
     <!-- Panel mit Download-Link -->
     <div class="panel">
-        <div class="shine"></div> <!-- Glänzender Effekt -->
+        <div class="shine-background"></div> <!-- Glänzender Effekt für Hintergrund -->
         <h2>Download die Datei</h2>
         <p>Klicke auf den Button, um die Datei herunterzuladen:</p>
         <div class="download-link">
             <a href="DEIN-DATEINAME" download>Download Datei</a>
+            <div class="shine-button"></div> <!-- Glänzender Effekt für Button -->
         </div>
     </div>
 
