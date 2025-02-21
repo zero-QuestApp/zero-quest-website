@@ -63,13 +63,7 @@
             width: 100%;
             text-align: center;
             position: relative;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
             z-index: 10; /* Damit der Inhalt immer vor den Streifen angezeigt wird */
-        }
-
-        .panel:hover {
-            transform: scale(1.05);
-            box-shadow: 0 20px 70px rgba(0, 170, 255, 0.6);
         }
 
         .panel h2 {
@@ -104,19 +98,19 @@
             opacity: 0.8;
         }
 
-        /* Animation für glänzenden Silber-Effekt beim Hintergrund */
+        /* Animation für glänzenden Silber-Effekt */
         .shine-background {
             position: absolute;
             top: 0;
             left: 0;
             height: 100%;
             width: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            animation: shineBackground 6s infinite linear;
-            z-index: 1; /* Damit die Streifen hinter dem Inhalt bleiben */
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.3), transparent, rgba(255, 255, 255, 0.3)); /* Subtiler silberner Effekt */
+            animation: shineBackground 8s infinite linear; /* Langsame Animation */
+            z-index: 1; /* Damit der Effekt immer im Hintergrund bleibt */
         }
 
-        /* Glänzender Effekt: von unten links nach oben rechts */
+        /* Glänzender Effekt von unten links nach oben rechts */
         @keyframes shineBackground {
             0% {
                 left: -100%;
