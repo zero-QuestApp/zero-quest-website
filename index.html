@@ -11,34 +11,34 @@
             box-sizing: border-box;
         }
 
-        /* Hintergrund und allgemeine Gestaltung */
+        /* Hintergrundgestaltung */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #121212; /* Dunkles Schwarz für den Hintergrund */
+            background-color: #121212; /* Sehr dunkles Grau-Schwarz */
             color: #e0e0e0;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            text-align: center;
             overflow: hidden;
             position: relative;
         }
 
-        /* Header Gestaltung */
+        /* Header */
         header {
             padding: 30px;
-            background: rgba(0, 0, 0, 0.7); /* Semi-transparenter schwarzer Hintergrund */
-            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
             margin-bottom: 40px;
+            text-align: center;
         }
 
         header h1 {
-            font-size: 3.5rem;
-            color: #00aaff; /* Leuchtendes Blau */
-            text-shadow: 0 0 20px #00aaff, 0 0 40px #00aaff;
+            font-size: 4rem;
+            color: #00aaff; /* Helles Blau */
+            text-shadow: 0 0 15px #00aaff, 0 0 30px #00aaff;
             margin-bottom: 10px;
         }
 
@@ -47,12 +47,12 @@
             color: #aaa;
         }
 
-        /* Panels gestalten */
+        /* Panel-Design */
         .panel {
             background: rgba(0, 0, 0, 0.8);
             padding: 50px;
             border-radius: 20px;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
             max-width: 600px;
             width: 100%;
             text-align: center;
@@ -60,8 +60,8 @@
         }
 
         .panel:hover {
-            transform: translateY(-10px); /* Hover-Effekt */
-            box-shadow: 0 0 60px rgba(0, 0, 0, 0.9);
+            transform: translateY(-10px);
+            box-shadow: 0 0 40px rgba(0, 170, 255, 0.8);
         }
 
         .panel h2 {
@@ -73,13 +73,13 @@
 
         .panel p {
             font-size: 1.3rem;
-            color: #aaa;
+            color: #bbb;
             margin-bottom: 30px;
         }
 
         .download-link a {
             font-size: 1.8rem;
-            color: #00aaff;
+            color: #121212;
             text-decoration: none;
             padding: 15px 30px;
             background: linear-gradient(45deg, #00aaff, #0066cc);
@@ -94,70 +94,51 @@
             transform: scale(1.1);
         }
 
+        /* Footer */
         footer {
             position: absolute;
             bottom: 20px;
             width: 100%;
-            color: #aaa;
+            color: #bbb;
             font-size: 1rem;
             text-align: center;
         }
 
-        /* Eleganter Lichteffekt um den Rand */
-        .glow-border {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-            z-index: -1;
-            background: linear-gradient(45deg, rgba(0, 170, 255, 0.6), rgba(0, 170, 255, 0.2));
-            animation: glow 3s ease-in-out infinite;
+        /* Subtile Animation für die Schaltflächen */
+        @keyframes glowing {
+            0% { box-shadow: 0 0 5px #00aaff, 0 0 10px #00aaff; }
+            50% { box-shadow: 0 0 20px #00aaff, 0 0 30px #00aaff; }
+            100% { box-shadow: 0 0 5px #00aaff, 0 0 10px #00aaff; }
         }
 
-        @keyframes glow {
-            0% {
-                opacity: 0.2;
-            }
-            50% {
-                opacity: 0.7;
-            }
-            100% {
-                opacity: 0.2;
-            }
+        /* Glühen beim Hover über die Schaltfläche */
+        .download-link a {
+            animation: glowing 1.5s infinite alternate;
         }
 
     </style>
 </head>
 <body>
 
-    <!-- Eleganter Lichteffekt um den Rand -->
-    <div class="glow-border"></div>
-
-    <div class="container">
-        <!-- Header -->
-        <header>
-            <h1>Willkommen auf der exklusiven Download-Seite</h1>
-            <p>Erhalte die neuesten Dateien jetzt!</p>
-        </header>
-        
-        <!-- Panel für Download -->
-        <main>
-            <div class="panel">
-                <h2>Download Deine Datei</h2>
-                <p>Klicke auf den Button, um die Datei herunterzuladen.</p>
-                <div class="download-link">
-                    <a href="DEIN-DATEINAME" download>Download Datei</a>
-                </div>
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer>
-            <p>&copy; 2025 Dein Name | Alle Rechte vorbehalten</p>
-        </footer>
+    <!-- Header Bereich -->
+    <header>
+        <h1>Willkommen auf der Download-Seite</h1>
+        <p>Hole dir die neuesten Dateien und Updates!</p>
+    </header>
+    
+    <!-- Panel für die Download-Option -->
+    <div class="panel">
+        <h2>Download Deine Datei</h2>
+        <p>Drücke den Button, um die Datei herunterzuladen.</p>
+        <div class="download-link">
+            <a href="DEIN-DATEINAME" download>Download Datei</a>
+        </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Dein Name | Alle Rechte vorbehalten</p>
+    </footer>
 
 </body>
 </html>
