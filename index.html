@@ -4,13 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zero Quest - Download</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
 
   <style>
     * {
@@ -19,81 +15,622 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --main-color: #0ff;
+      --secondary-color: #ff0080;
+      --bg-color: #000;
+    }
+
+    @keyframes textShadow {
+      0% {
+        text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+      }
+      5% {
+        text-shadow: 2.7928974010788217px 0 1px rgba(0,30,255,0.5), -2.7928974010788217px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+      }
+      /* ... mehr zufällige Textschatten für den Glitch-Effekt ... */
+      100% {
+        text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+      }
+    }
+
+    @keyframes flicker {
+      0% { opacity: 0.87; }
+      5% { opacity: 0.95; }
+      10% { opacity: 0.9; }
+      15% { opacity: 0.85; }
+      20% { opacity: 0.95; }
+      25% { opacity: 0.85; }
+      30% { opacity: 0.9; }
+      35% { opacity: 0.95; }
+      40% { opacity: 0.85; }
+      45% { opacity: 0.9; }
+      50% { opacity: 0.95; }
+      55% { opacity: 0.85; }
+      60% { opacity: 0.9; }
+      65% { opacity: 0.95; }
+      70% { opacity: 0.9; }
+      75% { opacity: 0.85; }
+      80% { opacity: 0.9; }
+      85% { opacity: 0.95; }
+      90% { opacity: 0.85; }
+      95% { opacity: 0.9; }
+      100% { opacity: 0.95; }
+    }
+
     body {
-      background: linear-gradient(135deg, #c0c0c0, #808080);
-      color: #fff;
-      font-family: 'Audiowide', sans-serif;
+      background: var(--bg-color);
+      color: var(--main-color);
+      font-family: 'VT323', monospace;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      animation: textShadow 1.6s infinite;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* CRT Effect */
+    body::before {
+      content: "";
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: 
+        linear-gradient(
+          transparent 50%, 
+          rgba(0, 0, 0, 0.5) 50%
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255, 0, 0, 0.06),
+          rgba(0, 255, 0, 0.02),
+          rgba(0, 0, 255, 0.06)
+        );
+      background-size: 100% 4px, 3px 100%;
+      pointer-events: none;
+      z-index: 999;
+      animation: scanlines 0.5s linear infinite;
+    }
+
+    /* Horizontale Linien */
+    .horizontal-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 1px,
+        rgba(0, 255, 255, 0.05) 2px,
+        rgba(0, 255, 255, 0.05) 3px
+      );
+      pointer-events: none;
+      z-index: 998;
+    }
+
+    /* Vertikale Linien */
+    .vertical-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 5px,
+        rgba(0, 255, 255, 0.02) 6px,
+        rgba(0, 255, 255, 0.02) 10px
+      );
+      pointer-events: none;
+      z-index: 997;
+    }
+
+    /* Glitch Linien */
+    .glitch-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    @keyframes scanlines {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 0 4px;
+      }
+    }
+
+    /* Neue Animation für Glitch-Effekt */
+    @keyframes glitch {
+      0% {
+        clip-path: none;
+        transform: none;
+        opacity: 0;
+      }
+      2% {
+        clip-path: polygon(0 20%, 100% 20%, 100% 21%, 0 21%);
+        transform: translate3d(-3px, 0, 0);
+        opacity: 1;
+      }
+      4% {
+        clip-path: none;
+        transform: none;
+        opacity: 0;
+      }
+      100% {
+        clip-path: none;
+        transform: none;
+        opacity: 0;
+      }
+    }
+
+    /* Zusätzliche Styles für bessere Lesbarkeit mit den Linien */
+    .content {
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 0 5px var(--main-color);
+    }
+
+    .hologram-container,
+    .gallery-section,
+    .comment-section {
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(1px);
+    }
+
+    /* Flicker Effect */
+    body::after {
+      content: " ";
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: rgba(18, 16, 16, 0.1);
+      opacity: 0;
+      z-index: 2;
+      pointer-events: none;
+      animation: flicker 0.15s infinite;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      padding: 20px;
+    }
+
+    header {
       text-align: center;
-      animation: fadeInBackground 1s ease-in-out;
+      margin: 40px 0;
     }
 
-    @keyframes fadeInBackground {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
+    header h1 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 2.5rem;
+      color: var(--main-color);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      line-height: 1.4;
+      text-shadow: 4px 4px var(--secondary-color);
     }
 
-    h1 {
-      font-size: 2rem;
-      color: #00ffff;
-      text-shadow: 0 0 8px #00ffff;
+    header p {
+      font-size: 1.5rem;
+      color: var(--main-color);
     }
 
-    p {
-      font-size: 1.1rem;
-      color: #eee;
+    .hologram-container {
+      width: 90%;
+      max-width: 800px;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    .content-wrapper {
+      position: relative;
+      border: 2px solid var(--main-color);
+      padding: 4px;
+      background: rgba(0, 255, 255, 0.1);
+    }
+
+    .hologram-frame {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .content-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      text-align: center;
+    }
+
+    .content-overlay h2 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.5rem;
+      color: var(--main-color);
+      margin-bottom: 15px;
+    }
+
+    .content-overlay p {
+      font-size: 1.2rem;
       margin-bottom: 20px;
     }
 
-    .download-link a {
+    .download-button {
+      font-family: 'Press Start 2P', cursive;
       display: inline-block;
       padding: 15px 30px;
-      background: #00ffff;
-      color: #000;
+      background: transparent;
+      color: var(--main-color);
       text-decoration: none;
+      font-size: 1rem;
+      border: 2px solid var(--main-color);
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .download-button:hover {
+      background: var(--main-color);
+      color: var(--bg-color);
+      text-shadow: none;
+    }
+
+    .gallery-section {
+      width: 90%;
+      max-width: 1200px;
+      margin: 40px auto;
+      border: 2px solid var(--main-color);
+      padding: 20px;
+      background: rgba(0, 255, 255, 0.05);
+    }
+
+    .gallery-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--main-color);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-item {
+      border: 2px solid var(--main-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      filter: grayscale(0.5) sepia(0.3) hue-rotate(160deg);
+    }
+
+    .comment-section {
+      width: 90%;
+      max-width: 800px;
+      margin: 40px auto;
+      border: 2px solid var(--main-color);
+      padding: 20px;
+      background: rgba(0, 255, 255, 0.05);
+    }
+
+    .comments-list {
+      margin: 20px 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .comment-item {
+      border: 1px solid var(--main-color);
+      margin-bottom: 15px;
+      padding: 15px;
+      background: rgba(0, 255, 255, 0.05);
+    }
+
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+    }
+
+    .comment-content {
       font-size: 1.1rem;
-      font-weight: bold;
-      box-shadow: 0 0 10px #00ffff;
-      transition: 0.3s ease;
     }
 
-    .download-link a:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #00ffff;
+    .rating-container {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+      justify-content: center;
     }
 
-    .image-container {
-      margin-top: 30px;
+    .rating-star {
+      font-size: 24px;
+      cursor: pointer;
+      color: rgba(0, 255, 255, 0.3);
+      transition: color 0.3s;
     }
 
-    .image-container img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    .rating-star.active {
+      color: var(--main-color);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--main-color);
+      font-size: 1.1rem;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 10px;
+      background: rgba(0, 255, 255, 0.1);
+      border: 2px solid var(--main-color);
+      color: var(--main-color);
+      font-family: 'VT323', monospace;
+      font-size: 1.1rem;
+    }
+
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .submit-button {
+      font-family: 'Press Start 2P', cursive;
+      padding: 10px 20px;
+      background: transparent;
+      color: var(--main-color);
+      border: 2px solid var(--main-color);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+
+    .submit-button:hover {
+      background: var(--main-color);
+      color: var(--bg-color);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--main-color);
+      font-size: 1rem;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
     }
   </style>
 </head>
 <body>
+  <div class="horizontal-lines"></div>
+  <div class="vertical-lines"></div>
+  <div class="glitch-lines"></div>
+  <div class="content">
+    <header>
+      <h1>Zero Quest</h1>
+      <p>Dein Portal in eine neue Dimension</p>
+    </header>
 
-  <h1>Zero Quest</h1>
-  <p>Dein Portal in eine neue Dimension</p>
+    <div class="hologram-container">
+      <div class="content-wrapper">
+        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20(14)-8gNRNzWYgZDauzpEX2nxR8SqsGFdbV.png" alt="Holographic Frame" class="hologram-frame">
+        <div class="content-overlay">
+          <h2>[System]</h2>
+          <p>Neue Datei verfügbar!</p>
+          <a href="https://www.dropbox.com/scl/fi/lxhfyucgfgov611emelo3/2025-01-03-20-15-00_OSKnHG3p.mp4?rlkey=6ayahrba5tgubxgxhqv4kln0b&st=p9skzizd&dl=0" class="download-button">
+            Download
+          </a>
+        </div>
+      </div>
+    </div>
 
-  <p><strong>[System]</strong><br>Neue Datei verfügbar!</p>
-  
-  <div class="download-link">
-    <a href="https://www.dropbox.com/scl/fi/lxhfyucgfgov611emelo3/2025-01-03-20-15-00_OSKnHG3p.mp4?rlkey=6ayahrba5tgubxgxhqv4kln0b&st=p9skzizd&dl=0">
-      Zero Quest herunterladen
-    </a>
+    <section class="gallery-section">
+      <h2 class="gallery-title">Galerie</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="https://via.placeholder.com/300x200/000000/00ffff?text=ZERO+QUEST" alt="Screenshot 1">
+        </div>
+        <div class="gallery-item">
+          <img src="https://via.placeholder.com/300x200/000000/00ffff?text=ZERO+QUEST" alt="Screenshot 2">
+        </div>
+        <div class="gallery-item">
+          <img src="https://via.placeholder.com/300x200/000000/00ffff?text=ZERO+QUEST" alt="Screenshot 3">
+        </div>
+        <div class="gallery-item">
+          <img src="https://via.placeholder.com/300x200/000000/00ffff?text=ZERO+QUEST" alt="Screenshot 4">
+        </div>
+      </div>
+    </section>
+
+    <section class="comment-section">
+      <h2 class="gallery-title">Feedback</h2>
+      
+      <div class="rating-container">
+        <span class="rating-star" data-rating="1">★</span>
+        <span class="rating-star" data-rating="2">★</span>
+        <span class="rating-star" data-rating="3">★</span>
+        <span class="rating-star" data-rating="4">★</span>
+        <span class="rating-star" data-rating="5">★</span>
+      </div>
+
+      <form id="comment-form" class="comment-form">
+        <div class="form-group">
+          <label class="form-label" for="name">Name:</label>
+          <input type="text" id="name" class="form-input" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="comment">Kommentar:</label>
+          <textarea id="comment" class="form-textarea" required></textarea>
+        </div>
+        
+        <button type="submit" class="submit-button">Absenden</button>
+      </form>
+
+      <div class="comments-list" id="comments-list">
+        <!-- Kommentare werden hier dynamisch eingefügt -->
+      </div>
+    </section>
+
+    <footer>
+      &copy; 2025 Zero Quest. Alle Rechte vorbehalten.
+    </footer>
   </div>
 
-  <div class="image-container">
-    <img src="dein-bild.jpg" alt="Zero Quest Bild">
-  </div>
+  <script>
+    // Kommentare im localStorage speichern und laden
+    let comments = JSON.parse(localStorage.getItem('comments')) || [];
+    let currentRating = parseInt(localStorage.getItem('rating')) || 0;
 
+    // Rating System
+    const stars = document.querySelectorAll('.rating-star');
+    
+    // Initiales Rating setzen
+    function updateStars(rating) {
+      stars.forEach((star, index) => {
+        if (index < rating) {
+          star.classList.add('active');
+        } else {
+          star.classList.remove('active');
+        }
+      });
+    }
+
+    updateStars(currentRating);
+
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        const rating = parseInt(star.dataset.rating);
+        currentRating = rating;
+        localStorage.setItem('rating', rating);
+        updateStars(rating);
+      });
+    });
+
+    // Kommentare anzeigen
+    function displayComments() {
+      const commentsList = document.getElementById('comments-list');
+      commentsList.innerHTML = comments.map(comment => `
+        <div class="comment-item">
+          <div class="comment-header">
+            <span>${comment.name}</span>
+            <span>${new Date(comment.date).toLocaleDateString()}</span>
+          </div>
+          <div class="comment-content">${comment.text}</div>
+        </div>
+      `).join('');
+    }
+
+    // Formular-Handler
+    document.getElementById('comment-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const text = document.getElementById('comment').value;
+      
+      const newComment = {
+        name,
+        text,
+        date: new Date().toISOString()
+      };
+      
+      comments.unshift(newComment); // Neuen Kommentar am Anfang einfügen
+      localStorage.setItem('comments', JSON.stringify(comments));
+      
+      // Formular zurücksetzen
+      e.target.reset();
+      
+      // Kommentare neu anzeigen
+      displayComments();
+    });
+
+    // Initiale Anzeige der Kommentare
+    displayComments();
+
+    // CRT Flicker Effect
+    function addRandomFlicker() {
+      const content = document.querySelector('.content');
+      setInterval(() => {
+        if (Math.random() > 0.97) {
+          content.style.opacity = '0.8';
+          setTimeout(() => {
+            content.style.opacity = '1';
+          }, 50);
+        }
+      }, 100);
+    }
+
+    addRandomFlicker();
+
+    // Glitch-Linien-Effekt
+    function createGlitchLine() {
+      const glitchContainer = document.querySelector('.glitch-lines');
+      const line = document.createElement('div');
+      
+      line.style.position = 'absolute';
+      line.style.top = Math.random() * 100 + '%';
+      line.style.left = '0';
+      line.style.right = '0';
+      line.style.height = '2px';
+      line.style.background = `rgba(0, 255, 255, ${Math.random() * 0.5})`;
+      line.style.animation = 'glitch 0.5s linear forwards';
+      
+      glitchContainer.appendChild(line);
+      
+      // Entferne die Linie nach der Animation
+      setTimeout(() => {
+        line.remove();
+      }, 500);
+    }
+
+    // Zufällige Glitch-Linien erzeugen
+    setInterval(() => {
+      if (Math.random() > 0.7) {
+        createGlitchLine();
+      }
+    }, 200);
+
+  </script>
 </body>
 </html>
