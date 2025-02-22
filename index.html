@@ -5,298 +5,178 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zero Quest - Download</title>
   <style>
+    /* GLOBAL STYLES */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
-    /* Gesamtes Seiten-Layout */
     body {
+      background: #000;  /* Reines Schwarz, wie im UI-Screenshot */
+      color: #fff;
       font-family: 'Arial', sans-serif;
-      background: linear-gradient(45deg, #0e0e0e, #3a3a3a); /* Dunklere Basis für futuristischen Look */
-      color: #e0e0e0;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-      position: relative;
-      overflow: auto;
+      /* Einfacher Fade-In-Effekt */
       animation: fadeInBackground 1s ease-in-out;
     }
-
-    /* Futuristischer, leuchtender Rahmen am Seitenrand */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      right: 10px;
-      bottom: 10px;
-      border: 2px dashed rgba(0, 170, 255, 0.8);
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 170, 255, 0.8);
-      pointer-events: none;
-      z-index: 999;
-      animation: borderGlow 3s ease-in-out infinite;
+    @keyframes fadeInBackground {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
     }
 
-    @keyframes borderGlow {
-      0% {
-        box-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
-      }
-      50% {
-        box-shadow: 0 0 20px rgba(0, 170, 255, 1);
-      }
-      100% {
-        box-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
-      }
-    }
-
-    /* Header */
+    /* HEADER */
     header {
-      background: rgba(0, 0, 0, 0.8);
-      padding: 30px 60px;
       text-align: center;
-      border-radius: 10px;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
-      margin-bottom: 40px;
-      width: 100%;
-      max-width: 1200px;
-      animation: fadeInHeader 1s ease-in-out;
+      margin: 40px 0 20px;
     }
-
     header h1 {
-      font-size: 3.5rem;
-      color: #00aaff;
+      font-size: 3rem;
+      color: #00ffff;
       text-transform: uppercase;
-      letter-spacing: 2px;
+      text-shadow: 0 0 10px #00ffff;
       margin-bottom: 10px;
-      text-shadow: 0 0 10px #00aaff, 0 0 30px #00aaff;
     }
-
     header p {
-      font-size: 1.4rem;
-      color: #bbb;
-      margin-bottom: 10px;
+      font-size: 1.2rem;
+      color: #ccc;
     }
 
-    /* Panel: futuristisches „Notification“-Design */
+    /* FUTURISTISCHES PANEL */
     .panel {
       position: relative;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 50px 70px;
-      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7);
-      max-width: 1000px;
-      width: 100%;
+      width: 90%;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 40px;
       text-align: center;
-      z-index: 10;
-      animation: fadeInPanel 1s ease-in-out;
-      overflow: hidden; /* Für den Clip-Path-Effekt */
-    }
 
-    /* Abgeschrägte Ecken + leuchtender Rahmen */
-    .panel::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      /* "Zerbrochenes Glas" als Hintergrund + schwarzer Overlay */
+      background: 
+        url("https://i.ibb.co/fp1n8Wr/cracked-glass.png") center/cover no-repeat,
+        rgba(0,0,0,0.85);
+
+      /* Leuchtender Rand und Schein */
+      border: 2px solid #00ffff;
+      box-shadow:
+        0 0 15px #00ffff,      /* Äußerer Schein */
+        inset 0 0 10px #00ffff;/* Innerer Schein */
+
+      /* Ecken abschrägen */
       clip-path: polygon(
-         8% 0%, 92% 0%,   /* Obere abgeschrägte Ecken */
-         100% 8%, 100% 92%, /* Rechte Seite */
-         92% 100%, 8% 100%, /* Untere abgeschrägte Ecken */
-         0% 92%, 0% 8%      /* Linke Seite */
+        4% 0%, 96% 0%,
+        100% 4%, 100% 96%,
+        96% 100%, 4% 100%,
+        0% 96%, 0% 4%
       );
-      border: 2px solid #00aaff;
-      box-shadow: 0 0 20px #00aaff;
-      pointer-events: none;
-      z-index: 1;
+      overflow: hidden;
     }
 
-    /* Inhalt über dem ::before-Element */
-    .panel > * {
-      position: relative;
-      z-index: 2;
-    }
-
+    /* PANEL HEADLINE */
     .panel h2 {
-      font-size: 2.4rem;
-      color: #00aaff;
+      font-size: 1.8rem;
+      color: #00ffff;
       margin-bottom: 20px;
-      text-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff;
+      text-shadow: 0 0 8px #00ffff;
     }
 
+    /* PANEL TEXT */
     .panel p {
-      font-size: 1.2rem;
-      color: #bbb;
-      margin-bottom: 25px;
+      font-size: 1.1rem;
+      color: #eee;
+      margin-bottom: 30px;
+      line-height: 1.4;
     }
 
-    /* Buttons (Yes / No) */
+    /* BUTTON-ROW (Yes / No) */
     .btn-row {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
       margin-bottom: 30px;
     }
-
     .btn-row a {
-      font-size: 1.4rem;
-      color: #121212;
+      display: inline-block;
+      margin: 0 10px;
+      padding: 10px 20px;
+      border: 2px solid #00ffff;
+      color: #00ffff;
       text-decoration: none;
-      padding: 10px 30px;
-      background: linear-gradient(45deg, #00aaff, #0066cc);
-      border-radius: 8px;
-      box-shadow: 0 0 20px rgba(0, 170, 255, 0.6);
+      font-size: 1rem;
       transition: 0.3s ease;
-      opacity: 0.85;
     }
-
     .btn-row a:hover {
-      transform: scale(1.05);
-      opacity: 1;
+      background: #00ffff;
+      color: #000;
+      box-shadow: 0 0 10px #00ffff;
     }
 
-    /* Download-Link (Extra großer Button) */
+    /* DOWNLOAD-BUTTON */
     .download-link a {
       display: inline-block;
       margin-top: 10px;
-      font-size: 1.6rem;
-      color: #121212;
+      padding: 15px 30px;
+      background: #00ffff;
+      color: #000;
       text-decoration: none;
-      padding: 15px 40px;
-      background: linear-gradient(45deg, #00aaff, #0066cc);
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0, 170, 255, 0.6);
-      transition: background 0.3s ease, transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
-      opacity: 0.8;
-      animation: glowEffect 2s ease-in-out infinite alternate;
+      font-size: 1.1rem;
+      font-weight: bold;
+      box-shadow: 0 0 10px #00ffff;
+      transition: 0.3s ease;
     }
-
     .download-link a:hover {
-      background: #00aaff;
-      color: #121212;
       transform: scale(1.05);
-      opacity: 1;
+      box-shadow: 0 0 20px #00ffff;
     }
 
-    .download-link a:focus {
-      outline: none;
-      box-shadow: 0 0 15px rgba(0, 170, 255, 1);
-    }
-
-    /* Glüheffekte */
-    @keyframes glowEffect {
-      0% {
-        box-shadow: 0 0 10px rgba(0, 170, 255, 0.6), 0 0 30px rgba(0, 170, 255, 0.8);
-      }
-      50% {
-        box-shadow: 0 0 20px rgba(0, 170, 255, 0.8), 0 0 40px rgba(0, 170, 255, 1);
-      }
-      100% {
-        box-shadow: 0 0 30px rgba(0, 170, 255, 0.6), 0 0 60px rgba(0, 170, 255, 0.9);
-      }
-    }
-
-    /* Fade-In-Animationen */
-    @keyframes fadeInBackground {
-      0% {
-        opacity: 0;
-      }
-      100% {
-        opacity: 1;
-      }
-    }
-
-    @keyframes fadeInHeader {
-      0% {
-        transform: translateY(-20px);
-        opacity: 0;
-      }
-      100% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    @keyframes fadeInPanel {
-      0% {
-        transform: scale(0.9);
-        opacity: 0;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-
-    /* Bilder-Galerie */
+    /* BILDER-GALERIE */
     .images {
+      width: 90%;
+      max-width: 1000px;
+      margin: 40px auto;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 25px;
-      width: 100%;
-      max-width: 1200px;
-      margin-top: 50px;
-      animation: fadeInImages 1s ease-in-out;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
     }
-
     .images img {
       width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0, 170, 255, 0.6);
+      border-radius: 8px;
+      box-shadow: 0 0 10px #00ffff;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
     .images img:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(0, 170, 255, 0.8);
+      box-shadow: 0 0 20px #00ffff;
     }
 
-    @keyframes fadeInImages {
-      0% {
-        opacity: 0;
-      }
-      100% {
-        opacity: 1;
-      }
-    }
-
-    /* Footer */
+    /* FOOTER */
     footer {
-      color: #aaa;
-      font-size: 1.2rem;
       text-align: center;
-      margin-top: 50px;
-      position: relative;
-      z-index: 10;
+      color: #888;
+      font-size: 0.9rem;
+      margin: 40px 0 20px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- HEADER -->
   <header>
     <h1>Zero Quest</h1>
     <p>Dein Portal in eine neue Dimension</p>
-    <p>(Hier kannst du die neueste Version herunterladen!)</p>
   </header>
 
-  <!-- Panel mit futuristischem "Notification"-Look -->
+  <!-- FUTURISTISCHES "NOTIFICATION"-PANEL -->
   <div class="panel">
     <h2>NOTIFICATION</h2>
-    <p>You have received a reward!<br>[Penalty Quest: Survival]<br>Check your reward?</p>
-
-    <!-- Ja / Nein Buttons -->
+    <p>
+      You have received a reward!<br>
+      [Penalty Quest: Survival]<br>
+      Check your reward?
+    </p>
     <div class="btn-row">
       <a href="#">Yes</a>
       <a href="#">No</a>
     </div>
-
-    <!-- Download-Link -->
     <div class="download-link">
       <a href="https://www.dropbox.com/scl/fi/lxhfyucgfgov611emelo3/2025-01-03-20-15-00_OSKnHG3p.mp4?rlkey=6ayahrba5tgubxgxhqv4kln0b&st=p9skzizd&dl=0">
         Zero Quest herunterladen
@@ -304,7 +184,7 @@
     </div>
   </div>
 
-  <!-- Bilder-Galerie -->
+  <!-- BILDER-GALERIE -->
   <div class="images">
     <img src="https://via.placeholder.com/300x200" alt="Bild 1">
     <img src="https://via.placeholder.com/300x200" alt="Bild 2">
@@ -312,10 +192,11 @@
     <img src="https://via.placeholder.com/300x200" alt="Bild 4">
   </div>
 
-  <!-- Footer -->
+  <!-- FOOTER -->
   <footer>
     &copy; 2025 Zero Quest. Alle Rechte vorbehalten.
   </footer>
 
 </body>
 </html>
+
