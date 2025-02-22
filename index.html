@@ -1,703 +1,636 @@
-"use client"
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zero Quest - Download</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
 
-import type React from "react"
-
-import { useState } from "react"
-import { validateEmail } from "./utils"
-
-interface User {
-  email: string
-  username: string
-  password: string
-}
-
-interface Comment {
-  id: string
-  username: string
-  text: string
-  date: string
-  rating: number
-}
-
-export default function HomePage() {
-  const [rating, setRating] = useState(0)
-  const [showLogin, setShowLogin] = useState(false)
-  const [showRegister, setShowRegister] = useState(false)
-  const [currentUser, setCurrentUser] = useState<User | null>(null)
-  const [loginError, setLoginError] = useState("")
-  const [registerError, setRegisterError] = useState("")
-  const [comments, setComments] = useState<Comment[]>(() => {
-    if (typeof window !== "undefined") {
-      return JSON.parse(localStorage.getItem("comments") || "[]")
-    }
-    return []
-  })
-
-  // Load users from localStorage
-  const getUsers = (): User[] => {
-    if (typeof window !== "undefined") {
-      return JSON.parse(localStorage.getItem("users") || "[]")
-    }
-    return []
-  }
-
-  const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const email = formData.get("email") as string
-    const username = formData.get("username") as string
-    const password = formData.get("password") as string
-    const confirmPassword = formData.get("confirmPassword") as string
-
-    if (!validateEmail(email)) {
-      setRegisterError("Ungültige Email-Adresse")
-      return
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    if (password !== confirmPassword) {
-      setRegisterError("Passwörter stimmen nicht überein")
-      return
+    :root {
+      --main-color: #0ff;
+      --secondary-color: #ff0080;
+      --bg-color: #000;
     }
 
-    const users = getUsers()
-    if (users.some((user) => user.email === email || user.username === username)) {
-      setRegisterError("Benutzer existiert bereits")
-      return
+    @keyframes textShadow {
+      0% {
+        text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+      }
+      5% {
+        text-shadow: 2.7928974010788217px 0 1px rgba(0,30,255,0.5), -2.7928974010788217px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+      }
+      /* ... mehr zufällige Textschatten für den Glitch-Effekt ... */
+      100% {
+        text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+      }
     }
 
-    const newUser = { email, username, password }
-    users.push(newUser)
-    localStorage.setItem("users", JSON.stringify(users))
-    setCurrentUser(newUser)
-    setShowRegister(false)
-    setRegisterError("")
-  }
-
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const username = formData.get("username") as string
-    const password = formData.get("password") as string
-
-    const users = getUsers()
-    const user = users.find((u) => u.username === username && u.password === password)
-
-    if (user) {
-      setCurrentUser(user)
-      setShowLogin(false)
-      setLoginError("")
-    } else {
-      setLoginError("Falsche Zugangsdaten")
-    }
-  }
-
-  const handleLogout = () => {
-    setCurrentUser(null)
-  }
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const text = (e.currentTarget.elements.namedItem("comment") as HTMLTextAreaElement).value
-
-    const newComment = {
-      id: crypto.randomUUID(),
-      username: currentUser?.username || "Anonym",
-      text,
-      date: new Date().toISOString(),
-      rating,
+    @keyframes flicker {
+      0% { opacity: 0.87; }
+      5% { opacity: 0.95; }
+      10% { opacity: 0.9; }
+      15% { opacity: 0.85; }
+      20% { opacity: 0.95; }
+      25% { opacity: 0.85; }
+      30% { opacity: 0.9; }
+      35% { opacity: 0.95; }
+      40% { opacity: 0.85; }
+      45% { opacity: 0.9; }
+      50% { opacity: 0.95; }
+      55% { opacity: 0.85; }
+      60% { opacity: 0.9; }
+      65% { opacity: 0.95; }
+      70% { opacity: 0.9; }
+      75% { opacity: 0.85; }
+      80% { opacity: 0.9; }
+      85% { opacity: 0.95; }
+      90% { opacity: 0.85; }
+      95% { opacity: 0.9; }
+      100% { opacity: 0.95; }
     }
 
-    const updatedComments = [newComment, ...comments]
-    localStorage.setItem("comments", JSON.stringify(updatedComments))
-    setComments(updatedComments)
-    e.currentTarget.reset()
-    setRating(0)
-  }
+    body {
+      background: var(--bg-color);
+      color: var(--main-color);
+      font-family: 'VT323', monospace;
+      min-height: 100vh;
+      animation: textShadow 1.6s infinite;
+      position: relative;
+      overflow-x: hidden;
+    }
 
-  return (
-    <>
-      <div className="horizontal-lines"></div>
-      <div className="vertical-lines"></div>
-      <div className="glitch-lines"></div>
-      <div className="content">
-        <header>
-          <h1>Zero Quest</h1>
-          <p>Dein Portal in eine neue Dimension</p>
-        </header>
+    /* CRT Effect */
+    body::before {
+      content: "";
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: 
+        linear-gradient(
+          transparent 50%, 
+          rgba(0, 0, 0, 0.5) 50%
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255, 0, 0, 0.06),
+          rgba(0, 255, 0, 0.02),
+          rgba(0, 0, 255, 0.06)
+        );
+      background-size: 100% 4px, 3px 100%;
+      pointer-events: none;
+      z-index: 999;
+      animation: scanlines 0.5s linear infinite;
+    }
 
-        <div className="hologram-container">
-          <div className="content-wrapper">
-            <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20(14)-8gNRNzWYgZDauzpEX2nxR8SqsGFdbV.png"
-              alt="Holographic Frame"
-              className="hologram-frame"
-            />
-            <div className="content-overlay">
-              <h2>[System]</h2>
-              <p>Neue Datei verfügbar!</p>
-              <a
-                href="https://www.dropbox.com/scl/fi/lxhfyucgfgov611emelo3/2025-01-03-20-15-00_OSKnHG3p.mp4?rlkey=6ayahrba5tgubxgxhqv4kln0b&st=p9skzizd&dl=0"
-                className="download-button"
-              >
-                Download
-              </a>
-            </div>
-          </div>
+    /* Horizontale Linien */
+    .horizontal-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 1px,
+        rgba(0, 255, 255, 0.05) 2px,
+        rgba(0, 255, 255, 0.05) 3px
+      );
+      pointer-events: none;
+      z-index: 998;
+    }
+
+    /* Vertikale Linien */
+    .vertical-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 5px,
+        rgba(0, 255, 255, 0.02) 6px,
+        rgba(0, 255, 255, 0.02) 10px
+      );
+      pointer-events: none;
+      z-index: 997;
+    }
+
+    /* Glitch Linien */
+    .glitch-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    @keyframes scanlines {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 0 4px;
+      }
+    }
+
+    /* Neue Animation für Glitch-Effekt */
+    @keyframes glitch {
+      0% {
+        clip-path: none;
+        transform: none;
+        opacity: 0;
+      }
+      2% {
+        clip-path: polygon(0 20%, 100% 20%, 100% 21%, 0 21%);
+        transform: translate3d(-3px, 0, 0);
+        opacity: 1;
+      }
+      4% {
+        clip-path: none;
+        transform: none;
+        opacity: 0;
+      }
+      100% {
+        clip-path: none;
+        transform: none;
+        opacity: 0;
+      }
+    }
+
+    /* Zusätzliche Styles für bessere Lesbarkeit mit den Linien */
+    .content {
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 0 5px var(--main-color);
+    }
+
+    .hologram-container,
+    .gallery-section,
+    .comment-section {
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(1px);
+    }
+
+    /* Flicker Effect */
+    body::after {
+      content: " ";
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: rgba(18, 16, 16, 0.1);
+      opacity: 0;
+      z-index: 2;
+      pointer-events: none;
+      animation: flicker 0.15s infinite;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    header h1 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 2.5rem;
+      color: var(--main-color);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      line-height: 1.4;
+      text-shadow: 4px 4px var(--secondary-color);
+    }
+
+    header p {
+      font-size: 1.5rem;
+      color: var(--main-color);
+    }
+
+    .hologram-container {
+      width: 90%;
+      max-width: 800px;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    .content-wrapper {
+      position: relative;
+      border: 2px solid var(--main-color);
+      padding: 4px;
+      background: rgba(0, 255, 255, 0.1);
+    }
+
+    .hologram-frame {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .content-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      text-align: center;
+    }
+
+    .content-overlay h2 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.5rem;
+      color: var(--main-color);
+      margin-bottom: 15px;
+    }
+
+    .content-overlay p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    .download-button {
+      font-family: 'Press Start 2P', cursive;
+      display: inline-block;
+      padding: 15px 30px;
+      background: transparent;
+      color: var(--main-color);
+      text-decoration: none;
+      font-size: 1rem;
+      border: 2px solid var(--main-color);
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .download-button:hover {
+      background: var(--main-color);
+      color: var(--bg-color);
+      text-shadow: none;
+    }
+
+    .gallery-section {
+      width: 90%;
+      max-width: 1200px;
+      margin: 40px auto;
+      border: 2px solid var(--main-color);
+      padding: 20px;
+      background: rgba(0, 255, 255, 0.05);
+    }
+
+    .gallery-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--main-color);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-item {
+      border: 2px solid var(--main-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      filter: grayscale(0.5) sepia(0.3) hue-rotate(160deg);
+    }
+
+    .comment-section {
+      width: 90%;
+      max-width: 800px;
+      margin: 40px auto;
+      border: 2px solid var(--main-color);
+      padding: 20px;
+      background: rgba(0, 255, 255, 0.05);
+    }
+
+    .comments-list {
+      margin: 20px 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .comment-item {
+      border: 1px solid var(--main-color);
+      margin-bottom: 15px;
+      padding: 15px;
+      background: rgba(0, 255, 255, 0.05);
+    }
+
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+    }
+
+    .comment-content {
+      font-size: 1.1rem;
+    }
+
+    .rating-container {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+      justify-content: center;
+    }
+
+    .rating-star {
+      font-size: 24px;
+      cursor: pointer;
+      color: rgba(0, 255, 255, 0.3);
+      transition: color 0.3s;
+    }
+
+    .rating-star.active {
+      color: var(--main-color);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--main-color);
+      font-size: 1.1rem;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 10px;
+      background: rgba(0, 255, 255, 0.1);
+      border: 2px solid var(--main-color);
+      color: var(--main-color);
+      font-family: 'VT323', monospace;
+      font-size: 1.1rem;
+    }
+
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .submit-button {
+      font-family: 'Press Start 2P', cursive;
+      padding: 10px 20px;
+      background: transparent;
+      color: var(--main-color);
+      border: 2px solid var(--main-color);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+
+    .submit-button:hover {
+      background: var(--main-color);
+      color: var(--bg-color);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--main-color);
+      font-size: 1rem;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="horizontal-lines"></div>
+  <div class="vertical-lines"></div>
+  <div class="glitch-lines"></div>
+  <div class="content">
+    <header>
+      <h1>Zero Quest</h1>
+      <p>Dein Portal in eine neue Dimension</p>
+    </header>
+
+    <div class="hologram-container">
+      <div class="content-wrapper">
+        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20(14)-8gNRNzWYgZDauzpEX2nxR8SqsGFdbV.png" alt="Holographic Frame" class="hologram-frame">
+        <div class="content-overlay">
+          <h2>[System]</h2>
+          <p>Neue Datei verfügbar!</p>
+          <a href="https://www.dropbox.com/scl/fi/lxhfyucgfgov611emelo3/2025-01-03-20-15-00_OSKnHG3p.mp4?rlkey=6ayahrba5tgubxgxhqv4kln0b&st=p9skzizd&dl=0" class="download-button">
+            Download
+          </a>
         </div>
+      </div>
+    </div>
 
-        <section className="comment-section">
-          <h2 className="gallery-title">Feedback</h2>
+    <section class="gallery-section">
+      <h2 class="gallery-title">Galerie</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="https://via.placeholder.com/300x200/000000/00ffff?text=ZERO+QUEST" alt="Screenshot 1">
+        </div>
+        <div class="gallery-item">
+          <img src="https://via.placeholder.com/300x200/000000/00ffff?text=ZERO+QUEST" alt="Screenshot 2">
+        </div>
+        <div class="gallery-item">
+          <img src="https://via.placeholder.com/300x200/000000/00ffff?text=ZERO+QUEST" alt="Screenshot 3">
+        </div>
+        <div class="gallery-item">
+          <img src="https://via.placeholder.com/300x200/000000/00ffff?text=ZERO+QUEST" alt="Screenshot 4">
+        </div>
+      </div>
+    </section>
 
-          {!currentUser ? (
-            <div className="auth-buttons">
-              <button onClick={() => setShowLogin(true)} className="download-button">
-                Login
-              </button>
-              <button onClick={() => setShowRegister(true)} className="download-button">
-                Registrieren
-              </button>
-              <p className="login-info">Du musst dich anmelden oder registrieren, um Feedback zu geben.</p>
-            </div>
-          ) : (
-            <>
-              <div className="user-info">
-                <p>Eingeloggt als: {currentUser.username}</p>
-                <button onClick={handleLogout} className="download-button">
-                  Logout
-                </button>
-              </div>
-
-              <div className="rating-container">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <span
-                    key={star}
-                    className={`rating-star ${star <= rating ? "active" : ""}`}
-                    onClick={() => setRating(star)}
-                  >
-                    ★
-                  </span>
-                ))}
-              </div>
-
-              <form onSubmit={handleSubmit} className="comment-form">
-                <div className="form-group">
-                  <label className="form-label" htmlFor="comment">
-                    Dein Feedback:
-                  </label>
-                  <textarea id="comment" className="form-textarea" required></textarea>
-                </div>
-
-                <button type="submit" className="submit-button">
-                  Absenden
-                </button>
-              </form>
-            </>
-          )}
-
-          {showLogin && (
-            <div className="login-overlay">
-              <div className="login-modal">
-                <h3 className="gallery-title" style={{ marginBottom: "20px" }}>
-                  Login
-                </h3>
-                <form onSubmit={handleLogin}>
-                  <div className="form-group">
-                    <label className="form-label">Benutzername:</label>
-                    <input type="text" name="username" className="form-input" required />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Passwort:</label>
-                    <input type="password" name="password" className="form-input" required />
-                  </div>
-                  {loginError && <div className="error-message">{loginError}</div>}
-                  <div className="modal-buttons">
-                    <button type="submit" className="download-button">
-                      Login
-                    </button>
-                    <button
-                      type="button"
-                      className="download-button"
-                      onClick={() => {
-                        setShowLogin(false)
-                        setLoginError("")
-                      }}
-                    >
-                      Abbrechen
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          )}
-
-          {showRegister && (
-            <div className="login-overlay">
-              <div className="login-modal">
-                <h3 className="gallery-title" style={{ marginBottom: "20px" }}>
-                  Registrieren
-                </h3>
-                <form onSubmit={handleRegister}>
-                  <div className="form-group">
-                    <label className="form-label">Email:</label>
-                    <input type="email" name="email" className="form-input" required />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Benutzername:</label>
-                    <input type="text" name="username" className="form-input" required />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Passwort:</label>
-                    <input type="password" name="password" className="form-input" required />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Passwort bestätigen:</label>
-                    <input type="password" name="confirmPassword" className="form-input" required />
-                  </div>
-                  {registerError && <div className="error-message">{registerError}</div>}
-                  <div className="modal-buttons">
-                    <button type="submit" className="download-button">
-                      Registrieren
-                    </button>
-                    <button
-                      type="button"
-                      className="download-button"
-                      onClick={() => {
-                        setShowRegister(false)
-                        setRegisterError("")
-                      }}
-                    >
-                      Abbrechen
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          )}
-
-          <div className="comments-list">
-            {comments.map((comment) => (
-              <div key={comment.id} className="comment-item">
-                <div className="comment-header">
-                  <span>{comment.username}</span>
-                  <span>{new Date(comment.date).toLocaleDateString()}</span>
-                </div>
-                <div className="rating-container" style={{ justifyContent: "flex-start", margin: "10px 0" }}>
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <span
-                      key={star}
-                      className={`rating-star ${star <= comment.rating ? "active" : ""}`}
-                      style={{ cursor: "default" }}
-                    >
-                      ★
-                    </span>
-                  ))}
-                </div>
-                <div className="comment-content">{comment.text}</div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <footer>
-          <div className="login-area">
-            {!currentUser ? (
-              <div className="auth-buttons">
-                <button onClick={() => setShowLogin(true)} className="download-button">
-                  Login
-                </button>
-                <button onClick={() => setShowRegister(true)} className="download-button">
-                  Registrieren
-                </button>
-              </div>
-            ) : (
-              <button onClick={handleLogout} className="download-button">
-                Logout
-              </button>
-            )}
-            {currentUser?.email === "zock868@gmail.com" && currentUser?.username === "admin" && (
-              <a href="/admin/users" className="download-button" style={{ marginLeft: "10px" }}>
-                Benutzer verwalten
-              </a>
-            )}
-          </div>
-          &copy; 2025 Zero Quest. Alle Rechte vorbehalten.
-        </footer>
+    <section class="comment-section">
+      <h2 class="gallery-title">Feedback</h2>
+      
+      <div class="rating-container">
+        <span class="rating-star" data-rating="1">★</span>
+        <span class="rating-star" data-rating="2">★</span>
+        <span class="rating-star" data-rating="3">★</span>
+        <span class="rating-star" data-rating="4">★</span>
+        <span class="rating-star" data-rating="5">★</span>
       </div>
 
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Share+Tech+Mono&display=swap');
-
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-
-        :root {
-          --main-color: #0ff;
-          --secondary-color: #ff0080;
-          --bg-color: #000;
-        }
-
-        @keyframes textShadow {
-          0% {
-            text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-          }
-          5% {
-            text-shadow: 2.7928974010788217px 0 1px rgba(0,30,255,0.5), -2.7928974010788217px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-          }
-          100% {
-            text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-          }
-        }
-
-        @keyframes flicker {
-          0% { opacity: 0.87; }
-          5% { opacity: 0.95; }
-          10% { opacity: 0.9; }
-          15% { opacity: 0.85; }
-          20% { opacity: 0.95; }
-          25% { opacity: 0.85; }
-          30% { opacity: 0.9; }
-          35% { opacity: 0.95; }
-          40% { opacity: 0.85; }
-          45% { opacity: 0.9; }
-          50% { opacity: 0.95; }
-          55% { opacity: 0.85; }
-          60% { opacity: 0.9; }
-          65% { opacity: 0.95; }
-          70% { opacity: 0.9; }
-          75% { opacity: 0.85; }
-          80% { opacity: 0.9; }
-          85% { opacity: 0.95; }
-          90% { opacity: 0.85; }
-          95% { opacity: 0.9; }
-          100% { opacity: 0.95; }
-        }
-
-        body {
-          background: var(--bg-color);
-          color: var(--main-color);
-          font-family: 'VT323', monospace;
-          min-height: 100vh;
-          animation: textShadow 1.6s infinite;
-          position: relative;
-          overflow-x: hidden;
-        }
-
-        .horizontal-lines {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 1px,
-            rgba(0, 255, 255, 0.05) 2px,
-            rgba(0, 255, 255, 0.05) 3px
-          );
-          pointer-events: none;
-          z-index: 998;
-        }
-
-        .vertical-lines {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 5px,
-            rgba(0, 255, 255, 0.02) 6px,
-            rgba(0, 255, 255, 0.02) 10px
-          );
-          pointer-events: none;
-          z-index: 997;
-        }
-
-        .glitch-lines {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          pointer-events: none;
-          z-index: 1000;
-        }
-
-        .content {
-          position: relative;
-          z-index: 1;
-          padding: 20px;
-        }
-
-        header {
-          text-align: center;
-          margin: 40px 0;
-        }
-
-        header h1 {
-          font-family: 'Press Start 2P', cursive;
-          font-size: 2.5rem;
-          color: var(--main-color);
-          text-transform: uppercase;
-          margin-bottom: 20px;
-          line-height: 1.4;
-          text-shadow: 4px 4px var(--secondary-color);
-        }
-
-        header p {
-          font-size: 1.5rem;
-          color: var(--main-color);
-        }
-
-        .hologram-container {
-          width: 90%;
-          max-width: 800px;
-          margin: 20px auto;
-          position: relative;
-        }
-
-        .content-wrapper {
-          position: relative;
-          border: 2px solid var(--main-color);
-          padding: 4px;
-          background: rgba(0, 255, 255, 0.1);
-        }
-
-        .hologram-frame {
-          width: 100%;
-          height: auto;
-          display: block;
-        }
-
-        .content-overlay {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 80%;
-          text-align: center;
-        }
-
-        .content-overlay h2 {
-          font-family: 'Press Start 2P', cursive;
-          font-size: 1.5rem;
-          color: var(--main-color);
-          margin-bottom: 15px;
-        }
-
-        .content-overlay p {
-          font-size: 1.2rem;
-          margin-bottom: 20px;
-        }
-
-        .download-button {
-          font-family: 'Press Start 2P', cursive;
-          display: inline-block;
-          padding: 15px 30px;
-          background: transparent;
-          color: var(--main-color);
-          text-decoration: none;
-          font-size: 1rem;
-          border: 2px solid var(--main-color);
-          text-transform: uppercase;
-          position: relative;
-          overflow: hidden;
-          transition: all 0.3s;
-          cursor: pointer;
-        }
-
-        .download-button:hover {
-          background: var(--main-color);
-          color: var(--bg-color);
-          text-shadow: none;
-        }
-
-        .comment-section {
-          width: 90%;
-          max-width: 800px;
-          margin: 40px auto;
-          border: 2px solid var(--main-color);
-          padding: 20px;
-          background: rgba(0, 255, 255, 0.05);
-        }
-
-        .gallery-title {
-          font-family: 'Press Start 2P', cursive;
-          font-size: 1.5rem;
-          text-align: center;
-          margin-bottom: 30px;
-          color: var(--main-color);
-        }
-
-        .rating-container {
-          display: flex;
-          gap: 10px;
-          margin: 20px 0;
-          justify-content: center;
-        }
-
-        .rating-star {
-          font-size: 24px;
-          cursor: pointer;
-          color: rgba(0, 255, 255, 0.3);
-          transition: color 0.3s;
-        }
-
-        .rating-star.active {
-          color: var(--main-color);
-        }
-
-        .form-group {
-          margin-bottom: 15px;
-        }
-
-        .form-label {
-          display: block;
-          margin-bottom: 5px;
-          color: var(--main-color);
-          font-size: 1.1rem;
-        }
-
-        .form-input,
-        .form-textarea {
-          width: 100%;
-          padding: 10px;
-          background: rgba(0, 255, 255, 0.1);
-          border: 2px solid var(--main-color);
-          color: var(--main-color);
-          font-family: 'VT323', monospace;
-          font-size: 1.1rem;
-        }
-
-        .form-textarea {
-          min-height: 100px;
-          resize: vertical;
-        }
-
-        .submit-button {
-          font-family: 'Press Start 2P', cursive;
-          padding: 10px 20px;
-          background: transparent;
-          color: var(--main-color);
-          border: 2px solid var(--main-color);
-          cursor: pointer;
-          font-size: 1rem;
-          transition: all 0.3s;
-        }
-
-        .submit-button:hover {
-          background: var(--main-color);
-          color: var(--bg-color);
-        }
-
-        .comments-list {
-          margin: 20px 0;
-          padding: 0;
-          list-style: none;
-        }
-
-        .comment-item {
-          border: 1px solid var(--main-color);
-          margin-bottom: 15px;
-          padding: 15px;
-          background: rgba(0, 255, 255, 0.05);
-        }
-
-        .comment-header {
-          display: flex;
-          justify-content: space-between;
-          margin-bottom: 10px;
-          font-size: 0.9rem;
-          color: var(--secondary-color);
-        }
-
-        .comment-content {
-          font-size: 1.1rem;
-        }
-
-        .login-overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(0, 0, 0, 0.8);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 1000;
-        }
-
-        .login-modal {
-          background: var(--bg-color);
-          border: 2px solid var(--main-color);
-          padding: 20px;
-          width: 90%;
-          max-width: 400px;
-          position: relative;
-        }
-
-        footer {
-          text-align: center;
-          padding: 20px;
-          color: var(--main-color);
-          font-size: 1rem;
-          margin-top: 40px;
-        }
-
-        @media (max-width: 768px) {
-          header h1 {
-            font-size: 1.8rem;
-          }
-        }
-
-        .login-area {
-          text-align: center;
-          margin-bottom: 20px;
-        }
+      <form id="comment-form" class="comment-form">
+        <div class="form-group">
+          <label class="form-label" for="name">Name:</label>
+          <input type="text" id="name" class="form-input" required>
+        </div>
         
-        .auth-buttons {
-          text-align: center;
-          margin: 20px 0;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 10px;
-        }
+        <div class="form-group">
+          <label class="form-label" for="comment">Kommentar:</label>
+          <textarea id="comment" class="form-textarea" required></textarea>
+        </div>
+        
+        <button type="submit" class="submit-button">Absenden</button>
+      </form>
 
-        .login-info {
-          margin-top: 10px;
-          color: var(--secondary-color);
-        }
+      <div class="comments-list" id="comments-list">
+        <!-- Kommentare werden hier dynamisch eingefügt -->
+      </div>
+    </section>
 
-        .user-info {
-          text-align: center;
-          margin: 20px 0;
-          padding: 10px;
-          border: 1px solid var(--main-color);
-          background: rgba(0, 255, 255, 0.05);
-        }
+    <footer>
+      &copy; 2025 Zero Quest. Alle Rechte vorbehalten.
+    </footer>
+  </div>
 
-        .error-message {
-          color: var(--secondary-color);
-          text-align: center;
-          margin: 10px 0;
-        }
+  <script>
+    // Kommentare im localStorage speichern und laden
+    let comments = JSON.parse(localStorage.getItem('comments')) || [];
+    let currentRating = parseInt(localStorage.getItem('rating')) || 0;
 
-        .modal-buttons {
-          display: flex;
-          gap: 10px;
-          justify-content: center;
-          margin-top: 20px;
+    // Rating System
+    const stars = document.querySelectorAll('.rating-star');
+    
+    // Initiales Rating setzen
+    function updateStars(rating) {
+      stars.forEach((star, index) => {
+        if (index < rating) {
+          star.classList.add('active');
+        } else {
+          star.classList.remove('active');
         }
-      `}</style>
-    </>
-  )
-}
+      });
+    }
 
+    updateStars(currentRating);
+
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        const rating = parseInt(star.dataset.rating);
+        currentRating = rating;
+        localStorage.setItem('rating', rating);
+        updateStars(rating);
+      });
+    });
+
+    // Kommentare anzeigen
+    function displayComments() {
+      const commentsList = document.getElementById('comments-list');
+      commentsList.innerHTML = comments.map(comment => `
+        <div class="comment-item">
+          <div class="comment-header">
+            <span>${comment.name}</span>
+            <span>${new Date(comment.date).toLocaleDateString()}</span>
+          </div>
+          <div class="comment-content">${comment.text}</div>
+        </div>
+      `).join('');
+    }
+
+    // Formular-Handler
+    document.getElementById('comment-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const text = document.getElementById('comment').value;
+      
+      const newComment = {
+        name,
+        text,
+        date: new Date().toISOString()
+      };
+      
+      comments.unshift(newComment); // Neuen Kommentar am Anfang einfügen
+      localStorage.setItem('comments', JSON.stringify(comments));
+      
+      // Formular zurücksetzen
+      e.target.reset();
+      
+      // Kommentare neu anzeigen
+      displayComments();
+    });
+
+    // Initiale Anzeige der Kommentare
+    displayComments();
+
+    // CRT Flicker Effect
+    function addRandomFlicker() {
+      const content = document.querySelector('.content');
+      setInterval(() => {
+        if (Math.random() > 0.97) {
+          content.style.opacity = '0.8';
+          setTimeout(() => {
+            content.style.opacity = '1';
+          }, 50);
+        }
+      }, 100);
+    }
+
+    addRandomFlicker();
+
+    // Glitch-Linien-Effekt
+    function createGlitchLine() {
+      const glitchContainer = document.querySelector('.glitch-lines');
+      const line = document.createElement('div');
+      
+      line.style.position = 'absolute';
+      line.style.top = Math.random() * 100 + '%';
+      line.style.left = '0';
+      line.style.right = '0';
+      line.style.height = '2px';
+      line.style.background = `rgba(0, 255, 255, ${Math.random() * 0.5})`;
+      line.style.animation = 'glitch 0.5s linear forwards';
+      
+      glitchContainer.appendChild(line);
+      
+      // Entferne die Linie nach der Animation
+      setTimeout(() => {
+        line.remove();
+      }, 500);
+    }
+
+    // Zufällige Glitch-Linien erzeugen
+    setInterval(() => {
+      if (Math.random() > 0.7) {
+        createGlitchLine();
+      }
+    }, 200);
+
+  </script>
+</body>
+</html>
