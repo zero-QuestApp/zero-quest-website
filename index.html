@@ -27,6 +27,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      text-align: center;
       animation: fadeInBackground 1s ease-in-out;
     }
 
@@ -35,62 +37,20 @@
       100% { opacity: 1; }
     }
 
-    .panel {
-      position: relative;
-      width: 90%;
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 40px;
-      text-align: center;
-      background: url("mein-bild.jpg") center/cover no-repeat, rgba(0, 0, 0, 0.85);
-      clip-path: polygon(
-        10% 0%, 90% 0%,
-        100% 10%, 100% 90%,
-        90% 100%, 10% 100%,
-        0% 90%, 0% 10%
-      );
-      border: none;
-      overflow: hidden;
-    }
-
-    .panel::before {
-      content: "";
-      position: absolute;
-      top: 0; 
-      left: 0;
-      width: 100%;
-      height: 100%;
-      clip-path: inherit;
-      border: 2px solid #00ffff;
-      box-shadow:
-        0 0 15px #00ffff,
-        inset 0 0 10px #00ffff;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .panel > * {
-      position: relative;
-      z-index: 2;
-    }
-
-    .panel h2 {
-      font-size: 1.8rem;
+    h1 {
+      font-size: 2rem;
       color: #00ffff;
-      margin-bottom: 20px;
       text-shadow: 0 0 8px #00ffff;
     }
 
-    .panel p {
+    p {
       font-size: 1.1rem;
       color: #eee;
-      margin-bottom: 30px;
-      line-height: 1.4;
+      margin-bottom: 20px;
     }
 
     .download-link a {
       display: inline-block;
-      margin-top: 10px;
       padding: 15px 30px;
       background: #00ffff;
       color: #000;
@@ -109,19 +69,15 @@
 </head>
 <body>
 
-  <header>
-    <h1>Zero Quest</h1>
-    <p>Dein Portal in eine neue Dimension</p>
-  </header>
+  <h1>Zero Quest</h1>
+  <p>Dein Portal in eine neue Dimension</p>
 
-  <div class="panel">
-    <h2>[System]</h2>
-    <p>Neue Datei verfügbar!</p>
-    <div class="download-link">
-      <a href="https://www.dropbox.com/scl/fi/lxhfyucgfgov611emelo3/2025-01-03-20-15-00_OSKnHG3p.mp4?rlkey=6ayahrba5tgubxgxhqv4kln0b&st=p9skzizd&dl=0">
-        Zero Quest herunterladen
-      </a>
-    </div>
+  <p><strong>[System]</strong><br>Neue Datei verfügbar!</p>
+  
+  <div class="download-link">
+    <a href="https://www.dropbox.com/scl/fi/lxhfyucgfgov611emelo3/2025-01-03-20-15-00_OSKnHG3p.mp4?rlkey=6ayahrba5tgubxgxhqv4kln0b&st=p9skzizd&dl=0">
+      Zero Quest herunterladen
+    </a>
   </div>
 
 </body>
