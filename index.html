@@ -1,231 +1,256 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solo Leveling UI - Download</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solo Leveling UI - Download</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        /* Hintergrund - Grau-Silber Übergang */
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(45deg, #2f2f2f, #c0c0c0); /* Übergang von dunklem Grau zu Silber */
-            color: #e0e0e0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow: auto;
-            padding: 20px;
-            position: relative;
-            animation: fadeInBackground 1s ease-in-out;
-        }
+    /* Futuristischer Rahmen am Rand */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(45deg, #3a3a3a, #8a8a8a); /* Dunkleres Grau zu weniger intensivem Silber */
+      color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow: auto;
+      padding: 20px;
+      position: relative;
+      animation: fadeInBackground 1s ease-in-out;
+    }
 
-        /* Header */
-        header {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 30px 60px;
-            text-align: center;
-            border-radius: 10px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
-            margin-bottom: 40px;
-            width: 100%;
-            max-width: 1200px;
-            animation: fadeInHeader 1s ease-in-out;
-        }
+    /* Pseudo-Element für den leuchtenden Rahmen */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      border: 2px dashed rgba(0, 170, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 170, 255, 0.8);
+      pointer-events: none;
+      z-index: 999;
+      animation: borderGlow 3s ease-in-out infinite;
+    }
 
-        header h1 {
-            font-size: 3.5rem;
-            color: #00aaff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px #00aaff, 0 0 30px #00aaff;
-        }
+    @keyframes borderGlow {
+      0% {
+        box-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(0, 170, 255, 1);
+      }
+      100% {
+        box-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
+      }
+    }
 
-        header p {
-            font-size: 1.5rem;
-            color: #bbb;
-            margin-bottom: 25px;
-        }
+    /* Header */
+    header {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 30px 60px;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
+      margin-bottom: 40px;
+      width: 100%;
+      max-width: 1200px;
+      animation: fadeInHeader 1s ease-in-out;
+    }
 
-        /* Panel Design */
-        .panel {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 50px 70px;
-            border-radius: 15px;
-            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7);
-            max-width: 1000px;
-            width: 100%;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-            animation: fadeInPanel 1s ease-in-out;
-        }
+    header h1 {
+      font-size: 3.5rem;
+      color: #00aaff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #00aaff, 0 0 30px #00aaff;
+    }
 
-        .panel h2 {
-            font-size: 2.8rem;
-            color: #00aaff;
-            margin-bottom: 30px;
-            text-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff;
-        }
+    header p {
+      font-size: 1.5rem;
+      color: #bbb;
+      margin-bottom: 25px;
+    }
 
-        .panel p {
-            font-size: 1.4rem;
-            color: #bbb;
-            margin-bottom: 30px;
-        }
+    /* Panel Design */
+    .panel {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 50px 70px;
+      border-radius: 15px;
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7);
+      max-width: 1000px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+      animation: fadeInPanel 1s ease-in-out;
+    }
 
-        /* Download-Link */
-        .download-link a {
-            font-size: 1.8rem;
-            color: #121212;
-            text-decoration: none;
-            padding: 20px 40px;
-            background: linear-gradient(45deg, #00aaff, #0066cc);
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0, 170, 255, 0.6);
-            transition: background 0.3s ease, transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
-            opacity: 0.8;
-            animation: glowEffect 2s ease-in-out infinite alternate;
-        }
+    .panel h2 {
+      font-size: 2.8rem;
+      color: #00aaff;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff;
+    }
 
-        .download-link a:hover {
-            background: #00aaff;
-            color: #121212;
-            transform: scale(1.05);
-            opacity: 1;
-        }
+    .panel p {
+      font-size: 1.4rem;
+      color: #bbb;
+      margin-bottom: 30px;
+    }
 
-        .download-link a:focus {
-            outline: none;
-            box-shadow: 0 0 15px rgba(0, 170, 255, 1);
-        }
+    /* Download-Link */
+    .download-link a {
+      font-size: 1.8rem;
+      color: #121212;
+      text-decoration: none;
+      padding: 20px 40px;
+      background: linear-gradient(45deg, #00aaff, #0066cc);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 170, 255, 0.6);
+      transition: background 0.3s ease, transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0.8;
+      animation: glowEffect 2s ease-in-out infinite alternate;
+    }
 
-        /* Glüheffekte */
-        @keyframes glowEffect {
-            0% {
-                box-shadow: 0 0 10px rgba(0, 170, 255, 0.6), 0 0 30px rgba(0, 170, 255, 0.8);
-            }
-            50% {
-                box-shadow: 0 0 20px rgba(0, 170, 255, 0.8), 0 0 40px rgba(0, 170, 255, 1);
-            }
-            100% {
-                box-shadow: 0 0 30px rgba(0, 170, 255, 0.6), 0 0 60px rgba(0, 170, 255, 0.9);
-            }
-        }
+    .download-link a:hover {
+      background: #00aaff;
+      color: #121212;
+      transform: scale(1.05);
+      opacity: 1;
+    }
 
-        /* Fade-In-Animationen */
-        @keyframes fadeInBackground {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
+    .download-link a:focus {
+      outline: none;
+      box-shadow: 0 0 15px rgba(0, 170, 255, 1);
+    }
 
-        @keyframes fadeInHeader {
-            0% {
-                transform: translateY(-20px);
-                opacity: 0;
-            }
-            100% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
+    /* Glüheffekte */
+    @keyframes glowEffect {
+      0% {
+        box-shadow: 0 0 10px rgba(0, 170, 255, 0.6), 0 0 30px rgba(0, 170, 255, 0.8);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(0, 170, 255, 0.8), 0 0 40px rgba(0, 170, 255, 1);
+      }
+      100% {
+        box-shadow: 0 0 30px rgba(0, 170, 255, 0.6), 0 0 60px rgba(0, 170, 255, 0.9);
+      }
+    }
 
-        @keyframes fadeInPanel {
-            0% {
-                transform: scale(0.9);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
+    /* Fade-In-Animationen */
+    @keyframes fadeInBackground {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
 
-        /* Bilder-Galerie */
-        .images {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            width: 100%;
-            max-width: 1200px;
-            margin-top: 50px;
-            animation: fadeInImages 1s ease-in-out;
-        }
+    @keyframes fadeInHeader {
+      0% {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
 
-        .images img {
-            width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0, 170, 255, 0.6);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+    @keyframes fadeInPanel {
+      0% {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
 
-        .images img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(0, 170, 255, 0.8);
-        }
+    /* Bilder-Galerie */
+    .images {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+      width: 100%;
+      max-width: 1200px;
+      margin-top: 50px;
+      animation: fadeInImages 1s ease-in-out;
+    }
 
-        @keyframes fadeInImages {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
+    .images img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 170, 255, 0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        /* Footer */
-        footer {
-            color: #aaa;
-            font-size: 1.2rem;
-            text-align: center;
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
-        }
+    .images img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 170, 255, 0.8);
+    }
 
-    </style>
+    @keyframes fadeInImages {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* Footer */
+    footer {
+      color: #aaa;
+      font-size: 1.2rem;
+      text-align: center;
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
+  <!-- Header -->
+  <header>
+    <h1>Solo Leveling Download</h1>
+    <p>Lade die neueste Datei herunter!</p>
+  </header>
 
-    <!-- Header -->
-    <header>
-        <h1>Solo Leveling Download</h1>
-        <p>Lade die neueste Datei herunter!</p>
-    </header>
-
-    <!-- Panel mit Download-Link -->
-    <div class="panel">
-        <h2>Download die Datei</h2>
-        <p>Klicke auf den Button, um die Datei herunterzuladen:</p>
-        <div class="download-link">
-            <a href="https://www.dropbox.com/scl/fi/lxhfyucgfgov611emelo3/2025-01-03-20-15-00_OSKnHG3p.mp4?rlkey=6ayahrba5tgubxgxhqv4kln0b&st=p9skzizd&dl=0">Jetzt herunterladen</a>
-        </div>
+  <!-- Panel mit Download-Link -->
+  <div class="panel">
+    <h2>Download die Datei</h2>
+    <p>Klicke auf den Button, um die Datei herunterzuladen:</p>
+    <div class="download-link">
+      <a href="https://www.dropbox.com/scl/fi/lxhfyucgfgov611emelo3/2025-01-03-20-15-00_OSKnHG3p.mp4?rlkey=6ayahrba5tgubxgxhqv4kln0b&st=p9skzizd&dl=0">Jetzt herunterladen</a>
     </div>
+  </div>
 
-    <!-- Bilder-Galerie -->
-    <div class="images">
-        <img src="https://via.placeholder.com/300x200" alt="Bild 1">
-        <img src="https://via.placeholder.com/300x200" alt="Bild 2">
-        <img src="https://via.placeholder.com/300x200" alt="Bild 3">
-        <img src="https://via.placeholder.com/300x200" alt="Bild 4">
-    </div>
+  <!-- Bilder-Galerie -->
+  <div class="images">
+    <img src="https://via.placeholder.com/300x200" alt="Bild 1">
+    <img src="https://via.placeholder.com/300x200" alt="Bild 2">
+    <img src="https://via.placeholder.com/300x200" alt="Bild 3">
+    <img src="https://via.placeholder.com/300x200" alt="Bild 4">
+  </div>
 
-    <!-- Footer -->
-    <footer>
-        &copy; 2025 Solo Leveling UI. Alle Rechte vorbehalten.
-    </footer>
-
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Solo Leveling UI. Alle Rechte vorbehalten.
+  </footer>
 </body>
 </html>
