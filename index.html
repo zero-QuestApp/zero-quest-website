@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zero Quest - Download</title>
+
+  <!-- Futuristische Schriftart (Audiowide) von Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap"
+    rel="stylesheet"
+  />
+
   <style>
     /* GLOBAL STYLES */
     * {
@@ -11,17 +20,18 @@
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
-      background: #000;  /* Reines Schwarz, wie im UI-Screenshot */
+      background: #000; /* Reines Schwarz */
       color: #fff;
-      font-family: 'Arial', sans-serif;
+      font-family: 'Audiowide', sans-serif; /* Futuristische Schriftart */
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      /* Einfacher Fade-In-Effekt */
       animation: fadeInBackground 1s ease-in-out;
     }
+
     @keyframes fadeInBackground {
       0% { opacity: 0; }
       100% { opacity: 1; }
@@ -32,13 +42,15 @@
       text-align: center;
       margin: 40px 0 20px;
     }
+
     header h1 {
       font-size: 3rem;
-      color: #00ffff;
+      color: #00ffff; /* Neonblau */
       text-transform: uppercase;
       text-shadow: 0 0 10px #00ffff;
       margin-bottom: 10px;
     }
+
     header p {
       font-size: 1.2rem;
       color: #ccc;
@@ -53,28 +65,48 @@
       padding: 40px;
       text-align: center;
 
-      /* "Zerbrochenes Glas" als Hintergrund + schwarzer Overlay */
-      background: 
+      /* Optional: "gebrochenes Glas" als Hintergrund-Textur + Overlay */
+      background:
         url("https://i.ibb.co/fp1n8Wr/cracked-glass.png") center/cover no-repeat,
-        rgba(0,0,0,0.85);
+        rgba(0, 0, 0, 0.85);
 
-      /* Leuchtender Rand und Schein */
-      border: 2px solid #00ffff;
-      box-shadow:
-        0 0 15px #00ffff,      /* Äußerer Schein */
-        inset 0 0 10px #00ffff;/* Innerer Schein */
-
-      /* Ecken abschrägen */
+      /* Ecken durch clip-path (alle Linien "verbunden") */
       clip-path: polygon(
-        4% 0%, 96% 0%,
-        100% 4%, 100% 96%,
-        96% 100%, 4% 100%,
-        0% 96%, 0% 4%
+        10% 0%, 90% 0%,
+        100% 10%, 100% 90%,
+        90% 100%, 10% 100%,
+        0% 90%, 0% 10%
       );
-      overflow: hidden;
+
+      /* Kein Standard-Rand, stattdessen ein Pseudo-Element für die Linie */
+      border: none;
+      overflow: hidden; /* Damit nichts übersteht */
     }
 
-    /* PANEL HEADLINE */
+    /* Neon-Rand über ::before erzeugen */
+    .panel::before {
+      content: "";
+      position: absolute;
+      top: 0; 
+      left: 0;
+      width: 100%;
+      height: 100%;
+      /* Gleiche Ecken wie .panel */
+      clip-path: inherit;
+      border: 2px solid #00ffff; /* Neonblauer Rand */
+      box-shadow:
+        0 0 15px #00ffff, /* Außen-Glow */
+        inset 0 0 10px #00ffff; /* Innen-Glow */
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Panel-Inhalt über dem ::before-Element */
+    .panel > * {
+      position: relative;
+      z-index: 2;
+    }
+
     .panel h2 {
       font-size: 1.8rem;
       color: #00ffff;
@@ -82,32 +114,11 @@
       text-shadow: 0 0 8px #00ffff;
     }
 
-    /* PANEL TEXT */
     .panel p {
       font-size: 1.1rem;
       color: #eee;
       margin-bottom: 30px;
       line-height: 1.4;
-    }
-
-    /* BUTTON-ROW (Yes / No) */
-    .btn-row {
-      margin-bottom: 30px;
-    }
-    .btn-row a {
-      display: inline-block;
-      margin: 0 10px;
-      padding: 10px 20px;
-      border: 2px solid #00ffff;
-      color: #00ffff;
-      text-decoration: none;
-      font-size: 1rem;
-      transition: 0.3s ease;
-    }
-    .btn-row a:hover {
-      background: #00ffff;
-      color: #000;
-      box-shadow: 0 0 10px #00ffff;
     }
 
     /* DOWNLOAD-BUTTON */
@@ -123,6 +134,7 @@
       box-shadow: 0 0 10px #00ffff;
       transition: 0.3s ease;
     }
+
     .download-link a:hover {
       transform: scale(1.05);
       box-shadow: 0 0 20px #00ffff;
@@ -137,12 +149,14 @@
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 20px;
     }
+
     .images img {
       width: 100%;
       border-radius: 8px;
       box-shadow: 0 0 10px #00ffff;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
     .images img:hover {
       transform: scale(1.05);
       box-shadow: 0 0 20px #00ffff;
@@ -165,18 +179,12 @@
     <p>Dein Portal in eine neue Dimension</p>
   </header>
 
-  <!-- FUTURISTISCHES "NOTIFICATION"-PANEL -->
+  <!-- FUTURISTISCHES PANEL MIT EINEM DURCHGEHENDEN NEON-RAND -->
   <div class="panel">
-    <h2>NOTIFICATION</h2>
-    <p>
-      You have received a reward!<br>
-      [Penalty Quest: Survival]<br>
-      Check your reward?
-    </p>
-    <div class="btn-row">
-      <a href="#">Yes</a>
-      <a href="#">No</a>
-    </div>
+    <!-- Statt "NOTIFICATION / Yes / No": Nur [System] -->
+    <h2>[System]</h2>
+    <p>Neue Datei verfügbar!</p>
+    <!-- Download-Link -->
     <div class="download-link">
       <a href="https://www.dropbox.com/scl/fi/lxhfyucgfgov611emelo3/2025-01-03-20-15-00_OSKnHG3p.mp4?rlkey=6ayahrba5tgubxgxhqv4kln0b&st=p9skzizd&dl=0">
         Zero Quest herunterladen
@@ -199,4 +207,3 @@
 
 </body>
 </html>
-
