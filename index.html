@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zero Quest - Download</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -28,7 +28,6 @@
       5% {
         text-shadow: 2.7928974010788217px 0 1px rgba(0,30,255,0.5), -2.7928974010788217px 0 1px rgba(255,0,80,0.3), 0 0 3px;
       }
-      /* ... mehr zufällige Textschatten für den Glitch-Effekt ... */
       100% {
         text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
       }
@@ -208,6 +207,39 @@
       position: relative;
       z-index: 1;
       padding: 20px;
+    }
+
+    /* Neue Styles für den Login-Button */
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .login-button {
+      font-family: 'Press Start 2P', cursive;
+      padding: 8px 15px;
+      background: transparent;
+      color: var(--main-color);
+      border: 2px solid var(--main-color);
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .login-button:hover {
+      background: var(--main-color);
+      color: var(--bg-color);
+      text-shadow: none;
+    }
+
+    .user-info {
+      font-family: 'VT323', monospace;
+      font-size: 1.2rem;
+      color: var(--secondary-color);
     }
 
     header {
@@ -447,6 +479,13 @@
   <div class="vertical-lines"></div>
   <div class="glitch-lines"></div>
   <div class="content">
+    <div class="header-container">
+      <div></div> <!-- Leerer Div für Flexbox-Spacing -->
+      <div id="auth-container">
+        <a href="login.html" class="login-button">Anmelden</a>
+      </div>
+    </div>
+
     <header>
       <h1>Zero Quest</h1>
       <p>Dein Portal in eine neue Dimension</p>
@@ -458,7 +497,7 @@
         <div class="content-overlay">
           <h2>[System]</h2>
           <p>Neue Datei verfügbar!</p>
-          <a href="https://www.dropbox.com/scl/fi/ptbux5o6nwjkuzdbjurge/zero-quest.apk?rlkey=eqj13231qu9ccjzgf9yuuklop&st=lm97xsrg&dl=1">
+          <a href="https://www.dropbox.com/scl/fi/ptbux5o6nwjkuzdbjurge/zero-quest.apk?rlkey=eqj13231qu9ccjzgf9yuuklop&st=lm97xsrg&dl=1" class="download-button">
             Download
           </a>
         </div>
@@ -486,27 +525,32 @@
     <section class="comment-section">
       <h2 class="gallery-title">Feedback</h2>
       
-      <div class="rating-container">
-        <span class="rating-star" data-rating="1">★</span>
-        <span class="rating-star" data-rating="2">★</span>
-        <span class="rating-star" data-rating="3">★</span>
-        <span class="rating-star" data-rating="4">★</span>
-        <span class="rating-star" data-rating="5">★</span>
+      <div id="feedback-login-required">
+        <p style="text-align: center; margin-bottom: 20px;">
+          Bitte <a href="login.html" style="color: var(--secondary-color); text-decoration: underline;">melde dich an</a> oder 
+          <a href="register.html" style="color: var(--secondary-color); text-decoration: underline;">registriere dich</a>, 
+          um Feedback zu geben.
+        </p>
       </div>
+      
+      <div id="feedback-form-container" style="display: none;">
+        <div class="rating-container">
+          <span class="rating-star" data-rating="1">★</span>
+          <span class="rating-star" data-rating="2">★</span>
+          <span class="rating-star" data-rating="3">★</span>
+          <span class="rating-star" data-rating="4">★</span>
+          <span class="rating-star" data-rating="5">★</span>
+        </div>
 
-      <form id="comment-form" class="comment-form">
-        <div class="form-group">
-          <label class="form-label" for="name">Name:</label>
-          <input type="text" id="name" class="form-input" required>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label" for="comment">Kommentar:</label>
-          <textarea id="comment" class="form-textarea" required></textarea>
-        </div>
-        
-        <button type="submit" class="submit-button">Absenden</button>
-      </form>
+        <form id="comment-form" class="comment-form">
+          <div class="form-group">
+            <label class="form-label" for="comment">Kommentar:</label>
+            <textarea id="comment" class="form-textarea" required></textarea>
+          </div>
+          
+          <button type="submit" class="submit-button">Absenden</button>
+        </form>
+      </div>
 
       <div class="comments-list" id="comments-list">
         <!-- Kommentare werden hier dynamisch eingefügt -->
@@ -519,9 +563,45 @@
   </div>
 
   <script>
+    // Benutzer-Authentifizierung prüfen
+    function checkAuth() {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      const authContainer = document.getElementById('auth-container');
+      const feedbackLoginRequired = document.getElementById('feedback-login-required');
+      const feedbackFormContainer = document.getElementById('feedback-form-container');
+      
+      if (currentUser) {
+        // Benutzer ist angemeldet
+        authContainer.innerHTML = `
+          <span class="user-info">Hallo, ${currentUser.name}</span>
+          <button id="logout-button" class="login-button" style="margin-left: 10px;">Abmelden</button>
+        `;
+        
+        // Logout-Button Funktionalität
+        document.getElementById('logout-button').addEventListener('click', () => {
+          localStorage.removeItem('currentUser');
+          window.location.reload();
+        });
+        
+        // Feedback-Formular anzeigen
+        if (feedbackLoginRequired) feedbackLoginRequired.style.display = 'none';
+        if (feedbackFormContainer) feedbackFormContainer.style.display = 'block';
+      } else {
+        // Benutzer ist nicht angemeldet
+        authContainer.innerHTML = `<a href="login.html" class="login-button">Anmelden</a>`;
+        
+        // Feedback-Formular ausblenden
+        if (feedbackLoginRequired) feedbackLoginRequired.style.display = 'block';
+        if (feedbackFormContainer) feedbackFormContainer.style.display = 'none';
+      }
+    }
+    
+    // Beim Laden der Seite Authentifizierung prüfen
+    checkAuth();
+
     // Kommentare im localStorage speichern und laden
     let comments = JSON.parse(localStorage.getItem('comments')) || [];
-    let currentRating = parseInt(localStorage.getItem('rating')) || 0;
+    let currentRating = 0;
 
     // Rating System
     const stars = document.querySelectorAll('.rating-star');
@@ -537,13 +617,10 @@
       });
     }
 
-    updateStars(currentRating);
-
     stars.forEach(star => {
       star.addEventListener('click', () => {
         const rating = parseInt(star.dataset.rating);
         currentRating = rating;
-        localStorage.setItem('rating', rating);
         updateStars(rating);
       });
     });
@@ -558,32 +635,51 @@
             <span>${new Date(comment.date).toLocaleDateString()}</span>
           </div>
           <div class="comment-content">${comment.text}</div>
+          <div class="comment-rating">
+            ${'★'.repeat(comment.rating)}${'☆'.repeat(5 - comment.rating)}
+          </div>
         </div>
       `).join('');
     }
 
     // Formular-Handler
-    document.getElementById('comment-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      const name = document.getElementById('name').value;
-      const text = document.getElementById('comment').value;
-      
-      const newComment = {
-        name,
-        text,
-        date: new Date().toISOString()
-      };
-      
-      comments.unshift(newComment); // Neuen Kommentar am Anfang einfügen
-      localStorage.setItem('comments', JSON.stringify(comments));
-      
-      // Formular zurücksetzen
-      e.target.reset();
-      
-      // Kommentare neu anzeigen
-      displayComments();
-    });
+    const commentForm = document.getElementById('comment-form');
+    if (commentForm) {
+      commentForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser) {
+          alert('Bitte melde dich an, um Feedback zu geben.');
+          return;
+        }
+        
+        const text = document.getElementById('comment').value;
+        
+        if (currentRating === 0) {
+          alert('Bitte gib eine Bewertung ab (1-5 Sterne).');
+          return;
+        }
+        
+        const newComment = {
+          name: currentUser.name,
+          text,
+          rating: currentRating,
+          date: new Date().toISOString()
+        };
+        
+        comments.unshift(newComment); // Neuen Kommentar am Anfang einfügen
+        localStorage.setItem('comments', JSON.stringify(comments));
+        
+        // Formular zurücksetzen
+        e.target.reset();
+        currentRating = 0;
+        updateStars(0);
+        
+        // Kommentare neu anzeigen
+        displayComments();
+      });
+    }
 
     // Initiale Anzeige der Kommentare
     displayComments();
@@ -630,7 +726,6 @@
         createGlitchLine();
       }
     }, 200);
-
   </script>
 </body>
 </html>
