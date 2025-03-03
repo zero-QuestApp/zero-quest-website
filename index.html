@@ -182,7 +182,8 @@
 
     .hologram-container,
     .gallery-section,
-    .comment-section {
+    .comment-section,
+    .blog-section {
       background: rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(1px);
     }
@@ -209,14 +210,35 @@
       padding: 20px;
     }
 
-    /* Neue Styles für den Login-Button */
-    .header-container {
+    /* Navigation */
+    .nav-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
+      border-bottom: 1px solid var(--main-color);
+      padding-bottom: 10px;
     }
 
+    .nav-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .nav-link {
+      font-family: 'VT323', monospace;
+      color: var(--main-color);
+      text-decoration: none;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+    }
+
+    .nav-link:hover {
+      color: var(--secondary-color);
+      text-shadow: 0 0 8px var(--secondary-color);
+    }
+
+    /* Login Button */
     .login-button {
       font-family: 'Press Start 2P', cursive;
       padding: 8px 15px;
@@ -324,7 +346,7 @@
       text-shadow: none;
     }
 
-    .gallery-section {
+    .gallery-section, .blog-section {
       width: 90%;
       max-width: 1200px;
       margin: 40px auto;
@@ -333,7 +355,7 @@
       background: rgba(0, 255, 255, 0.05);
     }
 
-    .gallery-title {
+    .section-title {
       font-family: 'Press Start 2P', cursive;
       font-size: 1.5rem;
       text-align: center;
@@ -358,6 +380,67 @@
       height: 200px;
       object-fit: cover;
       filter: grayscale(0.5) sepia(0.3) hue-rotate(160deg);
+    }
+
+    /* Blog Styles */
+    .blog-preview {
+      margin-bottom: 30px;
+      border: 1px solid var(--main-color);
+      padding: 15px;
+      background: rgba(0, 255, 255, 0.05);
+      transition: all 0.3s;
+    }
+
+    .blog-preview:hover {
+      background: rgba(0, 255, 255, 0.1);
+    }
+
+    .blog-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: var(--main-color);
+    }
+
+    .blog-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+      margin-bottom: 10px;
+    }
+
+    .blog-excerpt {
+      margin-bottom: 15px;
+    }
+
+    .read-more {
+      color: var(--secondary-color);
+      text-decoration: none;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.8rem;
+      transition: all 0.3s;
+    }
+
+    .read-more:hover {
+      text-decoration: underline;
+    }
+
+    .view-all {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .view-all a {
+      font-family: 'Press Start 2P', cursive;
+      color: var(--secondary-color);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+
+    .view-all a:hover {
+      text-decoration: underline;
     }
 
     .comment-section {
@@ -392,6 +475,39 @@
 
     .comment-content {
       font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+
+    .comment-rating {
+      color: var(--main-color);
+      margin-bottom: 10px;
+    }
+
+    .comment-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .comment-action {
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      text-decoration: underline;
+    }
+
+    .comment-replies {
+      margin-top: 10px;
+      padding-left: 20px;
+      border-left: 1px solid var(--main-color);
+    }
+
+    .reply-form {
+      margin-top: 10px;
+      display: none;
     }
 
     .rating-container {
@@ -461,6 +577,7 @@
       color: var(--main-color);
       font-size: 1rem;
       margin-top: 40px;
+      border-top: 1px solid var(--main-color);
     }
 
     @media (max-width: 768px) {
@@ -471,6 +588,16 @@
       .gallery-grid {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       }
+      
+      .nav-container {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -479,8 +606,12 @@
   <div class="vertical-lines"></div>
   <div class="glitch-lines"></div>
   <div class="content">
-    <div class="header-container">
-      <div></div> <!-- Leerer Div für Flexbox-Spacing -->
+    <div class="nav-container">
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="gallery.html" class="nav-link">Galerie</a>
+      </div>
       <div id="auth-container">
         <a href="login.html" class="login-button">Anmelden</a>
       </div>
@@ -504,8 +635,29 @@
       </div>
     </div>
 
+    <section class="blog-section">
+      <h2 class="section-title">Neueste Updates</h2>
+      <div id="blog-previews">
+        <!-- Blog-Vorschauen werden hier dynamisch eingefügt -->
+        <div class="blog-preview">
+          <h3 class="blog-title">Willkommen bei Zero Quest</h3>
+          <div class="blog-meta">
+            <span>Admin</span>
+            <span>01.03.2025</span>
+          </div>
+          <div class="blog-excerpt">
+            <p>Willkommen in der Welt von Zero Quest! Hier findest du alle Informationen zu unserem neuesten Projekt...</p>
+          </div>
+          <a href="blog-post.html?id=1" class="read-more">Weiterlesen &raquo;</a>
+        </div>
+      </div>
+      <div class="view-all">
+        <a href="blog.html">Alle Beiträge anzeigen &raquo;</a>
+      </div>
+    </section>
+
     <section class="gallery-section">
-      <h2 class="gallery-title">Galerie</h2>
+      <h2 class="section-title">Galerie</h2>
       <div class="gallery-grid">
         <div class="gallery-item">
           <img src="https://via.placeholder.com/300x200/000000/00ffff?text=ZERO+QUEST" alt="Screenshot 1">
@@ -523,7 +675,7 @@
     </section>
 
     <section class="comment-section">
-      <h2 class="gallery-title">Feedback</h2>
+      <h2 class="section-title">Feedback</h2>
       
       <div id="feedback-login-required">
         <p style="text-align: center; margin-bottom: 20px;">
@@ -562,24 +714,36 @@
     </footer>
   </div>
 
+  <script src="api.js"></script>
   <script>
     // Benutzer-Authentifizierung prüfen
     function checkAuth() {
-      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      const currentUser = getCurrentUser();
       const authContainer = document.getElementById('auth-container');
       const feedbackLoginRequired = document.getElementById('feedback-login-required');
       const feedbackFormContainer = document.getElementById('feedback-form-container');
       
       if (currentUser) {
         // Benutzer ist angemeldet
-        authContainer.innerHTML = `
+        let authHtml = `
           <span class="user-info">Hallo, ${currentUser.name}</span>
           <button id="logout-button" class="login-button" style="margin-left: 10px;">Abmelden</button>
         `;
         
+        // Admin-Link hinzufügen, wenn der Benutzer ein Admin ist
+        if (currentUser.isAdmin) {
+          authHtml = `
+            <span class="user-info">Admin: ${currentUser.name}</span>
+            <a href="admin.html" class="login-button" style="margin-left: 10px; background-color: var(--secondary-color); color: var(--bg-color);">Admin-Panel</a>
+            <button id="logout-button" class="login-button" style="margin-left: 10px;">Abmelden</button>
+          `;
+        }
+        
+        authContainer.innerHTML = authHtml;
+        
         // Logout-Button Funktionalität
         document.getElementById('logout-button').addEventListener('click', () => {
-          localStorage.removeItem('currentUser');
+          logoutUser();
           window.location.reload();
         });
         
@@ -599,8 +763,41 @@
     // Beim Laden der Seite Authentifizierung prüfen
     checkAuth();
 
+    // Blog-Vorschauen laden
+    function loadBlogPreviews() {
+      const blogPosts = getBlogPosts();
+      const previewsContainer = document.getElementById('blog-previews');
+      
+      if (previewsContainer) {
+        // Nur die neuesten 3 Beiträge anzeigen
+        const recentPosts = blogPosts.slice(0, 3);
+        
+        if (recentPosts.length === 0) {
+          previewsContainer.innerHTML = '<p style="text-align: center;">Noch keine Blog-Beiträge vorhanden.</p>';
+          return;
+        }
+        
+        previewsContainer.innerHTML = recentPosts.map(post => `
+          <div class="blog-preview">
+            <h3 class="blog-title">${post.title}</h3>
+            <div class="blog-meta">
+              <span>${post.author}</span>
+              <span>${new Date(post.date).toLocaleDateString()}</span>
+            </div>
+            <div class="blog-excerpt">
+              <p>${post.content.substring(0, 150)}${post.content.length > 150 ? '...' : ''}</p>
+            </div>
+            <a href="blog-post.html?id=${post.id}" class="read-more">Weiterlesen &raquo;</a>
+          </div>
+        `).join('');
+      }
+    }
+    
+    // Blog-Vorschauen laden
+    loadBlogPreviews();
+
     // Kommentare im localStorage speichern und laden
-    let comments = JSON.parse(localStorage.getItem('comments')) || [];
+    let comments = getComments();
     let currentRating = 0;
 
     // Rating System
@@ -628,18 +825,124 @@
     // Kommentare anzeigen
     function displayComments() {
       const commentsList = document.getElementById('comments-list');
-      commentsList.innerHTML = comments.map(comment => `
-        <div class="comment-item">
-          <div class="comment-header">
-            <span>${comment.name}</span>
-            <span>${new Date(comment.date).toLocaleDateString()}</span>
+      if (!commentsList) return;
+      
+      if (comments.length === 0) {
+        commentsList.innerHTML = '<p style="text-align: center;">Noch keine Kommentare vorhanden.</p>';
+        return;
+      }
+      
+      commentsList.innerHTML = comments.map(comment => {
+        // Antworten für diesen Kommentar abrufen
+        const replies = comment.replies || [];
+        
+        // Prüfen, ob der aktuelle Benutzer ein Admin ist
+        const currentUser = getCurrentUser();
+        const isAdmin = currentUser && currentUser.isAdmin;
+        
+        // Admin-Aktionen anzeigen
+        const adminActions = isAdmin ? `
+          <button class="comment-action delete-comment" data-id="${comment.id}">Löschen</button>
+        ` : '';
+        
+        // Antwort-Formular
+        const replyForm = `
+          <div class="reply-form" id="reply-form-${comment.id}">
+            <div class="form-group">
+              <textarea class="form-textarea reply-textarea" id="reply-text-${comment.id}" placeholder="Deine Antwort..."></textarea>
+            </div>
+            <button class="submit-button submit-reply" data-id="${comment.id}">Antworten</button>
           </div>
-          <div class="comment-content">${comment.text}</div>
-          <div class="comment-rating">
-            ${'★'.repeat(comment.rating)}${'☆'.repeat(5 - comment.rating)}
+        `;
+        
+        // Antworten anzeigen
+        const repliesHtml = replies.length > 0 ? `
+          <div class="comment-replies">
+            ${replies.map(reply => `
+              <div class="comment-item">
+                <div class="comment-header">
+                  <span>${reply.name}</span>
+                  <span>${new Date(reply.date).toLocaleDateString()}</span>
+                </div>
+                <div class="comment-content">${reply.text}</div>
+                ${isAdmin ? `<button class="comment-action delete-reply" data-comment-id="${comment.id}" data-reply-id="${reply.id}">Löschen</button>` : ''}
+              </div>
+            `).join('')}
+          </div  : ''}
+              </div>
+            `).join('')}
           </div>
-        </div>
-      `).join('');
+        ` : '';
+        
+        return `
+          <div class="comment-item">
+            <div class="comment-header">
+              <span>${comment.name}</span>
+              <span>${new Date(comment.date).toLocaleDateString()}</span>
+            </div>
+            <div class="comment-content">${comment.text}</div>
+            <div class="comment-rating">
+              ${'★'.repeat(comment.rating)}${'☆'.repeat(5 - comment.rating)}
+            </div>
+            <div class="comment-actions">
+              <button class="comment-action reply-button" data-id="${comment.id}">Antworten</button>
+              ${adminActions}
+            </div>
+            ${repliesHtml}
+            ${replyForm}
+          </div>
+        `;
+      }).join('');
+      
+      // Event-Listener für Antwort-Buttons
+      document.querySelectorAll('.reply-button').forEach(button => {
+        button.addEventListener('click', () => {
+          const commentId = button.dataset.id;
+          const replyForm = document.getElementById(`reply-form-${commentId}`);
+          
+          // Alle anderen Antwort-Formulare ausblenden
+          document.querySelectorAll('.reply-form').forEach(form => {
+            if (form.id !== `reply-form-${commentId}`) {
+              form.style.display = 'none';
+            }
+          });
+          
+          // Dieses Antwort-Formular ein-/ausblenden
+          replyForm.style.display = replyForm.style.display === 'block' ? 'none' : 'block';
+        });
+      });
+      
+      // Event-Listener für Antwort-Absenden
+      document.querySelectorAll('.submit-reply').forEach(button => {
+        button.addEventListener('click', () => {
+          const commentId = button.dataset.id;
+          const replyText = document.getElementById(`reply-text-${commentId}`).value;
+          
+          if (replyText.trim() === '') return;
+          
+          addReplyToComment(commentId, replyText);
+          displayComments();
+        });
+      });
+      
+      // Event-Listener für Löschen-Buttons (nur für Admins)
+      document.querySelectorAll('.delete-comment').forEach(button => {
+        button.addEventListener('click', () => {
+          const commentId = button.dataset.id;
+          deleteComment(commentId);
+          displayComments();
+        });
+      });
+      
+      // Event-Listener für Antwort-Löschen-Buttons (nur für Admins)
+      document.querySelectorAll('.delete-reply').forEach(button => {
+        button.addEventListener('click', () => {
+          const commentId = button.dataset.commentId;
+          const replyId = button.dataset.replyId;
+          deleteReply(commentId, replyId);
+          displayComments();
+        });
+      });
     }
 
     // Formular-Handler
@@ -648,7 +951,7 @@
       commentForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        const currentUser = getCurrentUser();
         if (!currentUser) {
           alert('Bitte melde dich an, um Feedback zu geben.');
           return;
@@ -661,15 +964,7 @@
           return;
         }
         
-        const newComment = {
-          name: currentUser.name,
-          text,
-          rating: currentRating,
-          date: new Date().toISOString()
-        };
-        
-        comments.unshift(newComment); // Neuen Kommentar am Anfang einfügen
-        localStorage.setItem('comments', JSON.stringify(comments));
+        addComment(text, currentRating);
         
         // Formular zurücksetzen
         e.target.reset();
