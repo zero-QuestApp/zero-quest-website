@@ -785,14 +785,33 @@
     function checkAdminAuth() {
       const currentUser = getCurrentUser();
       
-      if (!currentUser || !currentUser.isAdmin) {
+      if (!currentUser) {
+        // Kein Benutzer eingeloggt, zur Login-Seite umleiten
+        window.location.href = 'login.html';
+        return false;
+      }
+      
+      if (!currentUser.isAdmin) {
         // Kein Admin-Zugriff, zur Startseite umleiten
         window.location.href = 'index.html';
+        return false;
       }
+      
+      return true;
     }
     
     // Beim Laden der Seite Admin-Berechtigung prüfen
-    checkAdminAuth();
+    if (!checkAdminAuth()) {
+      // Wenn keine Berechtigung, wird die Seite umgeleitet
+      // Der restliche Code wird nicht ausgeführt
+    } else {
+      // Admin-Benutzer erstellen, falls noch keiner existiert
+      initializeAdmin();
+      
+      // Benutzername anzeigen
+      const currentUser = getCurrentUser();
+      document.querySelector('.user-info').textContent = `Admin: ${currentUser.name}`;
+    }
 
     // Logout-Button Funktionalität
     document.getElementById('logout-button').addEventListener('click', (e) => {
@@ -1274,11 +1293,36 @@
       // Fokus auf den Editor setzen, damit er sofort bereit ist
       document.getElementById('post-content').focus();
       
-      // Admin-Benutzer erstellen, falls noch keiner existiert
-      initializeAdmin();
-      
       console.log("Admin Panel wurde initialisiert");
     });
+    
+    // Initialisiere einen Admin-Benutzer, falls noch keiner existiert
+    function initializeAdmin() {
+      const users = getUsers();
+      
+      // Prüfen, ob bereits ein Admin existiert
+      const adminExists = users.some(user => user.isAdmin);
+      
+      if (!adminExists && users.length > 0) {
+        // Den ersten Benutzer zum Admin machen
+        users[0].isAdmin = true;
+        saveUsers(users);
+        console.log("Erster Benutzer wurde zum Admin gemacht:", users[0].name);
+      } else if (!adminExists && users.length === 0) {
+        // Standard-Admin erstellen, falls keine Benutzer existieren
+        const defaultAdmin = {
+          id: "admin-" + Date.now(),
+          name: "Administrator",
+          email: "admin@zeroquest.de",
+          password: "admin123", // In einer echten Anwendung sollte das Passwort gehasht sein
+          isAdmin: true
+        };
+        
+        users.push(defaultAdmin);
+        saveUsers(users);
+        console.log("Standard-Admin wurde erstellt");
+      }
+    }
   </script>
 </body>
 </html>
