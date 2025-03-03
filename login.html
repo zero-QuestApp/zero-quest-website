@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zero Quest - Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --main-color: #0ff;
+      --secondary-color: #ff0080;
+      --bg-color: #000;
+    }
+
+    /* ALLE CSS-STYLES AUS DEINER INDEX.HTLM HIER EINFÜGEN */
+    /* [Hier den kompletten <style>-Block aus deiner index.html einfügen] */
+    /* Aus Platzgründen nicht doppelt gezeigt, aber 1:1 kopieren! */
+    
+    /* CRT Effect, Animationen, Formulare etc. */
+    /* ... */
+    
+  </style>
+</head>
+<body>
+  <div class="horizontal-lines"></div>
+  <div class="vertical-lines"></div>
+  <div class="glitch-lines"></div>
+  
+  <div class="content">
+    <header>
+      <h1>🔐 SYSTEM ACCESS</h1>
+      <p>GitHub Credentials Required</p>
+    </header>
+
+    <div class="hologram-container">
+      <div class="content-wrapper">
+        <div class="content-overlay">
+          <form id="auth-form" onsubmit="return handleAuth(event)">
+            <div class="form-group">
+              <label class="form-label">Username:</label>
+              <input type="text" class="form-input" id="username" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Password:</label>
+              <input type="password" class="form-input" id="password" required>
+            </div>
+
+            <button type="submit" class="download-button">Login / Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+</body>
+</html>
