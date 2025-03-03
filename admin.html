@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zero Quest - Admin Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --main-color: #0ff;
+      --secondary-color: #ff0080;
+      --bg-color: #000;
+      --admin-color: #ff0080;
+    }
+
+    @keyframes textShadow {
+      0% {
+        text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+      }
+      5% {
+        text-shadow: 2.7928974010788217px 0 1px rgba(0,30,255,0.5), -2.7928974010788217px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+      }
+      100% {
+        text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+      }
+    }
+
+    body {
+      background: var(--bg-color);
+      color: var(--main-color);
+      font-family: 'VT323', monospace;
+      min-height: 100vh;
+      animation: textShadow 1.6s infinite;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* CRT Effect */
+    body::before {
+      content: "";
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: 
+        linear-gradient(
+          transparent 50%, 
+          rgba(0, 0, 0, 0.5) 50%
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255, 0, 0, 0.06),
+          rgba(0, 255, 0, 0.02),
+          rgba(0, 0, 255, 0.06)
+        );
+      background-size: 100% 4px, 3px 100%;
+      pointer-events: none;
+      z-index: 999;
+      animation: scanlines 0.5s linear infinite;
+    }
+
+    /* Horizontale Linien */
+    .horizontal-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 1px,
+        rgba(0, 255, 255, 0.05) 2px,
+        rgba(0, 255, 255, 0.05) 3px
+      );
+      pointer-events: none;
+      z-index: 998;
+    }
+
+    /* Vertikale Linien */
+    .vertical-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 5px,
+        rgba(0, 255, 255, 0.02) 6px,
+        rgba(0, 255, 255, 0.02) 10px
+      );
+      pointer-events: none;
+      z-index: 997;
+    }
+
+    /* Glitch Linien */
+    .glitch-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    @keyframes scanlines {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 0 4px;
+      }
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      padding: 20px;
