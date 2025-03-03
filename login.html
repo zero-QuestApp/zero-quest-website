@@ -258,6 +258,7 @@
     </div>
   </div>
 
+  <script src="api.js"></script>
   <script>
     // Glitch-Linien-Effekt
     function createGlitchLine() {
@@ -294,23 +295,15 @@
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       
-      // Benutzer aus dem localStorage abrufen
-      const users = JSON.parse(localStorage.getItem('users')) || [];
-      const user = users.find(u => u.email === email);
+      // Benutzer anmelden
+      const result = loginUser(email, password);
       
-      if (user && user.password === password) {
+      if (result.success) {
         // Erfolgreiche Anmeldung
-        localStorage.setItem('currentUser', JSON.stringify({
-          id: user.id,
-          name: user.name,
-          email: user.email
-        }));
-        
-        // Weiterleitung zur Hauptseite
         window.location.href = 'index.html';
       } else {
         // Fehlerhafte Anmeldung
-        document.getElementById('error-message').textContent = 'Ungültige Email oder Passwort.';
+        document.getElementById('error-message').textContent = result.message;
       }
     });
   </script>
