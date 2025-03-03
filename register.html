@@ -279,6 +279,7 @@
     </div>
   </div>
 
+  <script src="api.js"></script>
   <script>
     // Glitch-Linien-Effekt
     function createGlitchLine() {
@@ -326,39 +327,27 @@
         return;
       }
       
-      // Benutzer aus dem localStorage abrufen
-      const users = JSON.parse(localStorage.getItem('users')) || [];
+      // Benutzer registrieren
+      const result = registerUser(name, email, password);
       
-      // Überprüfen, ob die E-Mail bereits existiert
-      if (users.some(user => user.email === email)) {
-        errorMessage.textContent = 'Diese Email-Adresse wird bereits verwendet.';
-        return;
+      if (result.success) {
+        // Erfolgreiche Registrierung
+        errorMessage.textContent = '';
+        successMessage.textContent = 'Registrierung erfolgreich! Du wirst zur Anmeldeseite weitergeleitet...';
+        successMessage.style.display = 'block';
+        
+        // Formular zurücksetzen
+        e.target.reset();
+        
+        // Zur Anmeldeseite weiterleiten
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 2000);
+      } else {
+        // Fehlerhafte Registrierung
+        errorMessage.textContent = result.message;
+        successMessage.style.display = 'none';
       }
-      
-      // Neuen Benutzer erstellen
-      const newUser = {
-        id: Date.now().toString(),
-        name,
-        email,
-        password
-      };
-      
-      // Benutzer speichern
-      users.push(newUser);
-      localStorage.setItem('users', JSON.stringify(users));
-      
-      // Erfolgsmeldung anzeigen
-      errorMessage.textContent = '';
-      successMessage.textContent = 'Registrierung erfolgreich! Du wirst zur Anmeldeseite weitergeleitet...';
-      successMessage.style.display = 'block';
-      
-      // Formular zurücksetzen
-      e.target.reset();
-      
-      // Zur Anmeldeseite weiterleiten
-      setTimeout(() => {
-        window.location.href = 'login.html';
-      }, 2000);
     });
   </script>
 </body>
