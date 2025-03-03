@@ -803,19 +803,21 @@
 
     // Navigation zwischen Admin-Bereichen
     document.querySelectorAll('.admin-menu-link').forEach(link => {
-      link.addEventListener('click', (e) => {
+      link.addEventListener('click', function(e) {
         e.preventDefault();
         
         // Aktiven Link markieren
         document.querySelectorAll('.admin-menu-link').forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
+        this.classList.add('active');
         
         // Aktiven Bereich anzeigen
-        const sectionId = link.dataset.section;
+        const sectionId = this.getAttribute('data-section');
         document.querySelectorAll('.admin-section').forEach(section => {
           section.classList.remove('active');
         });
         document.getElementById(sectionId).classList.add('active');
+        
+        console.log("Abschnitt gewechselt zu:", sectionId);
       });
     });
 
@@ -829,6 +831,8 @@
       
       // Aktiven Status für Buttons aktualisieren
       updateButtonStates();
+      
+      console.log("Formatierung angewendet:", command, value);
     }
 
     // Aktiven Status der Formatierungsbuttons aktualisieren
@@ -878,9 +882,6 @@
           <div class="blog-item-actions">
             <button class="blog-action edit-post" data-id="${post.id}">Bearbeiten</button>
             <button class="blog-action delete delete-post" data-id="${post.id}">Löschen</button>
-          </div>
-        </div>
-      `).join('');  data-id="${post.id}">Löschen</button>
           </div>
         </div>
       `).join('');
@@ -1130,7 +1131,7 @@
       
       // Zum Bearbeitungsbereich navigieren
       document.querySelectorAll('.admin-menu-link').forEach(link => {
-        if (link.dataset.section === 'new-post') {
+        if (link.getAttribute('data-section') === 'new-post') {
           link.click();
         }
       });
@@ -1210,7 +1211,7 @@
         
         // Zur Blog-Verwaltung navigieren
         document.querySelectorAll('.admin-menu-link').forEach(link => {
-          if (link.dataset.section === 'blog-management') {
+          if (link.getAttribute('data-section') === 'blog-management') {
             link.click();
           }
         });
@@ -1272,6 +1273,11 @@
     document.addEventListener('DOMContentLoaded', function() {
       // Fokus auf den Editor setzen, damit er sofort bereit ist
       document.getElementById('post-content').focus();
+      
+      // Admin-Benutzer erstellen, falls noch keiner existiert
+      initializeAdmin();
+      
+      console.log("Admin Panel wurde initialisiert");
     });
   </script>
 </body>
