@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zero Quest - Registrieren</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --main-color: #0ff;
+      --secondary-color: #ff0080;
+      --bg-color: #000;
+    }
+
+    @keyframes textShadow {
+      0% {
+        text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+      }
+      5% {
+        text-shadow: 2.7928974010788217px 0 1px rgba(0,30,255,0.5), -2.7928974010788217px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+      }
+      100% {
+        text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+      }
+    }
+
+    body {
+      background: var(--bg-color);
+      color: var(--main-color);
+      font-family: 'VT323', monospace;
+      min-height: 100vh;
+      animation: textShadow 1.6s infinite;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* CRT Effect */
+    body::before {
+      content: "";
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: 
+        linear-gradient(
+          transparent 50%, 
+          rgba(0, 0, 0, 0.5) 50%
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255, 0, 0, 0.06),
+          rgba(0, 255, 0, 0.02),
+          rgba(0, 0, 255, 0.06)
+        );
+      background-size: 100% 4px, 3px 100%;
+      pointer-events: none;
+      z-index: 999;
+      animation: scanlines 0.5s linear infinite;
+    }
+
+    /* Horizontale Linien */
+    .horizontal-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 1px,
+        rgba(0, 255, 255, 0.05) 2px,
+        rgba(0, 255, 255, 0.05) 3px
+      );
+      pointer-events: none;
+      z-index: 998;
+    }
+
+    /* Vertikale Linien */
+    .vertical-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 5px,
+        rgba(0, 255, 255, 0.02) 6px,
+        rgba(0, 255, 255, 0.02) 10px
+      );
+      pointer-events: none;
+      z-index: 997;
+    }
+
+    /* Glitch Linien */
+    .glitch-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    @keyframes scanlines {
+      0% {
+        background-position: 0 0;
+      }
+      100% {
+        background-position: 0 4px;
+      }
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      padding: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .back-button {
+      font-family: 'Press Start 2P', cursive;
+      padding: 8px 15px;
+      background: transparent;
+      color: var(--main-color);
+      border: 2px solid var(--main-color);
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .back-button:hover {
+      background: var(--main-color);
+      color: var(--bg-color);
+      text-shadow: none;
+    }
+
+    .register-container {
+      border: 2px solid var(--main-color);
+      padding: 30px;
+      background: rgba(0, 255, 255, 0.05);
+      margin-top: 20px;
+    }
+
+    .register-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--main-color);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--main-color);
+      font-size: 1.1rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 10px;
+      background: rgba(0, 255, 255, 0.1);
+      border: 2px solid var(--main-color);
+      color: var(--main-color);
+      font-family: 'VT323', monospace;
+      font-size: 1.1rem;
+    }
+
+    .submit-button {
+      font-family: 'Press Start 2P', cursive;
+      padding: 10px 20px;
+      background: transparent;
+      color: var(--main-color);
+      border: 2px solid var(--main-color);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .submit-button:hover {
+      background: var(--main-color);
+      color: var(--bg-color);
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.1rem;
+    }
+
+    .login-link a {
+      color: var(--secondary-color);
+      text-decoration: underline;
+    }
+
+    .error-message {
+      color: var(--secondary-color);
+      margin-top: 10px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    .success-message {
+      color: var(--main-color);
+      margin-top: 10px;
+      text-align: center;
+      font-size: 1.1rem;
+      background: rgba(0, 255, 255, 0.1);
+      padding: 10px;
+      border: 1px solid var(--main-color);
+    }
+  </style>
+</head>
+<body>
+  <div class="horizontal-lines"></div>
+  <div class="vertical-lines"></div>
+  <div class="glitch-lines"></div>
+  <div class="content">
+    <a href="index.html" class="back-button">← Zurück</a>
+    
+    <div class="register-container">
+      <h2 class="register-title">Registrieren</h2>
+      
+      <form id="register-form">
+        <div class="form-group">
+          <label class="form-label" for="name">Name:</label>
+          <input type="text" id="name" class="form-input" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="email">Email:</label>
+          <input type="email" id="email" class="form-input" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="password">Passwort:</label>
+          <input type="password" id="password" class="form-input" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="confirm-password">Passwort bestätigen:</label>
+          <input type="password" id="confirm-password" class="form-input" required>
+        </div>
+        
+        <div id="error-message" class="error-message"></div>
+        <div id="success-message" class="success-message" style="display: none;"></div>
+        
+        <button type="submit" class="submit-button">Registrieren</button>
+      </form>
+      
+      <div class="login-link">
+        Bereits registriert? <a href="login.html">Anmelden</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Glitch-Linien-Effekt
+    function createGlitchLine() {
+      const glitchContainer = document.querySelector('.glitch-lines');
+      const line = document.createElement('div');
+      
+      line.style.position = 'absolute';
+      line.style.top = Math.random() * 100 + '%';
+      line.style.left = '0';
+      line.style.right = '0';
+      line.style.height = '2px';
+      line.style.background = `rgba(0, 255, 255, ${Math.random() * 0.5})`;
+      line.style.animation = 'glitch 0.5s linear forwards';
+      
+      glitchContainer.appendChild(line);
+      
+      // Entferne die Linie nach der Animation
+      setTimeout(() => {
+        line.remove();
+      }, 500);
+    }
+
+    // Zufällige Glitch-Linien erzeugen
+    setInterval(() => {
+      if (Math.random() > 0.7) {
+        createGlitchLine();
+      }
+    }, 200);
+
+    // Registrierungs-Formular-Handler
+    document.getElementById('register-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+      
+      const errorMessage = document.getElementById('error-message');
+      const successMessage = document.getElementById('success-message');
+      
+      // Passwörter überprüfen
+      if (password !== confirmPassword) {
+        errorMessage.textContent = 'Die Passwörter stimmen nicht überein.';
+        return;
+      }
+      
+      // Benutzer aus dem localStorage abrufen
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      
+      // Überprüfen, ob die E-Mail bereits existiert
+      if (users.some(user => user.email === email)) {
+        errorMessage.textContent = 'Diese Email-Adresse wird bereits verwendet.';
+        return;
+      }
+      
+      // Neuen Benutzer erstellen
+      const newUser = {
+        id: Date.now().toString(),
+        name,
+        email,
+        password
+      };
+      
+      // Benutzer speichern
+      users.push(newUser);
+      localStorage.setItem('users', JSON.stringify(users));
+      
+      // Erfolgsmeldung anzeigen
+      errorMessage.textContent = '';
+      successMessage.textContent = 'Registrierung erfolgreich! Du wirst zur Anmeldeseite weitergeleitet...';
+      successMessage.style.display = 'block';
+      
+      // Formular zurücksetzen
+      e.target.reset();
+      
+      // Zur Anmeldeseite weiterleiten
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
