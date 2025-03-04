@@ -580,6 +580,33 @@
       border-top: 1px solid var(--main-color);
     }
 
+    /* Debug Panel */
+    .debug-panel {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid var(--main-color);
+      padding: 10px;
+      z-index: 1000;
+      max-width: 300px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-size: 0.8rem;
+    }
+
+    .debug-button {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background: transparent;
+      border: 1px solid var(--main-color);
+      color: var(--main-color);
+      padding: 5px 10px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
     @media (max-width: 768px) {
       .admin-container {
         flex-direction: column;
@@ -668,6 +695,8 @@
             <!-- Blog-Einträge werden hier dynamisch eingefügt -->
             <p>Lade Blog-Einträge...</p>
           </div>
+          
+          <button class="submit-button" id="create-new-post-button">Neuen Blog erstellen</button>
         </div>
         
         <!-- New Post Section -->
@@ -779,6 +808,9 @@
     </footer>
   </div>
 
+  <button id="debug-button" style="position: fixed; bottom: 10px; right: 10px; background: transparent; border: 1px solid var(--main-color); color: var(--main-color); padding: 5px 10px; cursor: pointer; z-index: 1001;">Debug</button>
+  <div id="debug-panel" style="position: fixed; bottom: 10px; right: 10px; background: rgba(0, 0, 0, 0.8); border: 1px solid var(--main-color); padding: 10px; z-index: 1000; max-width: 300px; max-height: 200px; overflow-y: auto; font-size: 0.8rem; display: none;"></div>
+
   <script src="api.js"></script>
   <script>
     // Prüfen, ob der Benutzer ein Admin ist
@@ -805,7 +837,7 @@
       // Wenn keine Berechtigung, wird die Seite umgeleitet
       // Der restliche Code wird nicht ausgeführt
     } else {
-      // Admin-Benutzer erstellen, falls noch keiner existiert
+      // Admin-Benutzer erstellen, falls nötig
       initializeAdmin();
       
       // Benutzername anzeigen
@@ -837,6 +869,16 @@
         document.getElementById(sectionId).classList.add('active');
         
         console.log("Abschnitt gewechselt zu:", sectionId);
+      });
+    });
+
+    // Button zum Erstellen eines neuen Beitrags
+    document.getElementById('create-new-post-button').addEventListener('click', function() {
+      // Zum Bereich "Neuer Beitrag" wechseln
+      document.querySelectorAll('.admin-menu-link').forEach(link => {
+        if (link.getAttribute('data-section') === 'new-post') {
+          link.click();
+        }
       });
     });
 
@@ -920,6 +962,7 @@
           if (confirm('Bist du sicher, dass du diesen Beitrag löschen möchtest?')) {
             deleteBlogPost(postId);
             loadBlogPosts();
+            showAlert('Beitrag erfolgreich gelöscht!', 'success');
           }
         });
       });
@@ -981,6 +1024,7 @@
           if (confirm('Bist du sicher, dass du diesen Kommentar löschen möchtest?')) {
             deleteComment(commentId);
             loadComments();
+            showAlert('Kommentar erfolgreich gelöscht!', 'success');
           }
         });
       });
@@ -993,6 +1037,7 @@
           if (confirm('Bist du sicher, dass du diese Antwort löschen möchtest?')) {
             deleteReply(commentId, replyId);
             loadComments();
+            showAlert('Antwort erfolgreich gelöscht!', 'success');
           }
         });
       });
@@ -1045,6 +1090,7 @@
           if (confirm('Bist du sicher, dass du diesen Benutzer zum Admin machen möchtest?')) {
             makeUserAdmin(userId);
             loadUsers();
+            showAlert('Benutzer wurde zum Admin gemacht!', 'success');
           }
         });
       });
@@ -1260,6 +1306,38 @@
       }, 3000);
     }
 
+    // Debug-Panel anzeigen
+    document.getElementById('debug-button').addEventListener('click', function() {
+      const debugPanel = document.getElementById('debug-panel');
+      
+      if (debugPanel.style.display === 'none') {
+        // Debug-Informationen anzeigen
+        debugPanel.innerHTML = `
+          <h3>Debug-Informationen</h3>
+          <p>Benutzer: ${JSON.stringify(getUsers().length)} Einträge</p>
+          <p>Aktueller Benutzer: ${getCurrentUser() ? getCurrentUser().name : 'Keiner'}</p>
+          <p>Blog-Beiträge: ${JSON.stringify(getBlogPosts().length)} Einträge</p>
+          <p>Kommentare: ${JSON.stringify(getComments().length)} Einträge</p>
+          <button id="clear-storage">Speicher löschen</button>
+        `;
+      
+      // Event-Listener für "Speicher löschen"-Button
+      document.getElementById('clear-storage').addEventListener('click', function() {
+        if (confirm('Bist du sicher, dass du alle Daten löschen möchtest? Dies kann nicht rückgängig gemacht werden!')) {
+          localStorage.clear();
+          alert('Alle Daten wurden gelöscht. Die Seite wird neu geladen.');
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        }
+      });
+      
+        debugPanel.style.display = 'block';
+      } else {
+        debugPanel.style.display = 'none';
+      }
+    });
+
     // Glitch-Linien-Effekt
     function createGlitchLine() {
       const glitchContainer = document.querySelector('.glitch-lines');
@@ -1293,36 +1371,12 @@
       // Fokus auf den Editor setzen, damit er sofort bereit ist
       document.getElementById('post-content').focus();
       
+      // Debug-Ausgabe
+      showStorageDebug();
+      
       console.log("Admin Panel wurde initialisiert");
     });
-    
-    // Initialisiere einen Admin-Benutzer, falls noch keiner existiert
-    function initializeAdmin() {
-      const users = getUsers();
-      
-      // Prüfen, ob bereits ein Admin existiert
-      const adminExists = users.some(user => user.isAdmin);
-      
-      if (!adminExists && users.length > 0) {
-        // Den ersten Benutzer zum Admin machen
-        users[0].isAdmin = true;
-        saveUsers(users);
-        console.log("Erster Benutzer wurde zum Admin gemacht:", users[0].name);
-      } else if (!adminExists && users.length === 0) {
-        // Standard-Admin erstellen, falls keine Benutzer existieren
-        const defaultAdmin = {
-          id: "admin-" + Date.now(),
-          name: "Administrator",
-          email: "admin@zeroquest.de",
-          password: "admin123", // In einer echten Anwendung sollte das Passwort gehasht sein
-          isAdmin: true
-        };
-        
-        users.push(defaultAdmin);
-        saveUsers(users);
-        console.log("Standard-Admin wurde erstellt");
-      }
-    }
   </script>
 </body>
 </html>
+
