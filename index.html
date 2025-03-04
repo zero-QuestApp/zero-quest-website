@@ -20,125 +20,20 @@
       --secondary-color: #ff0080;
       --bg-color: #000;
       --text-color: #fff;
-      --card-bg: rgba(0, 0, 0, 0.5);
-      --card-border: rgba(0, 255, 255, 0.3);
-      --transition-speed: 0.3s;
-    }
-
-    @keyframes textShadow {
-      0% {
-        text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-      }
-      5% {
-        text-shadow: 2.7928974010788217px 0 1px rgba(0,30,255,0.5), -2.7928974010788217px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-      }
-      100% {
-        text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-      }
     }
 
     body {
-      background: var(--bg-color);
+      background-color: var(--bg-color);
       color: var(--text-color);
       font-family: 'VT323', monospace;
-      min-height: 100vh;
-      animation: textShadow 1.6s infinite;
-      position: relative;
-      overflow-x: hidden;
+      line-height: 1.6;
     }
 
-    /* CRT Effect */
-    body::before {
-      content: "";
-      display: block;
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      background: 
-        linear-gradient(
-          transparent 50%, 
-          rgba(0, 0, 0, 0.5) 50%
-        ),
-        linear-gradient(
-          90deg,
-          rgba(255, 0, 0, 0.06),
-          rgba(0, 255, 0, 0.02),
-          rgba(0, 0, 255, 0.06)
-        );
-      background-size: 100% 4px, 3px 100%;
-      pointer-events: none;
-      z-index: 999;
-      animation: scanlines 0.5s linear infinite;
-    }
-
-    /* Horizontale Linien */
-    .horizontal-lines {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 1px,
-        rgba(0, 255, 255, 0.05) 2px,
-        rgba(0, 255, 255, 0.05) 3px
-      );
-      pointer-events: none;
-      z-index: 998;
-    }
-
-    /* Vertikale Linien */
-    .vertical-lines {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 5px,
-        rgba(0, 255, 255, 0.02) 6px,
-        rgba(0, 255, 255, 0.02) 10px
-      );
-      pointer-events: none;
-      z-index: 997;
-    }
-
-    /* Glitch Linien */
-    .glitch-lines {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      pointer-events: none;
-      z-index: 1000;
-    }
-
-    @keyframes scanlines {
-      0% {
-        background-position: 0 0;
-      }
-      100% {
-        background-position: 0 4px;
-      }
-    }
-
-    .content {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Header und Navigation */
+    /* Header Styles */
     header {
-      padding: 20px 0;
-      position: relative;
-      z-index: 10;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 15px 0;
+      border-bottom: 1px solid var(--main-color);
     }
 
     .nav-container {
@@ -154,7 +49,6 @@
       font-family: 'Press Start 2P', cursive;
       font-size: 1.5rem;
       color: var(--main-color);
-      text-shadow: 2px 2px var(--bg-color);
     }
 
     .logo h1 span {
@@ -165,97 +59,26 @@
       text-decoration: none;
     }
 
-    .main-nav {
-      display: flex;
-    }
-
     .nav-links {
       display: flex;
       list-style: none;
+      gap: 20px;
     }
 
     .nav-link {
       color: var(--main-color);
       text-decoration: none;
-      padding: 10px 15px;
       font-size: 1.2rem;
-      transition: all var(--transition-speed);
-      position: relative;
-    }
-
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 2px;
-      background: var(--secondary-color);
-      transition: width var(--transition-speed);
-    }
-
-    .nav-link:hover::after,
-    .nav-link.active::after {
-      width: 80%;
+      transition: all 0.3s;
     }
 
     .nav-link:hover,
     .nav-link.active {
       color: var(--secondary-color);
-      text-shadow: 0 0 8px var(--secondary-color);
     }
 
-    .mobile-menu-toggle {
-      display: none;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      width: 30px;
-      height: 20px;
-      position: relative;
-      z-index: 100;
-    }
-
-    .mobile-menu-toggle span {
-      display: block;
-      width: 100%;
-      height: 2px;
-      background: var(--main-color);
-      position: absolute;
-      transition: all 0.3s;
-    }
-
-    .mobile-menu-toggle span:nth-child(1) {
-      top: 0;
-    }
-
-    .mobile-menu-toggle span:nth-child(2) {
-      top: 9px;
-    }
-
-    .mobile-menu-toggle span:nth-child(3) {
-      top: 18px;
-    }
-
-    .mobile-menu-toggle.active span:nth-child(1) {
-      transform: rotate(45deg);
-      top: 9px;
-    }
-
-    .mobile-menu-toggle.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .mobile-menu-toggle.active span:nth-child(3) {
-      transform: rotate(-45deg);
-      top: 9px;
-    }
-
-    /* Auth Container */
     .auth-container {
       display: flex;
-      align-items: center;
       gap: 15px;
     }
 
@@ -267,19 +90,13 @@
       border: 2px solid var(--main-color);
       cursor: pointer;
       font-size: 0.7rem;
-      transition: all var(--transition-speed);
+      transition: all 0.3s;
       text-decoration: none;
     }
 
     .auth-button:hover {
       background: var(--main-color);
       color: var(--bg-color);
-      text-shadow: none;
-    }
-
-    .user-info {
-      font-size: 1.1rem;
-      color: var(--secondary-color);
     }
 
     /* Hero Section */
@@ -289,14 +106,12 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      position: relative;
-      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.5);
       padding: 0 20px;
     }
 
     .hero-content {
       max-width: 800px;
-      z-index: 2;
     }
 
     .hero h1 {
@@ -304,8 +119,6 @@
       font-size: 3rem;
       color: var(--main-color);
       margin-bottom: 20px;
-      line-height: 1.4;
-      text-shadow: 4px 4px var(--bg-color);
     }
 
     .hero h1 span {
@@ -315,7 +128,6 @@
     .hero p {
       font-size: 1.5rem;
       margin-bottom: 30px;
-      line-height: 1.6;
     }
 
     .hero-buttons {
@@ -333,16 +145,13 @@
       border: none;
       cursor: pointer;
       font-size: 1rem;
-      transition: all var(--transition-speed);
+      transition: all 0.3s;
       text-decoration: none;
       display: inline-block;
-      text-shadow: none;
     }
 
     .primary-button:hover {
       background: var(--secondary-color);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }
 
     .secondary-button {
@@ -353,7 +162,7 @@
       border: 2px solid var(--main-color);
       cursor: pointer;
       font-size: 1rem;
-      transition: all var(--transition-speed);
+      transition: all 0.3s;
       text-decoration: none;
       display: inline-block;
     }
@@ -361,27 +170,15 @@
     .secondary-button:hover {
       background: var(--main-color);
       color: var(--bg-color);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-      text-shadow: none;
     }
 
-    /* Pixel Art Hintergrund */
-    .pixel-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect width="10" height="10" fill="%23000"/><rect x="10" y="10" width="10" height="10" fill="%23000"/><rect x="10" y="0" width="10" height="10" fill="%23111"/><rect x="0" y="10" width="10" height="10" fill="%23111"/></svg>');
-      opacity: 0.5;
-      z-index: 1;
-    }
-
-    /* Features Section */
-    .features {
+    /* Section Styles */
+    section {
       padding: 80px 20px;
-      background: rgba(0, 0, 0, 0.3);
+    }
+
+    section:nth-child(even) {
+      background-color: rgba(0, 0, 0, 0.3);
     }
 
     .container {
@@ -395,18 +192,9 @@
       color: var(--main-color);
       text-align: center;
       margin-bottom: 50px;
-      position: relative;
     }
 
-    .section-title::after {
-      content: '';
-      display: block;
-      width: 100px;
-      height: 3px;
-      background: var(--secondary-color);
-      margin: 20px auto 0;
-    }
-
+    /* Features Grid */
     .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -414,17 +202,10 @@
     }
 
     .feature-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
+      background-color: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--main-color);
       padding: 30px;
       text-align: center;
-      transition: all var(--transition-speed);
-    }
-
-    .feature-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-      border-color: var(--main-color);
     }
 
     .feature-icon {
@@ -440,274 +221,10 @@
       margin-bottom: 15px;
     }
 
-    .feature-description {
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-
-    /* About Section */
-    .about {
-      padding: 80px 20px;
-    }
-
-    .about-content {
-      display: flex;
-      align-items: center;
-      gap: 50px;
-    }
-
-    .about-image {
-      flex: 1;
-      border: 3px solid var(--main-color);
-      position: relative;
-    }
-
-    .about-image img {
-      width: 100%;
-      display: block;
-    }
-
-    .about-image::before {
-      content: '';
-      position: absolute;
-      top: -15px;
-      left: -15px;
-      right: 15px;
-      bottom: 15px;
-      border: 1px solid var(--secondary-color);
-      z-index: -1;
-    }
-
-    .about-text {
-      flex: 1;
-    }
-
-    .about-text h2 {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 2rem;
-      color: var(--main-color);
-      margin-bottom: 30px;
-    }
-
-    .about-text p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
-    .about-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-top: 30px;
-    }
-
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-number {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 2rem;
-      color: var(--secondary-color);
-      margin-bottom: 10px;
-    }
-
-    .stat-label {
-      font-size: 1.1rem;
-    }
-
-    /* Gallery Section */
-    .gallery {
-      padding: 80px 20px;
-      background: rgba(0, 0, 0, 0.3);
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .gallery-item {
-      position: relative;
-      overflow: hidden;
-      border: 2px solid var(--card-border);
-      transition: all var(--transition-speed);
-    }
-
-    .gallery-item:hover {
-      transform: scale(1.05);
-      border-color: var(--main-color);
-      z-index: 2;
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      display: block;
-      transition: all var(--transition-speed);
-    }
-
-    .gallery-item:hover img {
-      transform: scale(1.1);
-    }
-
-    .gallery-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0, 0, 0, 0.7);
-      color: var(--main-color);
-      padding: 10px;
-      transform: translateY(100%);
-      transition: all var(--transition-speed);
-    }
-
-    .gallery-item:hover .gallery-overlay {
-      transform: translateY(0);
-    }
-
-    .gallery-title {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 0.9rem;
-      margin-bottom: 5px;
-    }
-
-    .gallery-description {
-      font-size: 0.9rem;
-      opacity: 0.8;
-    }
-
-    .view-more {
-      text-align: center;
-      margin-top: 40px;
-    }
-
-    /* Testimonials Section */
-    .testimonials {
-      padding: 80px 20px;
-    }
-
-    .testimonials-slider {
-      max-width: 800px;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    .testimonial-item {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      padding: 30px;
-      text-align: center;
-      margin: 0 auto;
-    }
-
-    .testimonial-text {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      margin-bottom: 20px;
-      font-style: italic;
-    }
-
-    .testimonial-author {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 1rem;
-      color: var(--secondary-color);
-    }
-
-    .testimonial-rating {
-      color: var(--main-color);
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-    }
-
-    /* Contact Section */
-    .contact {
-      padding: 80px 20px;
-      background: rgba(0, 0, 0, 0.3);
-    }
-
-    .contact-container {
-      display: flex;
-      gap: 50px;
-    }
-
-    .contact-info {
-      flex: 1;
-    }
-
-    .contact-info h2 {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 2rem;
-      color: var(--main-color);
-      margin-bottom: 30px;
-    }
-
-    .contact-info p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
-    .contact-details {
-      margin-top: 30px;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-
-    .contact-icon {
-      font-size: 1.5rem;
-      color: var(--secondary-color);
-      margin-right: 15px;
-    }
-
-    .contact-text {
-      font-size: 1.1rem;
-    }
-
-    .contact-form {
-      flex: 1;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-label {
-      display: block;
-      margin-bottom: 5px;
-      color: var(--main-color);
-      font-size: 1.1rem;
-    }
-
-    .form-input,
-    .form-textarea {
-      width: 100%;
-      padding: 10px;
-      background: rgba(0, 0, 0, 0.3);
-      border: 2px solid var(--main-color);
-      color: var(--text-color);
-      font-family: 'VT323', monospace;
-      font-size: 1.1rem;
-    }
-
-    .form-textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
-
     /* Footer */
     footer {
-      background: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.8);
       padding: 50px 20px 20px;
-      position: relative;
     }
 
     .footer-content {
@@ -728,11 +245,6 @@
 
     .footer-logo h2 span {
       color: var(--secondary-color);
-    }
-
-    .footer-logo p {
-      font-size: 1rem;
-      opacity: 0.8;
     }
 
     .footer-links {
@@ -760,12 +272,11 @@
       color: var(--text-color);
       text-decoration: none;
       font-size: 1.1rem;
-      transition: all var(--transition-speed);
+      transition: all 0.3s;
     }
 
     .footer-column a:hover {
       color: var(--secondary-color);
-      text-shadow: 0 0 5px var(--secondary-color);
     }
 
     .footer-bottom {
@@ -775,652 +286,165 @@
       border-top: 1px solid rgba(0, 255, 255, 0.2);
       max-width: 1200px;
       margin: 30px auto 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-bottom p {
-      font-size: 1rem;
-      opacity: 0.8;
-    }
-
-    /* Theme Toggle */
-    .theme-toggle {
-      background: transparent;
-      border: none;
-      color: var(--main-color);
-      font-size: 1.5rem;
-      cursor: pointer;
-      transition: all var(--transition-speed);
-    }
-
-    .theme-toggle:hover {
-      color: var(--secondary-color);
-      transform: rotate(45deg);
-    }
-
-    /* Back to Top Button */
-    .back-to-top {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      background: var(--main-color);
-      color: var(--bg-color);
-      border: none;
-      border-radius: 50%;
-      font-size: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      opacity: 0;
-      visibility: hidden;
-      transition: all var(--transition-speed);
-      z-index: 100;
-    }
-
-    .back-to-top.visible {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .back-to-top:hover {
-      background: var(--secondary-color);
-      transform: translateY(-5px);
-    }
-
-    /* Loading Spinner */
-    .loading-spinner {
-      width: 50px;
-      height: 50px;
-      border: 5px solid rgba(0, 255, 255, 0.3);
-      border-radius: 50%;
-      border-top-color: var(--main-color);
-      animation: spin 1s linear infinite;
-      margin: 20px auto;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    /* Post Card */
-    .post-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      overflow: hidden;
-      transition: all var(--transition-speed);
-    }
-
-    .post-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-      border-color: var(--main-color);
-    }
-
-    .post-image {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-
-    .post-content {
-      padding: 20px;
-    }
-
-    .post-title {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 1.2rem;
-      color: var(--main-color);
-      margin-bottom: 10px;
-    }
-
-    .post-excerpt {
-      font-size: 1.1rem;
-      margin-bottom: 15px;
-      line-height: 1.4;
-    }
-
-    .post-meta {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.9rem;
-      color: var(--secondary-color);
-    }
-
-    /* Dark Mode */
-    .dark {
-      --main-color: #0ff;
-      --secondary-color: #ff0080;
-      --bg-color: #000;
-      --text-color: #fff;
-      --card-bg: rgba(0, 0, 0, 0.5);
-      --card-border: rgba(0, 255, 255, 0.3);
-    }
-
-    .light {
-      --main-color: #0088ff;
-      --secondary-color: #ff0088;
-      --bg-color: #f0f0f0;
-      --text-color: #333;
-      --card-bg: rgba(255, 255, 255, 0.9);
-      --card-border: rgba(0, 136, 255, 0.3);
     }
 
     /* Responsive Styles */
-    @media (max-width: 1024px) {
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-      
-      .about-content {
-        flex-direction: column;
-      }
-      
-      .contact-container {
-        flex-direction: column;
-      }
-    }
-
     @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
       .hero h1 {
         font-size: 2rem;
       }
       
       .hero-buttons {
         flex-direction: column;
-        gap: 15px;
-      }
-      
-      .mobile-menu-toggle {
-        display: block;
-      }
-      
-      .main-nav {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 80%;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.9);
-        flex-direction: column;
-        justify-content: center;
         align-items: center;
-        transition: all 0.5s;
-        z-index: 99;
-      }
-      
-      .main-nav.active {
-        right: 0;
-      }
-      
-      .nav-links {
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .nav-link {
-        padding: 15px;
-        font-size: 1.5rem;
       }
       
       .footer-content {
         flex-direction: column;
       }
-      
-      .footer-links {
-        flex-direction: column;
-        gap: 20px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .hero h1 {
-        font-size: 1.5rem;
-      }
-      
-      .section-title {
-        font-size: 1.5rem;
-      }
-      
-      .feature-card {
-        padding: 20px;
-      }
-      
-      .about-stats {
-        grid-template-columns: 1fr;
-      }
     }
   </style>
 </head>
 <body>
-  <div class="horizontal-lines"></div>
-  <div class="vertical-lines"></div>
-  <div class="glitch-lines"></div>
+  <!-- Header mit Navigation -->
+  <header>
+    <div class="nav-container">
+      <div class="logo">
+        <a href="index.html">
+          <h1>ZERO<span>QUEST</span></h1>
+        </a>
+      </div>
+      
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="blog.html" class="nav-link">Blog</a></li>
+          <li><a href="gallery.html" class="nav-link">Galerie</a></li>
+          <li><a href="download.html" class="nav-link">Download</a></li>
+          <li><a href="#about" class="nav-link">Über uns</a></li>
+          <li><a href="#contact" class="nav-link">Kontakt</a></li>
+        </ul>
+      </nav>
+      
+      <div id="auth-container" class="auth-container">
+        <a href="login.html" class="auth-button">Anmelden</a>
+        <a href="register.html" class="auth-button">Registrieren</a>
+      </div>
+    </div>
+  </header>
 
-  <div class="content">
-    <!-- Header mit Navigation -->
-    <header>
-      <div class="nav-container">
-        <div class="logo">
-          <a href="index.html">
-            <h1>ZERO<span>QUEST</span></h1>
-          </a>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>ZERO<span>QUEST</span></h1>
+      <p>Ein retro-futuristisches Abenteuer in einer Cyberpunk-Welt voller Geheimnisse und Herausforderungen.</p>
+      <div class="hero-buttons">
+        <a href="download.html" class="primary-button">Jetzt Spielen</a>
+        <a href="#about" class="secondary-button">Mehr erfahren</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="container">
+      <h2 class="section-title">Spielfeatures</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🎮</div>
+          <h3 class="feature-title">Retro Gameplay</h3>
+          <p>Klassisches 2D-Gameplay mit modernen Elementen und herausfordernden Rätseln.</p>
         </div>
-        
-        <button class="mobile-menu-toggle" id="mobile-menu-toggle">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        
-        <nav class="main-nav" id="main-nav">
-          <ul class="nav-links">
-            <li><a href="index.html" class="nav-link active">Home</a></li>
-            <li><a href="blog.html" class="nav-link">Blog</a></li>
-            <li><a href="gallery.html" class="nav-link">Galerie</a></li>
-            <li><a href="download.html" class="nav-link">Download</a></li>
-            <li><a href="#about" class="nav-link">Über uns</a></li>
-            <li><a href="#contact" class="nav-link">Kontakt</a></li>
+        <div class="feature-card">
+          <div class="feature-icon">🌍</div>
+          <h3 class="feature-title">Offene Welt</h3>
+          <p>Erkunde eine weitläufige Cyberpunk-Welt mit versteckten Geheimnissen und Nebenquests.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔧</div>
+          <h3 class="feature-title">Charakteranpassung</h3>
+          <p>Passe deinen Charakter mit verschiedenen Fähigkeiten und Ausrüstungen an.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about" id="about">
+    <div class="container">
+      <h2 class="section-title">Über Zero Quest</h2>
+      <p style="text-align: center; max-width: 800px; margin: 0 auto;">
+        Zero Quest ist ein Retro-Cyberpunk-Abenteuer, das die Nostalgie der 80er und 90er Jahre mit modernem Gameplay verbindet. 
+        Entwickelt von einem kleinen, leidenschaftlichen Team, bietet das Spiel eine einzigartige Mischung aus Action, Rätseln und Erkundung.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <h2 class="section-title">Kontakt</h2>
+      <div style="text-align: center;">
+        <p>Hast du Fragen oder Feedback? Kontaktiere uns!</p>
+        <p>Email: info@zeroquest.de</p>
+        <p>Telefon: +49 123 456789</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">
+        <h2>ZERO<span>QUEST</span></h2>
+        <p>© 2025 Zero Quest. Alle Rechte vorbehalten.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-column">
+          <h3>Navigation</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="gallery.html">Galerie</a></li>
+            <li><a href="download.html">Download</a></li>
           </ul>
-        </nav>
-        
-        <div id="auth-container" class="auth-container">
-          <!-- Wird dynamisch gefüllt -->
+        </div>
+        <div class="footer-column">
+          <h3>Rechtliches</h3>
+          <ul>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+            <li><a href="agb.html">AGB</a></li>
+          </ul>
         </div>
       </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="pixel-bg"></div>
-      <div class="hero-content">
-        <h1>ZERO<span>QUEST</span></h1>
-        <p>Ein retro-futuristisches Abenteuer in einer Cyberpunk-Welt voller Geheimnisse und Herausforderungen.</p>
-        <div class="hero-buttons">
-          <a href="download.html" class="primary-button">Jetzt Spielen</a>
-          <a href="#about" class="secondary-button">Mehr erfahren</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features" id="features">
-      <div class="container">
-        <h2 class="section-title">Spielfeatures</h2>
-        <div class="features-grid">
-          <div class="feature-card">
-            <div class="feature-icon">🎮</div>
-            <h3 class="feature-title">Retro Gameplay</h3>
-            <p class="feature-description">Klassisches 2D-Gameplay mit modernen Elementen und herausfordernden Rätseln.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🌍</div>
-            <h3 class="feature-title">Offene Welt</h3>
-            <p class="feature-description">Erkunde eine weitläufige Cyberpunk-Welt mit versteckten Geheimnissen und Nebenquests.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🔧</div>
-            <h3 class="feature-title">Charakteranpassung</h3>
-            <p class="feature-description">Passe deinen Charakter mit verschiedenen Fähigkeiten und Ausrüstungen an.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🎵</div>
-            <h3 class="feature-title">Synthwave Soundtrack</h3>
-            <p class="feature-description">Tauche ein in die Atmosphäre mit einem packenden Retro-Synthwave-Soundtrack.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">👥</div>
-            <h3 class="feature-title">Multiplayer</h3>
-            <p class="feature-description">Spiele mit Freunden im Koop-Modus oder tritt gegen sie in PvP-Arenen an.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">📱</div>
-            <h3 class="feature-title">Cross-Platform</h3>
-            <p class="feature-description">Spiele auf PC, Konsole oder Mobilgeräten mit plattformübergreifendem Fortschritt.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about" id="about">
-      <div class="container">
-        <div class="about-content">
-          <div class="about-image">
-            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjMTExIiAvPgogICAgPHRleHQgeD0iMzAwIiB5PSIyMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzBmZiI+WmVybyBRdWVzdCBTY3JlZW5zaG90PC90ZXh0Pgo8L3N2Zz4=" alt="Zero Quest Screenshot">
-          </div>
-          <div class="about-text">
-            <h2>Über Zero Quest</h2>
-            <p>Zero Quest ist ein Retro-Cyberpunk-Abenteuer, das die Nostalgie der 80er und 90er Jahre mit modernem Gameplay verbindet. Entwickelt von einem kleinen, leidenschaftlichen Team, bietet das Spiel eine einzigartige Mischung aus Action, Rätseln und Erkundung.</p>
-            <p>In einer dystopischen Zukunft, in der Megakonzerne die Welt regieren und virtuelle Realität zum Alltag gehört, schlüpfst du in die Rolle eines Hackers, der ein gefährliches Geheimnis aufdeckt. Deine Entscheidungen beeinflussen den Verlauf der Geschichte und das Schicksal der Welt.</p>
-            <div class="about-stats">
-              <div class="stat-item">
-                <div class="stat-number">50+</div>
-                <div class="stat-label">Level</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-number">100+</div>
-                <div class="stat-label">Waffen & Items</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-number">20+</div>
-                <div class="stat-label">Stunden Spielzeit</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section class="gallery" id="gallery">
-      <div class="container">
-        <h2 class="section-title">Galerie</h2>
-        <div class="gallery-grid">
-          <div class="gallery-item">
-            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMjIyIiAvPgogICAgPHRleHQgeD0iMTUwIiB5PSIxMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzBmZiI+U3BpZWx3ZWx0IDE8L3RleHQ+Cjwvc3ZnPg==" alt="Spielwelt 1">
-            <div class="gallery-overlay">
-              <div class="gallery-title">Neon City</div>
-              <div class="gallery-description">Die pulsierende Hauptstadt der Spielwelt</div>
-            </div>
-          </div>
-          <div class="gallery-item">
-            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMjIyIiAvPgogICAgPHRleHQgeD0iMTUwIiB5PSIxMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmMDA4MCI+Q2hhcmFrdGVyZTwvdGV4dD4KPC9zdmc+" alt="Charaktere">
-            <div class="gallery-overlay">
-              <div class="gallery-title">Charaktere</div>
-              <div class="gallery-description">Die Helden und Schurken von Zero Quest</div>
-            </div>
-          </div>
-          <div class="gallery-item">
-            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMjIyIiAvPgogICAgPHRleHQgeD0iMTUwIiB5PSIxMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzBmZiI+S2FtcGZzeXN0ZW08L3RleHQ+Cjwvc3ZnPg==" alt="Kampfsystem">
-            <div class="gallery-overlay">
-              <div class="gallery-title">Kampfsystem</div>
-              <div class="gallery-description">Dynamische Kämpfe mit verschiedenen Waffen</div>
-            </div>
-          </div>
-          <div class="gallery-item">
-            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMjIyIiAvPgogICAgPHRleHQgeD0iMTUwIiB5PSIxMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmMDA4MCI+UnVpbmVuPC90ZXh0Pgo8L3N2Zz4=" alt="Ruinen">
-            <div class="gallery-overlay">
-              <div class="gallery-title">Ruinen</div>
-              <div class="gallery-description">Geheimnisvolle Orte voller Schätze und Gefahren</div>
-            </div>
-          </div>
-        </div>
-        <div class="view-more">
-          <a href="gallery.html" class="secondary-button">Mehr anzeigen</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Latest Blog Posts -->
-    <section class="latest-posts">
-      <div class="container">
-        <h2 class="section-title">Neueste Blog-Beiträge</h2>
-        <div id="latest-posts-container" class="features-grid">
-          <!-- Wird dynamisch gefüllt -->
-          <div class="loading-spinner"></div>
-        </div>
-        <div class="view-more">
-          <a href="blog.html" class="secondary-button">Alle Beiträge</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-      <div class="container">
-        <h2 class="section-title">Kontakt</h2>
-        <div class="contact-container">
-          <div class="contact-info">
-            <h2>Lass uns in Kontakt treten</h2>
-            <p>Hast du Fragen, Feedback oder möchtest du mit uns zusammenarbeiten? Fülle einfach das Formular aus oder kontaktiere uns direkt.</p>
-            <div class="contact-details">
-              <div class="contact-item">
-                <div class="contact-icon">📧</div>
-                <div class="contact-text">info@zeroquest.de</div>
-              </div>
-              <div class="contact-item">
-                <div class="contact-icon">📱</div>
-                <div class="contact-text">+49 123 456789</div>
-              </div>
-              <div class="contact-item">
-                <div class="contact-icon">📍</div>
-                <div class="contact-text">Pixelstraße 42, 12345 Gametown</div>
-              </div>
-            </div>
-          </div>
-          <div class="contact-form">
-            <form id="contact-form">
-              <div class="form-group">
-                <label class="form-label" for="name">Name</label>
-                <input type="text" id="name" class="form-input" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="email">E-Mail</label>
-                <input type="email" id="email" class="form-input" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="subject">Betreff</label>
-                <input type="text" id="subject" class="form-input" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="message">Nachricht</label>
-                <textarea id="message" class="form-textarea" required></textarea>
-              </div>
-              <button type="submit" class="primary-button">Nachricht senden</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-      <div class="footer-content">
-        <div class="footer-logo">
-          <h2>ZERO<span>QUEST</span></h2>
-          <p>© 2025 Zero Quest. Alle Rechte vorbehalten.</p>
-        </div>
-        <div class="footer-links">
-          <div class="footer-column">
-            <h3>Navigation</h3>
-            <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="blog.html">Blog</a></li>
-              <li><a href="gallery.html">Galerie</a></li>
-              <li><a href="download.html">Download</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h3>Rechtliches</h3>
-            <ul>
-              <li><a href="impressum.html">Impressum</a></li>
-              <li><a href="datenschutz.html">Datenschutz</a></li>
-              <li><a href="agb.html">AGB</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h3>Community</h3>
-            <ul>
-              <li><a href="https://discord.gg/zeroquest">Discord</a></li>
-              <li><a href="https://twitter.com/zeroquest">Twitter</a></li>
-              <li><a href="https://instagram.com/zeroquest">Instagram</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>Entwickelt mit 💙 und vielen Pixeln</p>
-        <button id="theme-toggle" class="theme-toggle">🌙</button>
-      </div>
-    </footer>
-  </div>
-
-  <!-- Zurück nach oben Button -->
-  <button id="back-to-top" class="back-to-top">↑</button>
+    </div>
+    <div class="footer-bottom">
+      <p>Entwickelt mit 💙 und vielen Pixeln</p>
+    </div>
+  </footer>
 
   <script src="api.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Mobile Menu Toggle
-      const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-      const mainNav = document.getElementById('main-nav');
-      
-      if (mobileMenuToggle && mainNav) {
-        mobileMenuToggle.addEventListener('click', function() {
-          this.classList.toggle('active');
-          mainNav.classList.toggle('active');
-        });
-      }
-      
-      // Back to Top Button
-      const backToTopButton = document.getElementById('back-to-top');
-      
-      if (backToTopButton) {
-        window.addEventListener('scroll', function() {
-          if (window.pageYOffset > 300) {
-            backToTopButton.classList.add('visible');
-          } else {
-            backToTopButton.classList.remove('visible');
-          }
-        });
-        
-        backToTopButton.addEventListener('click', function() {
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
-        });
-      }
-      
-      // Theme Toggle
-      const themeToggle = document.getElementById('theme-toggle');
-      
-      if (themeToggle) {
-        themeToggle.addEventListener('click', function() {
-          document.body.classList.toggle('light');
-          
-          if (document.body.classList.contains('light')) {
-            this.textContent = '☀️';
-          } else {
-            this.textContent = '🌙';
-          }
-        });
-      }
-      
-      // Smooth Scrolling für Anker-Links
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          e.preventDefault();
-          
-          const targetId = this.getAttribute('href');
-          
-          if (targetId === '#') return;
-          
-          const targetElement = document.querySelector(targetId);
-          
-          if (targetElement) {
-            targetElement.scrollIntoView({
-              behavior: 'smooth'
-            });
-            
-            // Mobile Menü schließen, wenn ein Link geklickt wird
-            if (mainNav && mainNav.classList.contains('active')) {
-              mainNav.classList.remove('active');
-              mobileMenuToggle.classList.remove('active');
-            }
-          }
-        });
-      });
-      
-      // Kontaktformular
-      const contactForm = document.getElementById('contact-form');
-      
-      if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-          
-          // Hier würde normalerweise der Code zum Absenden des Formulars stehen
-          alert('Vielen Dank für deine Nachricht! Wir werden uns so schnell wie möglich bei dir melden.');
-          contactForm.reset();
-        });
-      }
-      
-      // Neueste Blog-Beiträge laden
-      loadLatestPosts();
-      
       // Auth-Container aktualisieren
-      updateAuthContainer();
-    });
-    
-    // Neueste Blog-Beiträge laden
-    function loadLatestPosts() {
-      const postsContainer = document.getElementById('latest-posts-container');
-      
-      if (!postsContainer) return;
-      
-      // Blog-Beiträge abrufen
-      let blogPosts = getBlogPosts();
-      
-      // Sortiere nach Datum (neueste zuerst)
-      blogPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
-      
-      // Nur die neuesten 3 Beiträge anzeigen
-      const latestPosts = blogPosts.slice(0, 3);
-      
-      // Keine Beiträge gefunden
-      if (latestPosts.length === 0) {
-        postsContainer.innerHTML = `
-          <div class="feature-card" style="grid-column: span 3;">
-            <p>Noch keine Blog-Beiträge vorhanden.</p>
-          </div>
-        `;
-        return;
-      }
-      
-      // Beiträge anzeigen
-      postsContainer.innerHTML = latestPosts.map(post => {
-        // Erstelle einen Auszug aus dem Inhalt (entferne HTML-Tags)
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = post.content;
-        const textContent = tempDiv.textContent || tempDiv.innerText;
-        const excerpt = textContent.substring(0, 100) + (textContent.length > 100 ? '...' : '');
-        
-        return `
-          <div class="post-card">
-            ${post.image ? `<img src="${post.image}" alt="${post.title}" class="post-image">` : ''}
-            <div class="post-content">
-              <h3 class="post-title">${post.title}</h3>
-              <p class="post-excerpt">${excerpt}</p>
-              <div class="post-meta">
-                <span>${post.author || 'Admin'}</span>
-                <span>${new Date(post.date).toLocaleDateString()}</span>
-              </div>
-              <a href="blog-post.html?id=${post.id}" class="secondary-button" style="margin-top: 15px;">Weiterlesen</a>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-    
-    // Auth-Container aktualisieren
-    function updateAuthContainer() {
       const authContainer = document.getElementById('auth-container');
-      
-      if (!authContainer) return;
-      
       const currentUser = getCurrentUser();
       
       if (currentUser) {
         // Benutzer ist eingeloggt
         authContainer.innerHTML = `
-          <span class="user-info">Hallo, ${currentUser.name}</span>
+          <span style="color: var(--secondary-color); margin-right: 10px;">Hallo, ${currentUser.name}</span>
           ${currentUser.isAdmin ? '<a href="admin.html" class="auth-button">Admin</a>' : ''}
           <button id="logout-button" class="auth-button">Abmelden</button>
         `;
@@ -1428,47 +452,10 @@
         // Event-Listener für Logout-Button
         document.getElementById('logout-button').addEventListener('click', function() {
           logoutUser();
-          updateAuthContainer();
+          window.location.reload();
         });
-      } else {
-        // Benutzer ist nicht eingeloggt
-        authContainer.innerHTML = `
-          <a href="login.html" class="auth-button">Anmelden</a>
-          <a href="register.html" class="auth-button">Registrieren</a>
-        `;
       }
-    }
-    
-    // Glitch-Linien-Effekt
-    function createGlitchLine() {
-      const glitchContainer = document.querySelector('.glitch-lines');
-      
-      if (!glitchContainer) return;
-      
-      const line = document.createElement('div');
-      
-      line.style.position = 'absolute';
-      line.style.top = Math.random() * 100 + '%';
-      line.style.left = '0';
-      line.style.right = '0';
-      line.style.height = '2px';
-      line.style.background = `rgba(255, 0, 128, ${Math.random() * 0.5})`;
-      line.style.animation = 'glitch 0.5s linear forwards';
-      
-      glitchContainer.appendChild(line);
-      
-      // Entferne die Linie nach der Animation
-      setTimeout(() => {
-        line.remove();
-      }, 500);
-    }
-    
-    // Zufällige Glitch-Linien erzeugen
-    setInterval(() => {
-      if (Math.random() > 0.7) {
-        createGlitchLine();
-      }
-    }, 200);
+    });
   </script>
 </body>
 </html>
