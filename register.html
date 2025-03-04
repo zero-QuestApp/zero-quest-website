@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-
+  
   <style>
     * {
       margin: 0;
@@ -19,153 +19,89 @@
       --main-color: #0ff;
       --secondary-color: #ff0080;
       --bg-color: #000;
-    }
-
-    @keyframes textShadow {
-      0% {
-        text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-      }
-      5% {
-        text-shadow: 2.7928974010788217px 0 1px rgba(0,30,255,0.5), -2.7928974010788217px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-      }
-      100% {
-        text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-      }
+      --text-color: #fff;
     }
 
     body {
-      background: var(--bg-color);
-      color: var(--main-color);
+      background-color: var(--bg-color);
+      color: var(--text-color);
       font-family: 'VT323', monospace;
+      line-height: 1.6;
       min-height: 100vh;
-      animation: textShadow 1.6s infinite;
-      position: relative;
-      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* CRT Effect */
-    body::before {
-      content: "";
-      display: block;
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      background: 
-        linear-gradient(
-          transparent 50%, 
-          rgba(0, 0, 0, 0.5) 50%
-        ),
-        linear-gradient(
-          90deg,
-          rgba(255, 0, 0, 0.06),
-          rgba(0, 255, 0, 0.02),
-          rgba(0, 0, 255, 0.06)
-        );
-      background-size: 100% 4px, 3px 100%;
-      pointer-events: none;
-      z-index: 999;
-      animation: scanlines 0.5s linear infinite;
+    /* Header Styles */
+    header {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 15px 0;
+      border-bottom: 1px solid var(--main-color);
     }
 
-    /* Horizontale Linien */
-    .horizontal-lines {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 1px,
-        rgba(0, 255, 255, 0.05) 2px,
-        rgba(0, 255, 255, 0.05) 3px
-      );
-      pointer-events: none;
-      z-index: 998;
-    }
-
-    /* Vertikale Linien */
-    .vertical-lines {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 5px,
-        rgba(0, 255, 255, 0.02) 6px,
-        rgba(0, 255, 255, 0.02) 10px
-      );
-      pointer-events: none;
-      z-index: 997;
-    }
-
-    /* Glitch Linien */
-    .glitch-lines {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      pointer-events: none;
-      z-index: 1000;
-    }
-
-    @keyframes scanlines {
-      0% {
-        background-position: 0 0;
-      }
-      100% {
-        background-position: 0 4px;
-      }
-    }
-
-    .content {
-      position: relative;
-      z-index: 1;
-      padding: 20px;
-      max-width: 500px;
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
       margin: 0 auto;
+      padding: 0 20px;
     }
 
-    .back-button {
+    .logo h1 {
       font-family: 'Press Start 2P', cursive;
-      padding: 8px 15px;
-      background: transparent;
+      font-size: 1.5rem;
       color: var(--main-color);
-      border: 2px solid var(--main-color);
-      cursor: pointer;
-      font-size: 0.8rem;
-      transition: all 0.3s;
-      text-decoration: none;
-      display: inline-block;
-      margin-bottom: 20px;
     }
 
-    .back-button:hover {
-      background: var(--main-color);
-      color: var(--bg-color);
-      text-shadow: none;
+    .logo h1 span {
+      color: var(--secondary-color);
+    }
+
+    .logo a {
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+    }
+
+    .nav-link {
+      color: var(--main-color);
+      text-decoration: none;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+    }
+
+    .nav-link:hover {
+      color: var(--secondary-color);
+    }
+
+    /* Register Form */
+    .register-section {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
     }
 
     .register-container {
+      max-width: 400px;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
       border: 2px solid var(--main-color);
       padding: 30px;
-      background: rgba(0, 255, 255, 0.05);
-      margin-top: 20px;
     }
 
     .register-title {
       font-family: 'Press Start 2P', cursive;
       font-size: 1.5rem;
+      color: var(--main-color);
       text-align: center;
       margin-bottom: 30px;
-      color: var(--main-color);
     }
 
     .form-group {
@@ -182,173 +118,196 @@
     .form-input {
       width: 100%;
       padding: 10px;
-      background: rgba(0, 255, 255, 0.1);
+      background-color: rgba(0, 0, 0, 0.3);
       border: 2px solid var(--main-color);
-      color: var(--main-color);
+      color: var(--text-color);
       font-family: 'VT323', monospace;
       font-size: 1.1rem;
     }
 
-    .submit-button {
-      font-family: 'Press Start 2P', cursive;
-      padding: 10px 20px;
-      background: transparent;
-      color: var(--main-color);
-      border: 2px solid var(--main-color);
-      cursor: pointer;
-      font-size: 1rem;
-      transition: all 0.3s;
+    .form-input:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+    }
+
+    .form-button {
       width: 100%;
-      margin-top: 10px;
-    }
-
-    .submit-button:hover {
-      background: var(--main-color);
+      padding: 12px;
+      background-color: var(--main-color);
       color: var(--bg-color);
+      border: none;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
     }
 
-    .login-link {
+    .form-button:hover {
+      background-color: var(--secondary-color);
+    }
+
+    .form-footer {
       text-align: center;
       margin-top: 20px;
       font-size: 1.1rem;
     }
 
-    .login-link a {
-      color: var(--secondary-color);
-      text-decoration: underline;
-    }
-
-    .error-message {
-      color: var(--secondary-color);
-      margin-top: 10px;
-      text-align: center;
-      font-size: 1.1rem;
-    }
-
-    .success-message {
+    .form-footer a {
       color: var(--main-color);
-      margin-top: 10px;
-      text-align: center;
-      font-size: 1.1rem;
-      background: rgba(0, 255, 255, 0.1);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .form-footer a:hover {
+      color: var(--secondary-color);
+    }
+
+    .alert {
       padding: 10px;
-      border: 1px solid var(--main-color);
+      margin-bottom: 20px;
+      border: 1px solid transparent;
+      text-align: center;
+    }
+
+    .alert-error {
+      background-color: rgba(255, 0, 0, 0.1);
+      border-color: #ff0000;
+      color: #ff0000;
+    }
+
+    .alert-success {
+      background-color: rgba(0, 255, 0, 0.1);
+      border-color: #00ff00;
+      color: #00ff00;
+    }
+
+    /* Footer */
+    footer {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      text-align: center;
+      border-top: 1px solid var(--main-color);
+    }
+
+    footer p {
+      font-size: 1rem;
     }
   </style>
 </head>
 <body>
-  <div class="horizontal-lines"></div>
-  <div class="vertical-lines"></div>
-  <div class="glitch-lines"></div>
-  <div class="content">
-    <a href="index.html" class="back-button">← Zurück</a>
-    
+  <!-- Header mit Navigation -->
+  <header>
+    <div class="nav-container">
+      <div class="logo">
+        <a href="index.html">
+          <h1>ZERO<span>QUEST</span></h1>
+        </a>
+      </div>
+      
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="blog.html" class="nav-link">Blog</a></li>
+          <li><a href="gallery.html" class="nav-link">Galerie</a></li>
+          <li><a href="download.html" class="nav-link">Download</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Register Section -->
+  <section class="register-section">
     <div class="register-container">
       <h2 class="register-title">Registrieren</h2>
       
+      <div id="alert-container"></div>
+      
       <form id="register-form">
         <div class="form-group">
-          <label class="form-label" for="name">Name:</label>
+          <label class="form-label" for="name">Name</label>
           <input type="text" id="name" class="form-input" required>
         </div>
         
         <div class="form-group">
-          <label class="form-label" for="email">Email:</label>
+          <label class="form-label" for="email">E-Mail</label>
           <input type="email" id="email" class="form-input" required>
         </div>
         
         <div class="form-group">
-          <label class="form-label" for="password">Passwort:</label>
+          <label class="form-label" for="password">Passwort</label>
           <input type="password" id="password" class="form-input" required>
         </div>
         
         <div class="form-group">
-          <label class="form-label" for="confirm-password">Passwort bestätigen:</label>
+          <label class="form-label" for="confirm-password">Passwort bestätigen</label>
           <input type="password" id="confirm-password" class="form-input" required>
         </div>
         
-        <div id="error-message" class="error-message"></div>
-        <div id="success-message" class="success-message" style="display: none;"></div>
+        <button type="submit" class="form-button">Registrieren</button>
         
-        <button type="submit" class="submit-button">Registrieren</button>
+        <div class="form-footer">
+          <p>Bereits ein Konto? <a href="login.html">Anmelden</a></p>
+        </div>
       </form>
-      
-      <div class="login-link">
-        Bereits registriert? <a href="login.html">Anmelden</a>
-      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Zero Quest. Alle Rechte vorbehalten.</p>
+  </footer>
 
   <script src="api.js"></script>
   <script>
-    // Glitch-Linien-Effekt
-    function createGlitchLine() {
-      const glitchContainer = document.querySelector('.glitch-lines');
-      const line = document.createElement('div');
+    document.addEventListener('DOMContentLoaded', function() {
+      const registerForm = document.getElementById('register-form');
+      const alertContainer = document.getElementById('alert-container');
       
-      line.style.position = 'absolute';
-      line.style.top = Math.random() * 100 + '%';
-      line.style.left = '0';
-      line.style.right = '0';
-      line.style.height = '2px';
-      line.style.background = `rgba(0, 255, 255, ${Math.random() * 0.5})`;
-      line.style.animation = 'glitch 0.5s linear forwards';
-      
-      glitchContainer.appendChild(line);
-      
-      // Entferne die Linie nach der Animation
-      setTimeout(() => {
-        line.remove();
-      }, 500);
-    }
-
-    // Zufällige Glitch-Linien erzeugen
-    setInterval(() => {
-      if (Math.random() > 0.7) {
-        createGlitchLine();
-      }
-    }, 200);
-
-    // Registrierungs-Formular-Handler
-    document.getElementById('register-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirm-password').value;
-      
-      const errorMessage = document.getElementById('error-message');
-      const successMessage = document.getElementById('success-message');
-      
-      // Passwörter überprüfen
-      if (password !== confirmPassword) {
-        errorMessage.textContent = 'Die Passwörter stimmen nicht überein.';
-        return;
+      // Prüfen, ob der Benutzer bereits eingeloggt ist
+      const currentUser = getCurrentUser();
+      if (currentUser) {
+        // Benutzer ist bereits eingeloggt, zur Startseite umleiten
+        window.location.href = 'index.html';
       }
       
-      // Benutzer registrieren
-      const result = registerUser(name, email, password);
+      // Registrierungsformular absenden
+      registerForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        
+        // Passwörter überprüfen
+        if (password !== confirmPassword) {
+          showAlert('Die Passwörter stimmen nicht überein.', 'error');
+          return;
+        }
+        
+        // Registrierungsfunktion aufrufen
+        const result = registerUser(name, email, password);
+        
+        if (result.success) {
+          // Erfolgsmeldung anzeigen
+          showAlert('Registrierung erfolgreich! Du wirst zur Anmeldeseite weitergeleitet...', 'success');
+          
+          // Zur Login-Seite weiterleiten
+          setTimeout(function() {
+            window.location.href = 'login.html';
+          }, 1500);
+        } else {
+          // Fehlermeldung anzeigen
+          showAlert(result.message || 'Fehler bei der Registrierung. Bitte überprüfe deine Eingaben.', 'error');
+        }
+      });
       
-      if (result.success) {
-        // Erfolgreiche Registrierung
-        errorMessage.textContent = '';
-        successMessage.textContent = 'Registrierung erfolgreich! Du wirst zur Anmeldeseite weitergeleitet...';
-        successMessage.style.display = 'block';
-        
-        // Formular zurücksetzen
-        e.target.reset();
-        
-        // Zur Anmeldeseite weiterleiten
-        setTimeout(() => {
-          window.location.href = 'login.html';
-        }, 2000);
-      } else {
-        // Fehlerhafte Registrierung
-        errorMessage.textContent = result.message;
-        successMessage.style.display = 'none';
+      // Funktion zum Anzeigen von Meldungen
+      function showAlert(message, type) {
+        alertContainer.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
       }
     });
   </script>
 </body>
 </html>
+
