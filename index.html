@@ -1,455 +1,248 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minecraft Team Management</title>
-    <link rel="stylesheet" href="design.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zero Quest - Retro Gaming Adventure</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Minecraft Team Management</h1>
-            <p>Punktesystem und Teamverwaltung</p>
-            <div id="theme-toggle" class="theme-toggle">
-                <i class="fas fa-sun"></i>
-                <i class="fas fa-moon"></i>
-            </div>
-        </header>
-
-        <!-- Login-Bereich (wird zuerst angezeigt) -->
-        <div id="loginArea" class="login-container">
-            <h2>Team Login</h2>
-            <form id="loginForm" onsubmit="return handleLogin(event)">
-                <div class="form-group">
-                    <label for="rank">Rang:</label>
-                    <select id="rank" required>
-                        <option value="">Wähle deinen Rang</option>
-                        <option value="owner">Owner</option>
-                        <option value="coowner">Co-Owner</option>
-                        <option value="admin">Admin</option>
-                        <option value="jradmin">Jr. Admin</option>
-                        <option value="moderator">Moderator</option>
-                        <option value="jrmoderator">Jr. Moderator</option>
-                        <option value="supporter">Supporter</option>
-                        <option value="jrsupporter">Jr. Supporter</option>
-                        <option value="builder">Builder</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="password">Rang-Passwort:</label>
-                    <input type="password" id="password" required>
-                </div>
-                <button type="submit">Anmelden</button>
-            </form>
+  <div class="horizontal-lines"></div>
+  <div class="vertical-lines"></div>
+  <div class="glitch-lines"></div>
+  
+  <div class="content">
+    <!-- Header mit Navigation -->
+    <header>
+      <div class="nav-container">
+        <div class="logo">
+          <a href="index.html">
+            <h1>ZERO<span>QUEST</span></h1>
+          </a>
         </div>
-
-        <!-- Admin-Bereich (wird erst nach Login angezeigt) -->
-        <div id="adminArea" class="admin-container" style="display: none;">
-            <div class="tabs">
-                <button class="tab-button active" data-tab="dashboard">Dashboard</button>
-                <button class="tab-button" data-tab="team">Team</button>
-                <button class="tab-button" data-tab="points">Punkte</button>
-                <button class="tab-button" data-tab="activity">Aktivität</button>
-                <button class="tab-button" data-tab="tasks">Aufgaben</button>
-                <button class="tab-button" data-tab="logs">Protokoll</button>
-                <button class="tab-button" data-tab="settings">Einstellungen</button>
-            </div>
-
-            <!-- Dashboard Tab -->
-            <div id="dashboard" class="tab-content active">
-                <h2>Dashboard</h2>
-                <div class="dashboard-stats">
-                    <div class="stat-card">
-                        <i class="fas fa-users"></i>
-                        <h3>Teammitglieder</h3>
-                        <p id="totalMembers">0</p>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-star"></i>
-                        <h3>Durchschnitt</h3>
-                        <p id="avgPoints">0</p>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-trophy"></i>
-                        <h3>Top Mitglied</h3>
-                        <p id="topMember">-</p>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-calendar-check"></i>
-                        <h3>Aktive Mitglieder</h3>
-                        <p id="activeMembers">0</p>
-                    </div>
-                </div>
-                <div class="quick-actions">
-                    <h3>Schnellaktionen</h3>
-                    <div class="action-buttons">
-                        <button onclick="showTab('team')"><i class="fas fa-users"></i> Team verwalten</button>
-                        <button onclick="showTab('points')"><i class="fas fa-star"></i> Punkte verwalten</button>
-                        <button onclick="showTab('activity')"><i class="fas fa-calendar-check"></i> Aktivität erfassen</button>
-                        <button onclick="showTab('tasks')"><i class="fas fa-tasks"></i> Aufgaben zuweisen</button>
-                    </div>
-                </div>
-                <div id="recentActivity" class="recent-activity">
-                    <h3>Letzte Aktivitäten</h3>
-                    <div id="recentActivityList" class="activity-list">
-                        <!-- Wird durch JavaScript gefüllt -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Team Tab -->
-            <div id="team" class="tab-content">
-                <h2>Team verwalten</h2>
-                <!-- Benutzer hinzufügen (nur für Owner/Co-Owner) -->
-                <div id="addUserArea" class="add-user-section" style="display: none;">
-                    <h3>Neuen Benutzer hinzufügen</h3>
-                    <form id="addUserForm" onsubmit="return handleAddUser(event)">
-                        <div class="form-group">
-                            <label for="mcname">Minecraft Username:</label>
-                            <input type="text" id="mcname" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="userRank">Rang zuweisen:</label>
-                            <select id="userRank" required>
-                                <option value="owner">Owner</option>
-                                <option value="coowner">Co-Owner</option>
-                                <option value="admin">Admin</option>
-                                <option value="jradmin">Jr. Admin</option>
-                                <option value="moderator">Moderator</option>
-                                <option value="jrmoderator">Jr. Moderator</option>
-                                <option value="supporter">Supporter</option>
-                                <option value="jrsupporter">Jr. Supporter</option>
-                                <option value="builder">Builder</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="points">Startpunkte:</label>
-                            <input type="number" id="points" required min="0" value="500">
-                        </div>
-                        <button type="submit">Benutzer hinzufügen</button>
-                    </form>
-                </div>
-
-                <div class="team-management">
-                    <h3>Teammitglieder</h3>
-                    <div class="search-filter">
-                        <input type="text" id="memberSearch" placeholder="Nach Benutzername suchen...">
-                        <select id="rankFilter">
-                            <option value="">Alle Ränge</option>
-                            <option value="owner">Owner</option>
-                            <option value="coowner">Co-Owner</option>
-                            <option value="admin">Admin</option>
-                            <option value="jradmin">Jr. Admin</option>
-                            <option value="moderator">Moderator</option>
-                            <option value="jrmoderator">Jr. Moderator</option>
-                            <option value="supporter">Supporter</option>
-                            <option value="jrsupporter">Jr. Supporter</option>
-                            <option value="builder">Builder</option>
-                        </select>
-                    </div>
-                    <div id="teamManagementList" class="team-management-list">
-                        <!-- Wird durch JavaScript gefüllt -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Punkte Tab -->
-            <div id="points" class="tab-content">
-                <h2>Punkte verwalten</h2>
-                <!-- Punkteabzug (für alle Ränge) -->
-                <div class="points-section">
-                    <h3>Punkteabzug</h3>
-                    <form id="pointsForm" onsubmit="return handlePoints(event)">
-                        <div class="form-group">
-                            <label for="member">Teammitglied:</label>
-                            <select id="member" required></select>
-                        </div>
-                        <div class="form-group">
-                            <label for="reason">Grund:</label>
-                            <select id="reason" required>
-                                <option value="">Wähle einen Grund</option>
-                                <option value="5">Ban ohne Begründung (-5 Punkte)</option>
-                                <option value="10">Unfaire Strafe (-10 Punkte)</option>
-                                <option value="20">Missbrauch der Admin-Rechte (-20 Punkte)</option>
-                                <option value="15">Beleidigung (-15 Punkte)</option>
-                                <option value="10">Inaktiv ohne Abmeldung (-10 Punkte)</option>
-                                <option value="30">Wiederholtes Fehlverhalten (-30 Punkte)</option>
-                                <option value="5">Spamming (-5 Punkte)</option>
-                                <option value="20">Schwere Regelverstöße (-20 Punkte)</option>
-                            </select>
-                        </div>
-                        <button type="submit">Punkte abziehen</button>
-                    </form>
-                </div>
-
-                <!-- Punkte hinzufügen (nur für Owner/Co-Owner) -->
-                <div id="addPointsArea" class="add-points-section" style="display: none;">
-                    <h3>Punkte hinzufügen</h3>
-                    <form id="addPointsForm" onsubmit="return handleAddPoints(event)">
-                        <div class="form-group">
-                            <label for="memberAdd">Teammitglied:</label>
-                            <select id="memberAdd" required></select>
-                        </div>
-                        <div class="form-group">
-                            <label for="pointsToAdd">Punkte:</label>
-                            <input type="number" id="pointsToAdd" min="1" max="100" value="10" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="addReason">Grund:</label>
-                            <select id="addReason" required>
-                                <option value="">Wähle einen Grund</option>
-                                <option value="Aktivität">Regelmäßige Aktivität</option>
-                                <option value="Hilfsbereitschaft">Besondere Hilfsbereitschaft</option>
-                                <option value="Aufgaben">Erfüllung von Aufgaben</option>
-                                <option value="Verbesserung">Verbesserung des Servers</option>
-                                <option value="Besonderes">Besondere Leistung</option>
-                            </select>
-                        </div>
-                        <button type="submit">Punkte hinzufügen</button>
-                    </form>
-                </div>
-
-                <!-- Vorschläge (nur für Owner/Co-Owner) -->
-                <div id="suggestionsContainer" class="suggestions-container" style="display: none;">
-                    <h3>Punkteabzug-Vorschläge</h3>
-                    <div id="suggestionsList">
-                        <!-- Wird durch JavaScript gefüllt -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Aktivität Tab -->
-            <div id="activity" class="tab-content">
-                <h2>Aktivität erfassen</h2>
-                <div class="activity-section">
-                    <h3>Anwesenheit melden</h3>
-                    <form id="activityForm" onsubmit="return handleActivity(event)">
-                        <div class="form-group">
-                            <label for="activityDate">Datum:</label>
-                            <input type="date" id="activityDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="activityHours">Stunden:</label>
-                            <input type="number" id="activityHours" min="0.5" max="24" step="0.5" value="1" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="activityType">Aktivitätstyp:</label>
-                            <select id="activityType" required>
-                                <option value="Moderation">Moderation</option>
-                                <option value="Support">Support</option>
-                                <option value="Bauen">Bauen</option>
-                                <option value="Events">Events</option>
-                                <option value="Administration">Administration</option>
-                                <option value="Sonstiges">Sonstiges</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="activityDescription">Beschreibung:</label>
-                            <textarea id="activityDescription" rows="3" placeholder="Was hast du gemacht?"></textarea>
-                        </div>
-                        <button type="submit">Aktivität speichern</button>
-                    </form>
-                </div>
-
-                <div class="activity-overview">
-                    <h3>Aktivitätsübersicht</h3>
-                    <div class="activity-filter">
-                        <select id="activityMemberFilter">
-                            <option value="">Alle Mitglieder</option>
-                            <!-- Wird durch JavaScript gefüllt -->
-                        </select>
-                        <select id="activityTypeFilter">
-                            <option value="">Alle Aktivitäten</option>
-                            <option value="Moderation">Moderation</option>
-                            <option value="Support">Support</option>
-                            <option value="Bauen">Bauen</option>
-                            <option value="Events">Events</option>
-                            <option value="Administration">Administration</option>
-                            <option value="Sonstiges">Sonstiges</option>
-                        </select>
-                        <select id="activityTimeFilter">
-                            <option value="7">Letzte Woche</option>
-                            <option value="30" selected>Letzter Monat</option>
-                            <option value="90">Letzte 3 Monate</option>
-                            <option value="all">Alle Zeit</option>
-                        </select>
-                    </div>
-                    <div id="activityList" class="activity-list">
-                        <!-- Wird durch JavaScript gefüllt -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Aufgaben Tab -->
-            <div id="tasks" class="tab-content">
-                <h2>Aufgaben</h2>
-                <div id="createTaskArea" class="create-task-section" style="display: none;">
-                    <h3>Neue Aufgabe erstellen</h3>
-                    <form id="createTaskForm" onsubmit="return handleCreateTask(event)">
-                        <div class="form-group">
-                            <label for="taskTitle">Titel:</label>
-                            <input type="text" id="taskTitle" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="taskDescription">Beschreibung:</label>
-                            <textarea id="taskDescription" rows="3" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="taskAssignee">Zuweisen an:</label>
-                            <select id="taskAssignee" required>
-                                <option value="">Wähle ein Teammitglied</option>
-                                <!-- Wird durch JavaScript gefüllt -->
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="taskDueDate">Fälligkeitsdatum:</label>
-                            <input type="date" id="taskDueDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="taskPriority">Priorität:</label>
-                            <select id="taskPriority" required>
-                                <option value="low">Niedrig</option>
-                                <option value="medium" selected>Mittel</option>
-                                <option value="high">Hoch</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="taskReward">Belohnung (Punkte):</label>
-                            <input type="number" id="taskReward" min="1" max="50" value="10" required>
-                        </div>
-                        <button type="submit">Aufgabe erstellen</button>
-                    </form>
-                </div>
-
-                <div class="tasks-overview">
-                    <h3>Aufgabenübersicht</h3>
-                    <div class="tasks-filter">
-                        <select id="taskStatusFilter">
-                            <option value="all">Alle Status</option>
-                            <option value="open">Offen</option>
-                            <option value="in-progress">In Bearbeitung</option>
-                            <option value="completed">Abgeschlossen</option>
-                        </select>
-                        <select id="taskAssigneeFilter">
-                            <option value="">Alle Mitglieder</option>
-                            <!-- Wird durch JavaScript gefüllt -->
-                        </select>
-                    </div>
-                    <div id="tasksList" class="tasks-list">
-                        <!-- Wird durch JavaScript gefüllt -->
-                    </div>
-                </div>
-
-                <div id="myTasks" class="my-tasks">
-                    <h3>Meine Aufgaben</h3>
-                    <div id="myTasksList" class="my-tasks-list">
-                        <!-- Wird durch JavaScript gefüllt -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Protokoll Tab -->
-            <div id="logs" class="tab-content">
-                <h2>Ereignisprotokoll</h2>
-                <div class="logs-filter">
-                    <input type="text" id="logSearch" placeholder="Suchen...">
-                    <select id="logTypeFilter">
-                        <option value="">Alle Ereignisse</option>
-                        <option value="login">Anmeldungen</option>
-                        <option value="points">Punkteänderungen</option>
-                        <option value="rank">Rangänderungen</option>
-                        <option value="user">Benutzerverwaltung</option>
-                        <option value="activity">Aktivitäten</option>
-                        <option value="task">Aufgaben</option>
-                    </select>
-                    <select id="logTimeFilter">
-                        <option value="7">Letzte Woche</option>
-                        <option value="30" selected>Letzter Monat</option>
-                        <option value="all">Alle Zeit</option>
-                    </select>
-                </div>
-                <div id="logsList" class="logs-list">
-                    <!-- Wird durch JavaScript gefüllt -->
-                </div>
-            </div>
-
-            <!-- Einstellungen Tab -->
-            <div id="settings" class="tab-content">
-                <h2>Einstellungen</h2>
-                <div class="settings-section">
-                    <h3>System-Einstellungen</h3>
-                    <form id="settingsForm" onsubmit="return handleSaveSettings(event)">
-                        <div class="form-group">
-                            <label for="autoReset">Automatisches Zurücksetzen der Punkte:</label>
-                            <select id="autoReset" required>
-                                <option value="monthly">Monatlich</option>
-                                <option value="quarterly">Vierteljährlich</option>
-                                <option value="never">Nie</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="inactivityThreshold">Inaktivitätsschwelle (Tage):</label>
-                            <input type="number" id="inactivityThreshold" min="1" max="90" value="14" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="minActivityHours">Mindestaktivität pro Monat (Stunden):</label>
-                            <input type="number" id="minActivityHours" min="1" max="100" value="10" required>
-                        </div>
-                        <button type="submit">Einstellungen speichern</button>
-                    </form>
-                </div>
-
-                <div class="data-management">
-                    <h3>Datenverwaltung</h3>
-                    <div class="data-buttons">
-                        <button onclick="exportData()"><i class="fas fa-download"></i> Daten exportieren</button>
-                        <button onclick="importData()"><i class="fas fa-upload"></i> Daten importieren</button>
-                        <input type="file" id="importFile" style="display: none;" accept=".json">
-                        <button onclick="createBackup()"><i class="fas fa-save"></i> Backup erstellen</button>
-                        <button onclick="restoreBackup()"><i class="fas fa-undo"></i> Backup wiederherstellen</button>
-                        <button onclick="clearData()" class="danger-button"><i class="fas fa-trash"></i> Alle Daten löschen</button>
-                    </div>
-                </div>
-            </div>
-
-            <button onclick="handleLogout()" class="logout-button">Ausloggen</button>
+        
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        
+        <nav class="main-nav" id="main-nav">
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link active">Home</a></li>
+            <li><a href="blog.html" class="nav-link">Blog</a></li>
+            <li><a href="gallery.html" class="nav-link">Galerie</a></li>
+            <li><a href="download.html" class="nav-link">Download</a></li>
+            <li><a href="#about" class="nav-link scroll-link">Über uns</a></li>
+            <li><a href="#contact" class="nav-link scroll-link">Kontakt</a></li>
+          </ul>
+        </nav>
+        
+        <div id="auth-container" class="auth-container">
+          <!-- Wird dynamisch gefüllt -->
         </div>
+      </div>
+    </header>
 
-        <!-- Team Übersicht (immer sichtbar) -->
-        <div class="team-overview">
-            <h2>Team Übersicht</h2>
-            <div id="teamList" class="team-list">
-                <!-- Wird durch JavaScript gefüllt -->
+    <!-- Hero-Bereich -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1 class="glitch-text" data-text="ZERO QUEST">ZERO QUEST</h1>
+        <p class="hero-subtitle">Dein Retro-Gaming Abenteuer beginnt hier</p>
+        <div class="hero-buttons">
+          <a href="download.html" class="cta-button">Jetzt Spielen</a>
+          <a href="#features" class="secondary-button scroll-link">Features entdecken</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="/placeholder.svg?height=400&width=600" alt="Zero Quest Game Screenshot" class="pixelated">
+      </div>
+    </section>
+
+    <!-- Features-Bereich -->
+    <section id="features" class="features-section">
+      <h2 class="section-title">Game Features</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🎮</div>
+          <h3>Retro Gameplay</h3>
+          <p>Klassisches 8-Bit Spielerlebnis mit modernen Elementen</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌍</div>
+          <h3>Offene Welt</h3>
+          <p>Erkunde eine riesige Pixelwelt voller Geheimnisse</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚔️</div>
+          <h3>Epische Kämpfe</h3>
+          <p>Fordernde Bosskämpfe und strategische Gefechte</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🧩</div>
+          <h3>Knifflige Rätsel</h3>
+          <p>Löse komplexe Puzzles und schalte neue Bereiche frei</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Neueste Blog-Beiträge -->
+    <section class="latest-posts">
+      <h2 class="section-title">Neueste Updates</h2>
+      <div class="posts-grid" id="latest-posts-container">
+        <!-- Wird dynamisch gefüllt -->
+        <div class="loading-spinner"></div>
+      </div>
+      <div class="center-button">
+        <a href="blog.html" class="secondary-button">Alle Beiträge ansehen</a>
+      </div>
+    </section>
+
+    <!-- Über uns -->
+    <section id="about" class="about-section">
+      <h2 class="section-title">Über Zero Quest</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <p>Zero Quest ist ein Retro-inspiriertes Rollenspiel, das die Nostalgie der 8-Bit-Ära mit modernem Gameplay verbindet. Unser kleines Entwicklerteam arbeitet mit Leidenschaft daran, dir ein unvergessliches Spielerlebnis zu bieten.</p>
+          <p>Die Welt von Zero Quest ist voller Geheimnisse, herausfordernder Gegner und spannender Quests. Tauche ein in ein Abenteuer, das dich an die goldene Ära der Videospiele erinnern wird!</p>
+          <div class="team-info">
+            <h3>Unser Team</h3>
+            <ul>
+              <li>Max Mustermann - Game Designer</li>
+              <li>Erika Musterfrau - Pixel Artist</li>
+              <li>Tom Tester - Entwickler</li>
+              <li>Anna Admin - Community Manager</li>
+            </ul>
+          </div>
+        </div>
+        <div class="about-image">
+          <img src="/placeholder.svg?height=300&width=400" alt="Zero Quest Team" class="pixelated">
+        </div>
+      </div>
+    </section>
+
+    <!-- Feedback-Bereich -->
+    <section id="feedback" class="feedback-section">
+      <h2 class="section-title">Spieler-Feedback</h2>
+      <div class="feedback-container" id="feedback-container">
+        <!-- Wird dynamisch gefüllt -->
+      </div>
+      <div class="center-button">
+        <a href="feedback.html" class="secondary-button">Feedback geben</a>
+      </div>
+    </section>
+
+    <!-- Kontakt -->
+    <section id="contact" class="contact-section">
+      <h2 class="section-title">Kontaktiere uns</h2>
+      <div class="contact-container">
+        <div class="contact-info">
+          <p>Hast du Fragen, Anregungen oder möchtest du uns einfach nur Hallo sagen? Wir freuen uns von dir zu hören!</p>
+          <div class="contact-methods">
+            <div class="contact-method">
+              <div class="contact-icon">✉️</div>
+              <p>info@zeroquest.de</p>
             </div>
+            <div class="contact-method">
+              <div class="contact-icon">🐦</div>
+              <p>@ZeroQuestGame</p>
+            </div>
+            <div class="contact-method">
+              <div class="contact-icon">📱</div>
+              <p>Discord: ZeroQuest#1234</p>
+            </div>
+          </div>
         </div>
+        <div class="contact-form">
+          <form id="contact-form">
+            <div class="form-group">
+              <label for="contact-name">Name</label>
+              <input type="text" id="contact-name" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-email">E-Mail</label>
+              <input type="email" id="contact-email" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-message">Nachricht</label>
+              <textarea id="contact-message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="submit-button">Nachricht senden</button>
+          </form>
+        </div>
+      </div>
+    </section>
 
-        <div class="hierarchy-container">
-            <h2>Team Hierarchie</h2>
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5ITqJSBI1JcsL9HuyVnmNpMk498cRQ.png" alt="Team Hierarchie" class="hierarchy-image">
+    <!-- Newsletter -->
+    <section class="newsletter-section">
+      <div class="newsletter-container">
+        <h2>Bleib auf dem Laufenden!</h2>
+        <p>Abonniere unseren Newsletter für Updates, Tipps und exklusive Inhalte.</p>
+        <form id="newsletter-form" class="newsletter-form">
+          <input type="email" placeholder="Deine E-Mail-Adresse" required>
+          <button type="submit">Abonnieren</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-logo">
+          <h2>ZERO<span>QUEST</span></h2>
+          <p>© 2025 Zero Quest. Alle Rechte vorbehalten.</p>
         </div>
+        <div class="footer-links">
+          <div class="footer-column">
+            <h3>Navigation</h3>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="blog.html">Blog</a></li>
+              <li><a href="gallery.html">Galerie</a></li>
+              <li><a href="download.html">Download</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Rechtliches</h3>
+            <ul>
+              <li><a href="impressum.html">Impressum</a></li>
+              <li><a href="datenschutz.html">Datenschutz</a></li>
+              <li><a href="agb.html">AGB</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Community</h3>
+            <ul>
+              <li><a href="https://discord.gg/zeroquest">Discord</a></li>
+              <li><a href="https://twitter.com/zeroquest">Twitter</a></li>
+              <li><a href="https://instagram.com/zeroquest">Instagram</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Entwickelt mit 💙 und vielen Pixeln</p>
+        <button id="theme-toggle" class="theme-toggle">🌙</button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Cookie-Banner -->
+  <div id="cookie-banner" class="cookie-banner">
+    <p>Diese Website verwendet Cookies, um dein Erlebnis zu verbessern.</p>
+    <div class="cookie-buttons">
+      <button id="accept-cookies">Akzeptieren</button>
+      <button id="reject-cookies">Ablehnen</button>
     </div>
+  </div>
 
-    <!-- Modals -->
-    <div id="userProfileModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div id="userProfileContent">
-                <!-- Wird durch JavaScript gefüllt -->
-            </div>
-        </div>
-    </div>
+  <!-- Zurück nach oben Button -->
+  <button id="back-to-top" class="back-to-top">↑</button>
 
-    <div id="taskDetailModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div id="taskDetailContent">
-                <!-- Wird durch JavaScript gefüllt -->
-            </div>
-        </div>
-    </div>
-
-    <script src="team-system.js"></script>
+  <script src="api.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
