@@ -1,1026 +1,455 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zero Quest - Download</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --main-color: #0ff;
-      --secondary-color: #ff0080;
-      --bg-color: #000;
-    }
-
-    @keyframes textShadow {
-      0% {
-        text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-      }
-      5% {
-        text-shadow: 2.7928974010788217px 0 1px rgba(0,30,255,0.5), -2.7928974010788217px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-      }
-      100% {
-        text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
-      }
-    }
-
-    @keyframes flicker {
-      0% { opacity: 0.87; }
-      5% { opacity: 0.95; }
-      10% { opacity: 0.9; }
-      15% { opacity: 0.85; }
-      20% { opacity: 0.95; }
-      25% { opacity: 0.85; }
-      30% { opacity: 0.9; }
-      35% { opacity: 0.95; }
-      40% { opacity: 0.85; }
-      45% { opacity: 0.9; }
-      50% { opacity: 0.95; }
-      55% { opacity: 0.85; }
-      60% { opacity: 0.9; }
-      65% { opacity: 0.95; }
-      70% { opacity: 0.9; }
-      75% { opacity: 0.85; }
-      80% { opacity: 0.9; }
-      85% { opacity: 0.95; }
-      90% { opacity: 0.85; }
-      95% { opacity: 0.9; }
-      100% { opacity: 0.95; }
-    }
-
-    body {
-      background: var(--bg-color);
-      color: var(--main-color);
-      font-family: 'VT323', monospace;
-      min-height: 100vh;
-      animation: textShadow 1.6s infinite;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    /* CRT Effect */
-    body::before {
-      content: "";
-      display: block;
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      background: 
-        linear-gradient(
-          transparent 50%, 
-          rgba(0, 0, 0, 0.5) 50%
-        ),
-        linear-gradient(
-          90deg,
-          rgba(255, 0, 0, 0.06),
-          rgba(0, 255, 0, 0.02),
-          rgba(0, 0, 255, 0.06)
-        );
-      background-size: 100% 4px, 3px 100%;
-      pointer-events: none;
-      z-index: 999;
-      animation: scanlines 0.5s linear infinite;
-    }
-
-    /* Horizontale Linien */
-    .horizontal-lines {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 1px,
-        rgba(0, 255, 255, 0.05) 2px,
-        rgba(0, 255, 255, 0.05) 3px
-      );
-      pointer-events: none;
-      z-index: 998;
-    }
-
-    /* Vertikale Linien */
-    .vertical-lines {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 5px,
-        rgba(0, 255, 255, 0.02) 6px,
-        rgba(0, 255, 255, 0.02) 10px
-      );
-      pointer-events: none;
-      z-index: 997;
-    }
-
-    /* Glitch Linien */
-    .glitch-lines {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      pointer-events: none;
-      z-index: 1000;
-    }
-
-    @keyframes scanlines {
-      0% {
-        background-position: 0 0;
-      }
-      100% {
-        background-position: 0 4px;
-      }
-    }
-
-    /* Neue Animation für Glitch-Effekt */
-    @keyframes glitch {
-      0% {
-        clip-path: none;
-        transform: none;
-        opacity: 0;
-      }
-      2% {
-        clip-path: polygon(0 20%, 100% 20%, 100% 21%, 0 21%);
-        transform: translate3d(-3px, 0, 0);
-        opacity: 1;
-      }
-      4% {
-        clip-path: none;
-        transform: none;
-        opacity: 0;
-      }
-      100% {
-        clip-path: none;
-        transform: none;
-        opacity: 0;
-      }
-    }
-
-    /* Zusätzliche Styles für bessere Lesbarkeit mit den Linien */
-    .content {
-      position: relative;
-      z-index: 1;
-      text-shadow: 0 0 5px var(--main-color);
-    }
-
-    .hologram-container,
-    .gallery-section,
-    .comment-section,
-    .blog-section {
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(1px);
-    }
-
-    /* Flicker Effect */
-    body::after {
-      content: " ";
-      display: block;
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      background: rgba(18, 16, 16, 0.1);
-      opacity: 0;
-      z-index: 2;
-      pointer-events: none;
-      animation: flicker 0.15s infinite;
-    }
-
-    .content {
-      position: relative;
-      z-index: 1;
-      padding: 20px;
-    }
-
-    /* Navigation */
-    .nav-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      border-bottom: 1px solid var(--main-color);
-      padding-bottom: 10px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 15px;
-    }
-
-    .nav-link {
-      font-family: 'VT323', monospace;
-      color: var(--main-color);
-      text-decoration: none;
-      font-size: 1.2rem;
-      transition: all 0.3s;
-    }
-
-    .nav-link:hover {
-      color: var(--secondary-color);
-      text-shadow: 0 0 8px var(--secondary-color);
-    }
-
-    /* Login Button */
-    .login-button {
-      font-family: 'Press Start 2P', cursive;
-      padding: 8px 15px;
-      background: transparent;
-      color: var(--main-color);
-      border: 2px solid var(--main-color);
-      cursor: pointer;
-      font-size: 0.8rem;
-      transition: all 0.3s;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .login-button:hover {
-      background: var(--main-color);
-      color: var(--bg-color);
-      text-shadow: none;
-    }
-
-    .user-info {
-      font-family: 'VT323', monospace;
-      font-size: 1.2rem;
-      color: var(--secondary-color);
-    }
-
-    header {
-      text-align: center;
-      margin: 40px 0;
-    }
-
-    header h1 {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 2.5rem;
-      color: var(--main-color);
-      text-transform: uppercase;
-      margin-bottom: 20px;
-      line-height: 1.4;
-      text-shadow: 4px 4px var(--secondary-color);
-    }
-
-    header p {
-      font-size: 1.5rem;
-      color: var(--main-color);
-    }
-
-    .hologram-container {
-      width: 90%;
-      max-width: 800px;
-      margin: 20px auto;
-      position: relative;
-    }
-
-    .content-wrapper {
-      position: relative;
-      border: 2px solid var(--main-color);
-      padding: 4px;
-      background: rgba(0, 255, 255, 0.1);
-    }
-
-    .hologram-frame {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .content-overlay {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 80%;
-      text-align: center;
-    }
-
-    .content-overlay h2 {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 1.5rem;
-      color: var(--main-color);
-      margin-bottom: 15px;
-    }
-
-    .content-overlay p {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-    }
-
-    .download-button {
-      font-family: 'Press Start 2P', cursive;
-      display: inline-block;
-      padding: 15px 30px;
-      background: transparent;
-      color: var(--main-color);
-      text-decoration: none;
-      font-size: 1rem;
-      border: 2px solid var(--main-color);
-      text-transform: uppercase;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s;
-    }
-
-    .download-button:hover {
-      background: var(--main-color);
-      color: var(--bg-color);
-      text-shadow: none;
-    }
-
-    .gallery-section, .blog-section {
-      width: 90%;
-      max-width: 1200px;
-      margin: 40px auto;
-      border: 2px solid var(--main-color);
-      padding: 20px;
-      background: rgba(0, 255, 255, 0.05);
-    }
-
-    .section-title {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 1.5rem;
-      text-align: center;
-      margin-bottom: 30px;
-      color: var(--main-color);
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .gallery-item {
-      border: 2px solid var(--main-color);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      filter: grayscale(0.5) sepia(0.3) hue-rotate(160deg);
-    }
-
-    /* Blog Styles */
-    .blog-preview {
-      margin-bottom: 30px;
-      border: 1px solid var(--main-color);
-      padding: 15px;
-      background: rgba(0, 255, 255, 0.05);
-      transition: all 0.3s;
-    }
-
-    .blog-preview:hover {
-      background: rgba(0, 255, 255, 0.1);
-    }
-
-    .blog-title {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      color: var(--main-color);
-    }
-
-    .blog-meta {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.9rem;
-      color: var(--secondary-color);
-      margin-bottom: 10px;
-    }
-
-    .blog-excerpt {
-      margin-bottom: 15px;
-    }
-
-    .read-more {
-      color: var(--secondary-color);
-      text-decoration: none;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 0.8rem;
-      transition: all 0.3s;
-    }
-
-    .read-more:hover {
-      text-decoration: underline;
-    }
-
-    .view-all {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    .view-all a {
-      font-family: 'Press Start 2P', cursive;
-      color: var(--secondary-color);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: all 0.3s;
-    }
-
-    .view-all a:hover {
-      text-decoration: underline;
-    }
-
-    .comment-section {
-      width: 90%;
-      max-width: 800px;
-      margin: 40px auto;
-      border: 2px solid var(--main-color);
-      padding: 20px;
-      background: rgba(0, 255, 255, 0.05);
-    }
-
-    .comments-list {
-      margin: 20px 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .comment-item {
-      border: 1px solid var(--main-color);
-      margin-bottom: 15px;
-      padding: 15px;
-      background: rgba(0, 255, 255, 0.05);
-    }
-
-    .comment-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      font-size: 0.9rem;
-      color: var(--secondary-color);
-    }
-
-    .comment-content {
-      font-size: 1.1rem;
-      margin-bottom: 10px;
-    }
-
-    .comment-rating {
-      color: var(--main-color);
-      margin-bottom: 10px;
-    }
-
-    .comment-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .comment-action {
-      font-size: 0.9rem;
-      color: var(--secondary-color);
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-      text-decoration: underline;
-    }
-
-    .comment-replies {
-      margin-top: 10px;
-      padding-left: 20px;
-      border-left: 1px solid var(--main-color);
-    }
-
-    .reply-form {
-      margin-top: 10px;
-      display: none;
-    }
-
-    .rating-container {
-      display: flex;
-      gap: 10px;
-      margin: 20px 0;
-      justify-content: center;
-    }
-
-    .rating-star {
-      font-size: 24px;
-      cursor: pointer;
-      color: rgba(0, 255, 255, 0.3);
-      transition: color 0.3s;
-    }
-
-    .rating-star.active {
-      color: var(--main-color);
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-label {
-      display: block;
-      margin-bottom: 5px;
-      color: var(--main-color);
-      font-size: 1.1rem;
-    }
-
-    .form-input,
-    .form-textarea {
-      width: 100%;
-      padding: 10px;
-      background: rgba(0, 255, 255, 0.1);
-      border: 2px solid var(--main-color);
-      color: var(--main-color);
-      font-family: 'VT323', monospace;
-      font-size: 1.1rem;
-    }
-
-    .form-textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .submit-button {
-      font-family: 'Press Start 2P', cursive;
-      padding: 10px 20px;
-      background: transparent;
-      color: var(--main-color);
-      border: 2px solid var(--main-color);
-      cursor: pointer;
-      font-size: 1rem;
-      transition: all 0.3s;
-    }
-
-    .submit-button:hover {
-      background: var(--main-color);
-      color: var(--bg-color);
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: var(--main-color);
-      font-size: 1rem;
-      margin-top: 40px;
-      border-top: 1px solid var(--main-color);
-    }
-
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 1.8rem;
-      }
-
-      .gallery-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      }
-      
-      .nav-container {
-        flex-direction: column;
-        gap: 10px;
-      }
-      
-      .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Team Management</title>
+    <link rel="stylesheet" href="design.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-  <div class="horizontal-lines"></div>
-  <div class="vertical-lines"></div>
-  <div class="glitch-lines"></div>
-  <div class="content">
-    <div class="nav-container">
-      <div class="nav-links">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="blog.html" class="nav-link">Blog</a>
-        <a href="gallery.html" class="nav-link">Galerie</a>
-      </div>
-      <div id="auth-container">
-        <a href="login.html" class="login-button">Anmelden</a>
-      </div>
-    </div>
-
-    <header>
-      <h1>Zero Quest</h1>
-      <p>Dein Portal in eine neue Dimension</p>
-    </header>
-
-    <div class="hologram-container">
-      <div class="content-wrapper">
-        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%20(14)-8gNRNzWYgZDauzpEX2nxR8SqsGFdbV.png" alt="Holographic Frame" class="hologram-frame">
-        <div class="content-overlay">
-          <h2>[System]</h2>
-          <p>Neue Datei verfügbar!</p>
-          <a href="https://www.dropbox.com/scl/fi/ptbux5o6nwjkuzdbjurge/zero-quest.apk?rlkey=eqj13231qu9ccjzgf9yuuklop&st=lm97xsrg&dl=1" class="download-button">
-            Download
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <section class="blog-section">
-      <h2 class="section-title">Neueste Updates</h2>
-      <div id="blog-previews">
-        <!-- Blog-Vorschauen werden hier dynamisch eingefügt -->
-        <div class="blog-preview">
-          <h3 class="blog-title">Willkommen bei Zero Quest</h3>
-          <div class="blog-meta">
-            <span>Admin</span>
-            <span>01.03.2025</span>
-          </div>
-          <div class="blog-excerpt">
-            <p>Willkommen in der Welt von Zero Quest! Hier findest du alle Informationen zu unserem neuesten Projekt...</p>
-          </div>
-          <a href="blog-post.html?id=1" class="read-more">Weiterlesen &raquo;</a>
-        </div>
-      </div>
-      <div class="view-all">
-        <a href="blog.html">Alle Beiträge anzeigen &raquo;</a>
-      </div>
-    </section>
-
-    <section class="gallery-section">
-      <h2 class="section-title">Galerie</h2>
-      <div class="gallery-grid">
-        <div class="gallery-item">
-          <img src="https://via.placeholder.com/300x200/000000/00ffff?text=ZERO+QUEST" alt="Screenshot 1">
-        </div>
-        <div class="gallery-item">
-          <img src="https://via.placeholder.com/300x200/000000/00ffff?text=ZERO+QUEST" alt="Screenshot 2">
-        </div>
-        <div class="gallery-item">
-          <img src="https://via.placeholder.com/300x200/000000/00ffff?text=ZERO+QUEST" alt="Screenshot 3">
-        </div>
-        <div class="gallery-item">
-          <img src="https://via.placeholder.com/300x200/000000/00ffff?text=ZERO+QUEST" alt="Screenshot 4">
-        </div>
-      </div>
-    </section>
-
-    <section class="comment-section">
-      <h2 class="section-title">Feedback</h2>
-      
-      <div id="feedback-login-required">
-        <p style="text-align: center; margin-bottom: 20px;">
-          Bitte <a href="login.html" style="color: var(--secondary-color); text-decoration: underline;">melde dich an</a> oder 
-          <a href="register.html" style="color: var(--secondary-color); text-decoration: underline;">registriere dich</a>, 
-          um Feedback zu geben.
-        </p>
-      </div>
-      
-      <div id="feedback-form-container" style="display: none;">
-        <div class="rating-container">
-          <span class="rating-star" data-rating="1">★</span>
-          <span class="rating-star" data-rating="2">★</span>
-          <span class="rating-star" data-rating="3">★</span>
-          <span class="rating-star" data-rating="4">★</span>
-          <span class="rating-star" data-rating="5">★</span>
-        </div>
-
-        <form id="comment-form" class="comment-form">
-          <div class="form-group">
-            <label class="form-label" for="comment">Kommentar:</label>
-            <textarea id="comment" class="form-textarea" required></textarea>
-          </div>
-          
-          <button type="submit" class="submit-button">Absenden</button>
-        </form>
-      </div>
-
-      <div class="comments-list" id="comments-list">
-        <!-- Kommentare werden hier dynamisch eingefügt -->
-      </div>
-    </section>
-
-    <footer>
-      &copy; 2025 Zero Quest. Alle Rechte vorbehalten.
-    </footer>
-  </div>
-
-  <script src="api.js"></script>
-  <script>
-    // Benutzer-Authentifizierung prüfen
-    function checkAuth() {
-      const currentUser = getCurrentUser();
-      const authContainer = document.getElementById('auth-container');
-      const feedbackLoginRequired = document.getElementById('feedback-login-required');
-      const feedbackFormContainer = document.getElementById('feedback-form-container');
-      
-      if (currentUser) {
-        // Benutzer ist angemeldet
-        let authHtml = `
-          <span class="user-info">Hallo, ${currentUser.name}</span>
-          <button id="logout-button" class="login-button" style="margin-left: 10px;">Abmelden</button>
-        `;
-        
-        // Admin-Link hinzufügen, wenn der Benutzer ein Admin ist
-        if (currentUser.isAdmin) {
-          authHtml = `
-            <span class="user-info">Admin: ${currentUser.name}</span>
-            <a href="admin.html" class="login-button" style="margin-left: 10px; background-color: var(--secondary-color); color: var(--bg-color);">Admin-Panel</a>
-            <button id="logout-button" class="login-button" style="margin-left: 10px;">Abmelden</button>
-          `;
-        }
-        
-        authContainer.innerHTML = authHtml;
-        
-        // Logout-Button Funktionalität
-        document.getElementById('logout-button').addEventListener('click', () => {
-          logoutUser();
-          window.location.reload();
-        });
-        
-        // Feedback-Formular anzeigen
-        if (feedbackLoginRequired) feedbackLoginRequired.style.display = 'none';
-        if (feedbackFormContainer) feedbackFormContainer.style.display = 'block';
-      } else {
-        // Benutzer ist nicht angemeldet
-        authContainer.innerHTML = `<a href="login.html" class="login-button">Anmelden</a>`;
-        
-        // Feedback-Formular ausblenden
-        if (feedbackLoginRequired) feedbackLoginRequired.style.display = 'block';
-        if (feedbackFormContainer) feedbackFormContainer.style.display = 'none';
-      }
-    }
-    
-    // Beim Laden der Seite Authentifizierung prüfen
-    checkAuth();
-
-    // Blog-Vorschauen laden
-    function loadBlogPreviews() {
-      const blogPosts = getBlogPosts();
-      const previewsContainer = document.getElementById('blog-previews');
-      
-      if (previewsContainer) {
-        // Nur die neuesten 3 Beiträge anzeigen
-        const recentPosts = blogPosts.slice(0, 3);
-        
-        if (recentPosts.length === 0) {
-          previewsContainer.innerHTML = '<p style="text-align: center;">Noch keine Blog-Beiträge vorhanden.</p>';
-          return;
-        }
-        
-        previewsContainer.innerHTML = recentPosts.map(post => `
-          <div class="blog-preview">
-            <h3 class="blog-title">${post.title}</h3>
-            <div class="blog-meta">
-              <span>${post.author}</span>
-              <span>${new Date(post.date).toLocaleDateString()}</span>
+    <div class="container">
+        <header>
+            <h1>Minecraft Team Management</h1>
+            <p>Punktesystem und Teamverwaltung</p>
+            <div id="theme-toggle" class="theme-toggle">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
             </div>
-            <div class="blog-excerpt">
-              <p>${post.content.substring(0, 150)}${post.content.length > 150 ? '...' : ''}</p>
-            </div>
-            <a href="blog-post.html?id=${post.id}" class="read-more">Weiterlesen &raquo;</a>
-          </div>
-        `).join('');
-      }
-    }
-    
-    // Blog-Vorschauen laden
-    loadBlogPreviews();
+        </header>
 
-    // Kommentare im localStorage speichern und laden
-    let comments = getComments();
-    let currentRating = 0;
-
-    // Rating System
-    const stars = document.querySelectorAll('.rating-star');
-    
-    // Initiales Rating setzen
-    function updateStars(rating) {
-      stars.forEach((star, index) => {
-        if (index < rating) {
-          star.classList.add('active');
-        } else {
-          star.classList.remove('active');
-        }
-      });
-    }
-
-    stars.forEach(star => {
-      star.addEventListener('click', () => {
-        const rating = parseInt(star.dataset.rating);
-        currentRating = rating;
-        updateStars(rating);
-      });
-    });
-
-    // Kommentare anzeigen
-    function displayComments() {
-      const commentsList = document.getElementById('comments-list');
-      if (!commentsList) return;
-      
-      if (comments.length === 0) {
-        commentsList.innerHTML = '<p style="text-align: center;">Noch keine Kommentare vorhanden.</p>';
-        return;
-      }
-      
-      commentsList.innerHTML = comments.map(comment => {
-        // Antworten für diesen Kommentar abrufen
-        const replies = comment.replies || [];
-        
-        // Prüfen, ob der aktuelle Benutzer ein Admin ist
-        const currentUser = getCurrentUser();
-        const isAdmin = currentUser && currentUser.isAdmin;
-        
-        // Admin-Aktionen anzeigen
-        const adminActions = isAdmin ? `
-          <button class="comment-action delete-comment" data-id="${comment.id}">Löschen</button>
-        ` : '';
-        
-        // Antwort-Formular
-        const replyForm = `
-          <div class="reply-form" id="reply-form-${comment.id}">
-            <div class="form-group">
-              <textarea class="form-textarea reply-textarea" id="reply-text-${comment.id}" placeholder="Deine Antwort..."></textarea>
-            </div>
-            <button class="submit-button submit-reply" data-id="${comment.id}">Antworten</button>
-          </div>
-        `;
-        
-        // Antworten anzeigen
-        const repliesHtml = replies.length > 0 ? `
-          <div class="comment-replies">
-            ${replies.map(reply => `
-              <div class="comment-item">
-                <div class="comment-header">
-                  <span>${reply.name}</span>
-                  <span>${new Date(reply.date).toLocaleDateString()}</span>
+        <!-- Login-Bereich (wird zuerst angezeigt) -->
+        <div id="loginArea" class="login-container">
+            <h2>Team Login</h2>
+            <form id="loginForm" onsubmit="return handleLogin(event)">
+                <div class="form-group">
+                    <label for="rank">Rang:</label>
+                    <select id="rank" required>
+                        <option value="">Wähle deinen Rang</option>
+                        <option value="owner">Owner</option>
+                        <option value="coowner">Co-Owner</option>
+                        <option value="admin">Admin</option>
+                        <option value="jradmin">Jr. Admin</option>
+                        <option value="moderator">Moderator</option>
+                        <option value="jrmoderator">Jr. Moderator</option>
+                        <option value="supporter">Supporter</option>
+                        <option value="jrsupporter">Jr. Supporter</option>
+                        <option value="builder">Builder</option>
+                    </select>
                 </div>
-                <div class="comment-content">${reply.text}</div>
-                ${isAdmin ? `<button class="comment-action delete-reply" data-comment-id="${comment.id}" data-reply-id="${reply.id}">Löschen</button>` : ''}
-              </div>
-            `).join('')}
-          </div  : ''}
-              </div>
-            `).join('')}
-          </div>
-        ` : '';
-        
-        return `
-          <div class="comment-item">
-            <div class="comment-header">
-              <span>${comment.name}</span>
-              <span>${new Date(comment.date).toLocaleDateString()}</span>
+                <div class="form-group">
+                    <label for="password">Rang-Passwort:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit">Anmelden</button>
+            </form>
+        </div>
+
+        <!-- Admin-Bereich (wird erst nach Login angezeigt) -->
+        <div id="adminArea" class="admin-container" style="display: none;">
+            <div class="tabs">
+                <button class="tab-button active" data-tab="dashboard">Dashboard</button>
+                <button class="tab-button" data-tab="team">Team</button>
+                <button class="tab-button" data-tab="points">Punkte</button>
+                <button class="tab-button" data-tab="activity">Aktivität</button>
+                <button class="tab-button" data-tab="tasks">Aufgaben</button>
+                <button class="tab-button" data-tab="logs">Protokoll</button>
+                <button class="tab-button" data-tab="settings">Einstellungen</button>
             </div>
-            <div class="comment-content">${comment.text}</div>
-            <div class="comment-rating">
-              ${'★'.repeat(comment.rating)}${'☆'.repeat(5 - comment.rating)}
+
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content active">
+                <h2>Dashboard</h2>
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <h3>Teammitglieder</h3>
+                        <p id="totalMembers">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-star"></i>
+                        <h3>Durchschnitt</h3>
+                        <p id="avgPoints">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-trophy"></i>
+                        <h3>Top Mitglied</h3>
+                        <p id="topMember">-</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-calendar-check"></i>
+                        <h3>Aktive Mitglieder</h3>
+                        <p id="activeMembers">0</p>
+                    </div>
+                </div>
+                <div class="quick-actions">
+                    <h3>Schnellaktionen</h3>
+                    <div class="action-buttons">
+                        <button onclick="showTab('team')"><i class="fas fa-users"></i> Team verwalten</button>
+                        <button onclick="showTab('points')"><i class="fas fa-star"></i> Punkte verwalten</button>
+                        <button onclick="showTab('activity')"><i class="fas fa-calendar-check"></i> Aktivität erfassen</button>
+                        <button onclick="showTab('tasks')"><i class="fas fa-tasks"></i> Aufgaben zuweisen</button>
+                    </div>
+                </div>
+                <div id="recentActivity" class="recent-activity">
+                    <h3>Letzte Aktivitäten</h3>
+                    <div id="recentActivityList" class="activity-list">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                </div>
             </div>
-            <div class="comment-actions">
-              <button class="comment-action reply-button" data-id="${comment.id}">Antworten</button>
-              ${adminActions}
+
+            <!-- Team Tab -->
+            <div id="team" class="tab-content">
+                <h2>Team verwalten</h2>
+                <!-- Benutzer hinzufügen (nur für Owner/Co-Owner) -->
+                <div id="addUserArea" class="add-user-section" style="display: none;">
+                    <h3>Neuen Benutzer hinzufügen</h3>
+                    <form id="addUserForm" onsubmit="return handleAddUser(event)">
+                        <div class="form-group">
+                            <label for="mcname">Minecraft Username:</label>
+                            <input type="text" id="mcname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="userRank">Rang zuweisen:</label>
+                            <select id="userRank" required>
+                                <option value="owner">Owner</option>
+                                <option value="coowner">Co-Owner</option>
+                                <option value="admin">Admin</option>
+                                <option value="jradmin">Jr. Admin</option>
+                                <option value="moderator">Moderator</option>
+                                <option value="jrmoderator">Jr. Moderator</option>
+                                <option value="supporter">Supporter</option>
+                                <option value="jrsupporter">Jr. Supporter</option>
+                                <option value="builder">Builder</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="points">Startpunkte:</label>
+                            <input type="number" id="points" required min="0" value="500">
+                        </div>
+                        <button type="submit">Benutzer hinzufügen</button>
+                    </form>
+                </div>
+
+                <div class="team-management">
+                    <h3>Teammitglieder</h3>
+                    <div class="search-filter">
+                        <input type="text" id="memberSearch" placeholder="Nach Benutzername suchen...">
+                        <select id="rankFilter">
+                            <option value="">Alle Ränge</option>
+                            <option value="owner">Owner</option>
+                            <option value="coowner">Co-Owner</option>
+                            <option value="admin">Admin</option>
+                            <option value="jradmin">Jr. Admin</option>
+                            <option value="moderator">Moderator</option>
+                            <option value="jrmoderator">Jr. Moderator</option>
+                            <option value="supporter">Supporter</option>
+                            <option value="jrsupporter">Jr. Supporter</option>
+                            <option value="builder">Builder</option>
+                        </select>
+                    </div>
+                    <div id="teamManagementList" class="team-management-list">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                </div>
             </div>
-            ${repliesHtml}
-            ${replyForm}
-          </div>
-        `;
-      }).join('');
-      
-      // Event-Listener für Antwort-Buttons
-      document.querySelectorAll('.reply-button').forEach(button => {
-        button.addEventListener('click', () => {
-          const commentId = button.dataset.id;
-          const replyForm = document.getElementById(`reply-form-${commentId}`);
-          
-          // Alle anderen Antwort-Formulare ausblenden
-          document.querySelectorAll('.reply-form').forEach(form => {
-            if (form.id !== `reply-form-${commentId}`) {
-              form.style.display = 'none';
-            }
-          });
-          
-          // Dieses Antwort-Formular ein-/ausblenden
-          replyForm.style.display = replyForm.style.display === 'block' ? 'none' : 'block';
-        });
-      });
-      
-      // Event-Listener für Antwort-Absenden
-      document.querySelectorAll('.submit-reply').forEach(button => {
-        button.addEventListener('click', () => {
-          const commentId = button.dataset.id;
-          const replyText = document.getElementById(`reply-text-${commentId}`).value;
-          
-          if (replyText.trim() === '') return;
-          
-          addReplyToComment(commentId, replyText);
-          displayComments();
-        });
-      });
-      
-      // Event-Listener für Löschen-Buttons (nur für Admins)
-      document.querySelectorAll('.delete-comment').forEach(button => {
-        button.addEventListener('click', () => {
-          const commentId = button.dataset.id;
-          deleteComment(commentId);
-          displayComments();
-        });
-      });
-      
-      // Event-Listener für Antwort-Löschen-Buttons (nur für Admins)
-      document.querySelectorAll('.delete-reply').forEach(button => {
-        button.addEventListener('click', () => {
-          const commentId = button.dataset.commentId;
-          const replyId = button.dataset.replyId;
-          deleteReply(commentId, replyId);
-          displayComments();
-        });
-      });
-    }
 
-    // Formular-Handler
-    const commentForm = document.getElementById('comment-form');
-    if (commentForm) {
-      commentForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const currentUser = getCurrentUser();
-        if (!currentUser) {
-          alert('Bitte melde dich an, um Feedback zu geben.');
-          return;
-        }
-        
-        const text = document.getElementById('comment').value;
-        
-        if (currentRating === 0) {
-          alert('Bitte gib eine Bewertung ab (1-5 Sterne).');
-          return;
-        }
-        
-        addComment(text, currentRating);
-        
-        // Formular zurücksetzen
-        e.target.reset();
-        currentRating = 0;
-        updateStars(0);
-        
-        // Kommentare neu anzeigen
-        displayComments();
-      });
-    }
+            <!-- Punkte Tab -->
+            <div id="points" class="tab-content">
+                <h2>Punkte verwalten</h2>
+                <!-- Punkteabzug (für alle Ränge) -->
+                <div class="points-section">
+                    <h3>Punkteabzug</h3>
+                    <form id="pointsForm" onsubmit="return handlePoints(event)">
+                        <div class="form-group">
+                            <label for="member">Teammitglied:</label>
+                            <select id="member" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reason">Grund:</label>
+                            <select id="reason" required>
+                                <option value="">Wähle einen Grund</option>
+                                <option value="5">Ban ohne Begründung (-5 Punkte)</option>
+                                <option value="10">Unfaire Strafe (-10 Punkte)</option>
+                                <option value="20">Missbrauch der Admin-Rechte (-20 Punkte)</option>
+                                <option value="15">Beleidigung (-15 Punkte)</option>
+                                <option value="10">Inaktiv ohne Abmeldung (-10 Punkte)</option>
+                                <option value="30">Wiederholtes Fehlverhalten (-30 Punkte)</option>
+                                <option value="5">Spamming (-5 Punkte)</option>
+                                <option value="20">Schwere Regelverstöße (-20 Punkte)</option>
+                            </select>
+                        </div>
+                        <button type="submit">Punkte abziehen</button>
+                    </form>
+                </div>
 
-    // Initiale Anzeige der Kommentare
-    displayComments();
+                <!-- Punkte hinzufügen (nur für Owner/Co-Owner) -->
+                <div id="addPointsArea" class="add-points-section" style="display: none;">
+                    <h3>Punkte hinzufügen</h3>
+                    <form id="addPointsForm" onsubmit="return handleAddPoints(event)">
+                        <div class="form-group">
+                            <label for="memberAdd">Teammitglied:</label>
+                            <select id="memberAdd" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="pointsToAdd">Punkte:</label>
+                            <input type="number" id="pointsToAdd" min="1" max="100" value="10" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="addReason">Grund:</label>
+                            <select id="addReason" required>
+                                <option value="">Wähle einen Grund</option>
+                                <option value="Aktivität">Regelmäßige Aktivität</option>
+                                <option value="Hilfsbereitschaft">Besondere Hilfsbereitschaft</option>
+                                <option value="Aufgaben">Erfüllung von Aufgaben</option>
+                                <option value="Verbesserung">Verbesserung des Servers</option>
+                                <option value="Besonderes">Besondere Leistung</option>
+                            </select>
+                        </div>
+                        <button type="submit">Punkte hinzufügen</button>
+                    </form>
+                </div>
 
-    // CRT Flicker Effect
-    function addRandomFlicker() {
-      const content = document.querySelector('.content');
-      setInterval(() => {
-        if (Math.random() > 0.97) {
-          content.style.opacity = '0.8';
-          setTimeout(() => {
-            content.style.opacity = '1';
-          }, 50);
-        }
-      }, 100);
-    }
+                <!-- Vorschläge (nur für Owner/Co-Owner) -->
+                <div id="suggestionsContainer" class="suggestions-container" style="display: none;">
+                    <h3>Punkteabzug-Vorschläge</h3>
+                    <div id="suggestionsList">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                </div>
+            </div>
 
-    addRandomFlicker();
+            <!-- Aktivität Tab -->
+            <div id="activity" class="tab-content">
+                <h2>Aktivität erfassen</h2>
+                <div class="activity-section">
+                    <h3>Anwesenheit melden</h3>
+                    <form id="activityForm" onsubmit="return handleActivity(event)">
+                        <div class="form-group">
+                            <label for="activityDate">Datum:</label>
+                            <input type="date" id="activityDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="activityHours">Stunden:</label>
+                            <input type="number" id="activityHours" min="0.5" max="24" step="0.5" value="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="activityType">Aktivitätstyp:</label>
+                            <select id="activityType" required>
+                                <option value="Moderation">Moderation</option>
+                                <option value="Support">Support</option>
+                                <option value="Bauen">Bauen</option>
+                                <option value="Events">Events</option>
+                                <option value="Administration">Administration</option>
+                                <option value="Sonstiges">Sonstiges</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="activityDescription">Beschreibung:</label>
+                            <textarea id="activityDescription" rows="3" placeholder="Was hast du gemacht?"></textarea>
+                        </div>
+                        <button type="submit">Aktivität speichern</button>
+                    </form>
+                </div>
 
-    // Glitch-Linien-Effekt
-    function createGlitchLine() {
-      const glitchContainer = document.querySelector('.glitch-lines');
-      const line = document.createElement('div');
-      
-      line.style.position = 'absolute';
-      line.style.top = Math.random() * 100 + '%';
-      line.style.left = '0';
-      line.style.right = '0';
-      line.style.height = '2px';
-      line.style.background = `rgba(0, 255, 255, ${Math.random() * 0.5})`;
-      line.style.animation = 'glitch 0.5s linear forwards';
-      
-      glitchContainer.appendChild(line);
-      
-      // Entferne die Linie nach der Animation
-      setTimeout(() => {
-        line.remove();
-      }, 500);
-    }
+                <div class="activity-overview">
+                    <h3>Aktivitätsübersicht</h3>
+                    <div class="activity-filter">
+                        <select id="activityMemberFilter">
+                            <option value="">Alle Mitglieder</option>
+                            <!-- Wird durch JavaScript gefüllt -->
+                        </select>
+                        <select id="activityTypeFilter">
+                            <option value="">Alle Aktivitäten</option>
+                            <option value="Moderation">Moderation</option>
+                            <option value="Support">Support</option>
+                            <option value="Bauen">Bauen</option>
+                            <option value="Events">Events</option>
+                            <option value="Administration">Administration</option>
+                            <option value="Sonstiges">Sonstiges</option>
+                        </select>
+                        <select id="activityTimeFilter">
+                            <option value="7">Letzte Woche</option>
+                            <option value="30" selected>Letzter Monat</option>
+                            <option value="90">Letzte 3 Monate</option>
+                            <option value="all">Alle Zeit</option>
+                        </select>
+                    </div>
+                    <div id="activityList" class="activity-list">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                </div>
+            </div>
 
-    // Zufällige Glitch-Linien erzeugen
-    setInterval(() => {
-      if (Math.random() > 0.7) {
-        createGlitchLine();
-      }
-    }, 200);
-  </script>
+            <!-- Aufgaben Tab -->
+            <div id="tasks" class="tab-content">
+                <h2>Aufgaben</h2>
+                <div id="createTaskArea" class="create-task-section" style="display: none;">
+                    <h3>Neue Aufgabe erstellen</h3>
+                    <form id="createTaskForm" onsubmit="return handleCreateTask(event)">
+                        <div class="form-group">
+                            <label for="taskTitle">Titel:</label>
+                            <input type="text" id="taskTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="taskDescription">Beschreibung:</label>
+                            <textarea id="taskDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="taskAssignee">Zuweisen an:</label>
+                            <select id="taskAssignee" required>
+                                <option value="">Wähle ein Teammitglied</option>
+                                <!-- Wird durch JavaScript gefüllt -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="taskDueDate">Fälligkeitsdatum:</label>
+                            <input type="date" id="taskDueDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="taskPriority">Priorität:</label>
+                            <select id="taskPriority" required>
+                                <option value="low">Niedrig</option>
+                                <option value="medium" selected>Mittel</option>
+                                <option value="high">Hoch</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="taskReward">Belohnung (Punkte):</label>
+                            <input type="number" id="taskReward" min="1" max="50" value="10" required>
+                        </div>
+                        <button type="submit">Aufgabe erstellen</button>
+                    </form>
+                </div>
+
+                <div class="tasks-overview">
+                    <h3>Aufgabenübersicht</h3>
+                    <div class="tasks-filter">
+                        <select id="taskStatusFilter">
+                            <option value="all">Alle Status</option>
+                            <option value="open">Offen</option>
+                            <option value="in-progress">In Bearbeitung</option>
+                            <option value="completed">Abgeschlossen</option>
+                        </select>
+                        <select id="taskAssigneeFilter">
+                            <option value="">Alle Mitglieder</option>
+                            <!-- Wird durch JavaScript gefüllt -->
+                        </select>
+                    </div>
+                    <div id="tasksList" class="tasks-list">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                </div>
+
+                <div id="myTasks" class="my-tasks">
+                    <h3>Meine Aufgaben</h3>
+                    <div id="myTasksList" class="my-tasks-list">
+                        <!-- Wird durch JavaScript gefüllt -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Protokoll Tab -->
+            <div id="logs" class="tab-content">
+                <h2>Ereignisprotokoll</h2>
+                <div class="logs-filter">
+                    <input type="text" id="logSearch" placeholder="Suchen...">
+                    <select id="logTypeFilter">
+                        <option value="">Alle Ereignisse</option>
+                        <option value="login">Anmeldungen</option>
+                        <option value="points">Punkteänderungen</option>
+                        <option value="rank">Rangänderungen</option>
+                        <option value="user">Benutzerverwaltung</option>
+                        <option value="activity">Aktivitäten</option>
+                        <option value="task">Aufgaben</option>
+                    </select>
+                    <select id="logTimeFilter">
+                        <option value="7">Letzte Woche</option>
+                        <option value="30" selected>Letzter Monat</option>
+                        <option value="all">Alle Zeit</option>
+                    </select>
+                </div>
+                <div id="logsList" class="logs-list">
+                    <!-- Wird durch JavaScript gefüllt -->
+                </div>
+            </div>
+
+            <!-- Einstellungen Tab -->
+            <div id="settings" class="tab-content">
+                <h2>Einstellungen</h2>
+                <div class="settings-section">
+                    <h3>System-Einstellungen</h3>
+                    <form id="settingsForm" onsubmit="return handleSaveSettings(event)">
+                        <div class="form-group">
+                            <label for="autoReset">Automatisches Zurücksetzen der Punkte:</label>
+                            <select id="autoReset" required>
+                                <option value="monthly">Monatlich</option>
+                                <option value="quarterly">Vierteljährlich</option>
+                                <option value="never">Nie</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="inactivityThreshold">Inaktivitätsschwelle (Tage):</label>
+                            <input type="number" id="inactivityThreshold" min="1" max="90" value="14" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="minActivityHours">Mindestaktivität pro Monat (Stunden):</label>
+                            <input type="number" id="minActivityHours" min="1" max="100" value="10" required>
+                        </div>
+                        <button type="submit">Einstellungen speichern</button>
+                    </form>
+                </div>
+
+                <div class="data-management">
+                    <h3>Datenverwaltung</h3>
+                    <div class="data-buttons">
+                        <button onclick="exportData()"><i class="fas fa-download"></i> Daten exportieren</button>
+                        <button onclick="importData()"><i class="fas fa-upload"></i> Daten importieren</button>
+                        <input type="file" id="importFile" style="display: none;" accept=".json">
+                        <button onclick="createBackup()"><i class="fas fa-save"></i> Backup erstellen</button>
+                        <button onclick="restoreBackup()"><i class="fas fa-undo"></i> Backup wiederherstellen</button>
+                        <button onclick="clearData()" class="danger-button"><i class="fas fa-trash"></i> Alle Daten löschen</button>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="handleLogout()" class="logout-button">Ausloggen</button>
+        </div>
+
+        <!-- Team Übersicht (immer sichtbar) -->
+        <div class="team-overview">
+            <h2>Team Übersicht</h2>
+            <div id="teamList" class="team-list">
+                <!-- Wird durch JavaScript gefüllt -->
+            </div>
+        </div>
+
+        <div class="hierarchy-container">
+            <h2>Team Hierarchie</h2>
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-5ITqJSBI1JcsL9HuyVnmNpMk498cRQ.png" alt="Team Hierarchie" class="hierarchy-image">
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="userProfileModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="userProfileContent">
+                <!-- Wird durch JavaScript gefüllt -->
+            </div>
+        </div>
+    </div>
+
+    <div id="taskDetailModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="taskDetailContent">
+                <!-- Wird durch JavaScript gefüllt -->
+            </div>
+        </div>
+    </div>
+
+    <script src="team-system.js"></script>
 </body>
 </html>
