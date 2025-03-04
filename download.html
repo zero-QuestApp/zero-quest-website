@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zero Quest - Download</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --main-color: #0ff;
+      --secondary-color: #ff0080;
+      --bg-color: #000;
+      --text-color: #fff;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'VT323', monospace;
+      line-height: 1.6;
+    }
+
+    /* Header Styles */
+    header {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 15px 0;
+      border-bottom: 1px solid var(--main-color);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .logo h1 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.5rem;
+      color: var(--main-color);
+    }
+
+    .logo h1 span {
+      color: var(--secondary-color);
+    }
+
+    .logo a {
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+    }
+
+    .nav-link {
+      color: var(--main-color);
+      text-decoration: none;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--secondary-color);
+    }
+
+    .auth-container {
+      display: flex;
+      gap: 15px;
+    }
+
+    .auth-button {
+      font-family: 'Press Start 2P', cursive;
+      padding: 8px 15px;
+      background: transparent;
+      color: var(--main-color);
+      border: 2px solid var(--main-color);
+      cursor: pointer;
+      font-size: 0.7rem;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+
+    .auth-button:hover {
+      background: var(--main-color);
+      color: var(--bg-color);
+    }
+
+    /* Download Header */
+    .download-header {
+      text-align: center;
+      padding: 60px 20px;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .download-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 2.5rem;
+      color: var(--main-color);
+      margin-bottom: 20px;
+    }
+
+    .download-description {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Download Section */
+    .download-section {
+      padding: 60px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .download-card {
+      background-color: rgba(0, 0, 0, 0.5);
+      border: 2px solid var(--main-color);
+      padding: 30px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .download-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--secondary-color);
+    }
+
+    .platform-icon {
+      font-size: 3rem;
+      color: var(--main-color);
+      margin-bottom: 20px;
+    }
+
+    .platform-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.2rem;
+      color: var(--main-color);
+      margin-bottom: 15px;
+    }
+
+    .platform-description {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    .download-button {
+      display: inline-block;
+      padding: 12px 25px;
+      background-color: var(--main-color);
+      color: var(--bg-color);
+      text-decoration: none;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.8rem;
+      transition: all 0.3s;
+    }
+
+    .download-button:hover {
+      background-color: var(--secondary-color);
+    }
+
+    /* System Requirements */
+    .requirements-section {
+      padding: 60px 20px;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .requirements-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 2rem;
+      color: var(--main-color);
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .requirements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .requirements-card {
+      background-color: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--main-color);
+      padding: 20px;
+    }
+
+    .requirements-card h3 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.2rem;
+      color: var(--main-color);
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .requirements-list {
+      list-style: none;
+    }
+
+    .requirements-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+    }
+
+    .requirements-list li:last-child {
+      border-bottom: none;
+    }
+
+    /* Footer */
+    footer {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 50px 20px 20px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .footer-logo h2 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.5rem;
+      color: var(--main-color);
+      margin-bottom: 15px;
+    }
+
+    .footer-logo h2 span {
+      color: var(--secondary-color);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .footer-column h3 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1rem;
+      color: var(--main-color);
+      margin-bottom: 15px;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column li {
+      margin-bottom: 10px;
+    }
+
+    .footer-column a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: all 0.3s;
+    }
+
+    .footer-column a:hover {
+      color: var(--secondary-color);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      margin-top: 30px;
+      border-top: 1px solid rgba(0, 255, 255, 0.2);
+      max-width: 1200px;
+      margin: 30px auto 0;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .download-title {
+        font-size: 2rem;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header mit Navigation -->
+  <header>
+    <div class="nav-container">
+      <div class="logo">
+        <a href="index.html">
+          <h1>ZERO<span>QUEST</span></h1>
+        </a>
+      </div>
+      
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="blog.html" class="nav-link">Blog</a></li>
+          <li><a href="gallery.html" class="nav-link">Galerie</a></li>
+          <li><a href="download.html" class="nav-link active">Download</a></li>
+          <li><a href="index.html#about" class="nav-link">Über uns</a></li>
+          <li><a href="index.html#contact" class="nav-link">Kontakt</a></li>
+        </ul>
+      </nav>
+      
+      <div id="auth-container" class="auth-container">
+        <a href="login.html" class="auth-button">Anmelden</a>
+        <a href="register.html" class="auth-button">Registrieren</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Download Header -->
+  <div class="download-header">
+    <h1 class="download-title">Download Zero Quest</h1>
+    <p class="download-description">Lade Zero Quest für deine bevorzugte Plattform herunter und tauche ein in eine Welt voller Abenteuer!</p>
+  </div>
+
+  <!-- Download Section -->
+  <section class="download-section">
+    <div class="container">
+      <div class="download-grid">
+        <div class="download-card">
+          <div class="platform-icon">💻</div>
+          <h3 class="platform-title">Windows</h3>
+          <p class="platform-description">Für Windows 10 und 11 optimiert</p>
+          <a href="#" class="download-button">Download (2.3 GB)</a>
+        </div>
+        <div class="download-card">
+          <div class="platform-icon">🍎</div>
+          <h3 class="platform-title">macOS</h3>
+          <p class="platform-description">Für macOS 11 und neuer</p>
+          <a href="#" class="download-button">Download (2.1 GB)</a>
+        </div>
+        <div class="download-card">
+          <div class="platform-icon">🐧</div>
+          <h3 class="platform-title">Linux</h3>
+          <p class="platform-description">Für Ubuntu, Debian und mehr</p>
+          <a href="#" class="download-button">Download (2.0 GB)</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- System Requirements -->
+  <section class="requirements-section">
+    <div class="container">
+      <h2 class="requirements-title">Systemanforderungen</h2>
+      <div class="requirements-grid">
+        <div class="requirements-card">
+          <h3>Minimum</h3>
+          <ul class="requirements-list">
+            <li><strong>Betriebssystem:</strong> Windows 10, macOS 11, Ubuntu 20.04</li>
+            <li><strong>Prozessor:</strong> Intel Core i3 / AMD Ryzen 3</li>
+            <li><strong>Arbeitsspeicher:</strong> 4 GB RAM</li>
+            <li><strong>Grafik:</strong> NVIDIA GeForce GTX 750 / AMD Radeon R7 260</li>
+            <li><strong>Speicherplatz:</strong> 5 GB verfügbarer Speicherplatz</li>
+            <li><strong>Internet:</strong> Breitband-Internetverbindung</li>
+          </ul>
+        </div>
+        <div class="requirements-card">
+          <h3>Empfohlen</h3>
+          <ul class="requirements-list">
+            <li><strong>Betriebssystem:</strong> Windows 11, macOS 12, Ubuntu 22.04</li>
+            <li><strong>Prozessor:</strong> Intel Core i5 / AMD Ryzen 5</li>
+            <li><strong>Arbeitsspeicher:</strong> 8 GB RAM</li>
+            <li><strong>Grafik:</strong> NVIDIA GeForce GTX 1060 / AMD Radeon RX 580</li>
+            <li><strong>Speicherplatz:</strong> 10 GB verfügbarer Speicherplatz (SSD empfohlen)</li>
+            <li><strong>Internet:</strong> Breitband-Internetverbindung</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">
+        <h2>ZERO<span>QUEST</span></h2>
+        <p>© 2025 Zero Quest. Alle Rechte vorbehalten.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-column">
+          <h3>Navigation</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="gallery.html">Galerie</a></li>
+            <li><a href="download.html">Download</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Rechtliches</h3>
+          <ul>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+            <li><a href="agb.html">AGB</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Entwickelt mit 💙 und vielen Pixeln</p>
+    </div>
+  </footer>
+
+  <script src="api.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Auth-Container aktualisieren
+      const authContainer = document.getElementById('auth-container');
+      const currentUser = getCurrentUser();
+      
+      if (currentUser) {
+        // Benutzer ist eingeloggt
+        authContainer.innerHTML = `
+          <span style="color: var(--secondary-color); margin-right: 10px;">Hallo, ${currentUser.name}</span>
+          ${currentUser.isAdmin ? '<a href="admin.html" class="auth-button">Admin</a>' : ''}
+          <button id="logout-button" class="auth-button">Abmelden</button>
+        `;
+        
+        // Event-Listener für Logout-Button
+        document.getElementById('logout-button').addEventListener('click', function() {
+          logoutUser();
+          window.location.reload();
+        });
+      }
+    });
+  </script>
+</body>
+</html>
+
